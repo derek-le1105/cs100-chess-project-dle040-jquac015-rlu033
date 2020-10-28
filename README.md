@@ -16,19 +16,18 @@
  > * Each member of the group **must** be committing code regularly and make sure their code is correctly attributed to them. We will be checking attributions to determine if there was equal contribution to the project.
 
 ## Project Description
- > For our project, we plan to make a virtual chess game.
- > * This is interesting to us because we are all avid chess players and its is interesting to see chess being built
-from the ground up.
+ > For our project, we plan to make a virtual 2-player chess game.
+ > * This is interesting to us because we are all avid chess players and it is interesting to see chess being built as a program from the ground up.
  > * Languages/Tools/Technologies:
  >   * [C++](https://www.cplusplus.com/)
  >   * [C++ graphics library](https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1126/materials/cppdoc/graphics.html)
  > * Input/Output:
  >   * The input will be the moves the player wants to make.
- >   * The output will be a chess board and chess pieces that reflect the position the player inputs.
- > * The three design patterns we plan to use are strategy, visitor,and :
- >   * We want to use the strategy design pattern in order to check for all moves of a chess piece. This allows us to check whether or not there is a checkmake/check. It is important to use the strategy design pattern because some pieces have multiple types of movement and we would not be able to full accomidate the piece without using the strategy design pattern. We also might create a scoring system with the piece values that can use the strategy pattern. 
- >   * Because we are using the strategy design pattern, it would also be important to use a visitor to view items in the object using the strategy design pattern. By using a visitor, we can check the locations of a piece, the squares it threatens, and the possible movements it can make. 
- >   *
+ >   * The output will be a chess board and chess pieces that reflect the position the player inputs. At the end of the game, an "End Game" message will be displayed (P1 wins, P2 wins, Draw).
+ > * The three design patterns we plan to use are abstract factory, strategy, and visitor:
+ >   * An important pattern is abstract factory. The pieces all have individual movements, but they all have the same type of movement, which can be called by the same function name. Having a "Piece" abstract class will allow the individual piece variations to have a movement function to use.
+ >   * We want to use the strategy design pattern in order to check for all moves of a chess piece. This allows us to check whether or not there is a checkmate/check/stalemate. It is important to use the strategy design pattern because some pieces have multiple types of movement and we would not be able to fully accommodate the piece without using the strategy design pattern. We also might create a scoring system with the piece values that can use the strategy pattern. 
+ >   * Because we are using the strategy design pattern, it would also be important to use a visitor to view items in the object using the strategy design pattern. By using a visitor, we can check the location of a piece and the possible movements it can make, specifically the squares it threatens. 
 
  > ## Phase II
  > In addition to completing the "Class Diagram" section below, you will need to 
