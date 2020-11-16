@@ -17,6 +17,12 @@
 
 ## Project Description
  > For our project, we plan to make a virtual 2-player chess game.
+ > * Taken from [Wikipedia](https://en.wikipedia.org/wiki/Chess)
+ >   * Chess is a two-player strategy board game played on a checkered board with 64 squares arranged in an 8×8 square grid.
+ >   * Each player begins with 16 pieces: one king, one queen, two rooks, two knights, two bishops, and eight pawns. Each piece type moves differently, with the most powerful being the queen and the least powerful the pawn.
+ >   * During the game, play typically involves exchanging pieces for the opponent's similar pieces, and finding and engineering opportunities to trade advantageously or to get a better position.
+ >   * The objective is to checkmate the opponent's king by placing it under an inescapable threat of capture. To this end, a player's pieces are used to attack and capture the opponent's pieces, while supporting one another. There are also several ways a game can end in a draw.
+ 
  > * This is interesting to us because we are all avid chess players and it is interesting to see chess being built as a program from the ground up.
  > * Languages/Tools/Technologies:
  >   * [C++](https://www.cplusplus.com/)
