@@ -1,14 +1,18 @@
+#ifndef __PIECE_H__
+#define __PIECE_H__
+
 enum Color {WHITE, BLACK};
 class Piece {
   private:
     Color alignment;
-
   public:
-    Color getAlignment();
+    Piece(Color a, char c, int i);
+    Color getAlignment() { return alignment; }
     virtual bool move(char, int) = 0;
     virtual void drawPiece() = 0;
 
   protected:
+    int x, y;
     int CharToInt(char);
 };
 
@@ -17,6 +21,7 @@ class Piece {
 //moves diagonally upwards by capturing
 class Pawn : public Piece {
   public:
+    Pawn(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int);
     void drawPiece();
 };
@@ -25,6 +30,7 @@ class Pawn : public Piece {
 //another way to see it is as only on one color
 class Bishop : public Piece {
   public:
+    Bishop(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int);
     void drawPiece();
 };
@@ -32,6 +38,7 @@ class Bishop : public Piece {
 //moves in an L-shape and can jump over pieces
 class Knight : public Piece {
   public:
+    Knight(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int);
     void drawPiece();
 };
@@ -39,6 +46,7 @@ class Knight : public Piece {
 //moves horizontally or vertically
 class Rook : public Piece {
   public:
+    Rook(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int);
     void drawPiece();
 };
@@ -46,6 +54,7 @@ class Rook : public Piece {
 //moves horizontally or vertically or diagonally
 class Queen : public Piece {
   public:
+    Queen(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int);
     void drawPiece();
 };
@@ -54,8 +63,10 @@ class Queen : public Piece {
 //can also castle with rook
 class King : public Piece {
   public:
+    King(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int);
     void drawPiece();
 };
+#endif
 
 //current problems: check(), stalemate(), checkmate(), castling, en passant
