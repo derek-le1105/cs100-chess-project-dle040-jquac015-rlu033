@@ -1,19 +1,32 @@
 #ifndef __PIECE_H__
 #define __PIECE_H__
 
+#include <cctype>
 enum Color {WHITE, BLACK};
 class Piece {
   private:
     Color alignment;
   public:
-    Piece(Color a, char c, int i);
+    Piece(Color a, char c, int i) {
+        alignment = a;
+        x = CharToInt(c);
+        y = i;
+    }
     Color getAlignment() { return alignment; }
-    virtual bool move(char, int, Piece*[][]) = 0; //size of array is 64 for board
+    virtual bool move(char, int, Piece* **array = nullptr) = 0; //size of array is 64 for board
+
     virtual void drawPiece() = 0;
 
   protected:
     int x, y;
-    int CharToInt(char);
+    int CharToInt(char c) {
+      if (isupper(c))
+          return c - 'A' + 1;
+      if (islower(c))
+          return c - 'a' + 1;
+      else
+          return 0;
+    }
 };
 
 //move: one forward, unless it hasn't moved yet (start)
@@ -22,7 +35,7 @@ class Piece {
 class Pawn : public Piece {
   public:
     Pawn(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][] = nullptr);
+    bool move(char, int, Piece* **array = nullptr);
     void drawPiece();
 };
 
@@ -31,7 +44,7 @@ class Pawn : public Piece {
 class Bishop : public Piece {
   public:
     Bishop(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][] = nullptr);
+    bool move(char, int, Piece* **array = nullptr);
     void drawPiece();
 };
 
@@ -39,7 +52,7 @@ class Bishop : public Piece {
 class Knight : public Piece {
   public:
     Knight(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][] = nullptr);
+    bool move(char, int, Piece* **array = nullptr);
     void drawPiece();
 };
 
@@ -47,7 +60,7 @@ class Knight : public Piece {
 class Rook : public Piece {
   public:
     Rook(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][] = nullptr);
+    bool move(char, int, Piece* **array = nullptr);
     void drawPiece();
 };
 
@@ -55,7 +68,7 @@ class Rook : public Piece {
 class Queen : public Piece {
   public:
     Queen(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][] = nullptr);
+    bool move(char, int, Piece* **array = nullptr);
     void drawPiece();
 };
 
@@ -64,7 +77,7 @@ class Queen : public Piece {
 class King : public Piece {
   public:
     King(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][] = nullptr);
+    bool move(char, int, Piece* **array = nullptr);
     void drawPiece();
 };
 #endif
