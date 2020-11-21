@@ -12,13 +12,13 @@ TEST(PieceFunctions, Alignment) {
 #include <iostream>
 using namespace std;
 bool PieceFunctionsTest(int& count) {
-    bool AllPass = true;
+    bool allPass = true;
     Rook r1(WHITE, 'a', 1);
     /*PieceFunctionsTest::Alignment*/ {
         cout << "  ";
         if (r1.getAlignment() != WHITE) {
             cout << "FAILED";
-            AllPass = false;
+            allPass = false;
         }
         else
             cout << "PASSED";
@@ -30,7 +30,7 @@ bool PieceFunctionsTest(int& count) {
         cout << "  ";
         if (r1.move('a',1)) {
             cout << "FAILED";
-            AllPass = false;
+            allPass = false;
         }
         else
             cout << "PASSED";
@@ -40,7 +40,7 @@ bool PieceFunctionsTest(int& count) {
         cout << "  ";
         if (r1.move('A',1)) {
             cout << "FAILED" << endl;
-            AllPass = false;
+            allPass = false;
         }
         else
             cout << "PASSED";
@@ -52,7 +52,7 @@ bool PieceFunctionsTest(int& count) {
         cout << "  ";
         if (!r1.move('h',1)) {
             cout << "FAILED";
-            AllPass = false;
+            allPass = false;
         }
         else
             cout << "PASSED";
@@ -62,7 +62,7 @@ bool PieceFunctionsTest(int& count) {
         cout << "  ";
         if (!r1.move('a',8)) {
             cout << "FAILED";
-            AllPass = false;
+            allPass = false;
         }
         else
             cout << "PASSED";
@@ -72,7 +72,7 @@ bool PieceFunctionsTest(int& count) {
         cout << "  ";
         if (r1.move('i',1)) {
             cout << "FAILED";
-            AllPass = false;
+            allPass = false;
         }
         else
             cout << "PASSED";
@@ -82,7 +82,7 @@ bool PieceFunctionsTest(int& count) {
         cout << "  ";
         if (r1.move('a',0)) {
             cout << "FAILED";
-            AllPass = false;
+            allPass = false;
         }
         else
             cout << "PASSED";
@@ -92,7 +92,7 @@ bool PieceFunctionsTest(int& count) {
         cout << "  ";
         if (r1.move('a',9)) {
             cout << "FAILED";
-            AllPass = false;
+            allPass = false;
         }
         else
             cout << "PASSED";
@@ -103,21 +103,21 @@ bool PieceFunctionsTest(int& count) {
     // cout << "  ";
     // if (0 == 0) {
     //     cout << "FAILED";
-    //     AllPass = false;
+    //     allPass = false;
     // }
     // else
     //     cout << "PASSED";
     // cout << ": FailingTest" << endl;
     // count += 1;
 
-    if (!AllPass) {
+    if (!allPass) {
         cout << "FAILED";
     }
     else
         cout << "PASSED";
     cout << ": PieceFunctionsTest" << endl;
     cout << endl;
-    return AllPass;
+    return allPass;
 }
 
 #endif
