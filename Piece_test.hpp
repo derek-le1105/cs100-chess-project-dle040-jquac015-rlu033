@@ -120,4 +120,97 @@ bool PieceFunctionsTest(int& count) {
     return allPass;
 }
 
+bool CollisionMoveTest(int& count) {
+    bool allPass = true;
+
+    Piece**** array = new Piece*[8][8];     //idk how to do 2d array yet
+    Piece* test = new Rook(WHITE, 'a', 1);
+    array[8][8] = test;
+    Piece* rookPiece1 = new Rook(WHITE, 'c', 1);
+    Piece* rookPiece2 = new Rook(WHITE, 'a', 3);
+
+    bool validMove;
+    /*CollisionMoveTest::ValidMoveRight*/ {
+        cout << "  ";
+        if (!test->move('b',1,array)) {
+            cout << "FAILED";
+            allPass = false;
+        }
+        else
+            cout << "PASSED";
+        cout << ": CollisionMoveTest::ValidMoveRight" << endl;
+        count += 1;
+    }
+    /*CollisionMoveTest::MoveIntoPiece1*/ {
+        cout << "  ";
+        if (test->move('c',1,array)) {
+            cout << "FAILED";
+            allPass = false;
+        }
+        else
+            cout << "PASSED";
+        cout << ": CollisionMoveTest::MoveIntoPiece1" << endl;
+        count += 1;
+    }
+    /*CollisionMoveTest::MovePastPiece1*/ {
+        cout << "  ";
+        if (test->move('d',1,array)) {
+            cout << "FAILED";
+            allPass = false;
+        }
+        else
+            cout << "PASSED";
+        cout << ": CollisionMoveTest::MovePastPiece1" << endl;
+        count += 1;
+    }
+
+    /*CollisionMoveTest::ValidMoveUp*/ {
+        cout << "  ";
+        if (!test->move('a',2,array)) {
+            cout << "FAILED";
+            allPass = false;
+        }
+        else
+            cout << "PASSED";
+        cout << ": CollisionMoveTest::ValidMoveUp" << endl;
+        count += 1;
+    }
+    /*CollisionMoveTest::MoveIntoPiece2*/ {
+        cout << "  ";
+        if (test->move('a',3,array)) {
+            cout << "FAILED";
+            allPass = false;
+        }
+        else
+            cout << "PASSED";
+        cout << ": CollisionMoveTest::MoveIntoPiece2" << endl;
+        count += 1;
+    }
+    /*CollisionMoveTest::MovePastPiece2*/ {
+        cout << "  ";
+        if (test->move('a',4,array)) {
+            cout << "FAILED";
+            allPass = false;
+        }
+        else
+            cout << "PASSED";
+        cout << ": CollisionMoveTest::MovePastPiece2" << endl;
+        count += 1;
+    }
+    
+    delete[] array;
+    delete rookPiece1;
+    delete rookPiece2;
+    delete test;
+
+    if (!allPass) {
+        cout << "FAILED";
+    }
+    else
+        cout << "PASSED";
+    cout << ": PieceFunctionsTest" << endl;
+    cout << endl;
+    return allPass;
+}
+
 #endif
