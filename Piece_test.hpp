@@ -1,7 +1,7 @@
 #ifndef __PIECE_TEST_HPP__
 #define __PIECE_TEST_HPP__
 
-// #include "gtest/gtest.h"
+#include "gtest/gtest.h"
 #include "Piece.h"
 /*
 TEST(PieceFunctions, Alignment) {
@@ -17,7 +17,7 @@ TEST(PieceFunctionTest, Alignment) {
 }
 
 TEST(PieceMoveTest, NoMove) {
-    int pass;
+    int pass = 1;
     Rook test(WHITE, 'a', 1);
     if (test.move('a',1)) { pass = 0; }
     EXPECT_EQ(pass, 1);
@@ -79,27 +79,19 @@ TEST(PieceMoveCollision, MoveRight) {
     array[5][3] = rookPiece1;
     //MoveRightValid
     pass = 1;
-    if (!test.move('e',4,array)) { pass = 0; }
+    if (!test->move('e',4,array)) { pass = 0; }
     ASSERT_EQ(pass, 1);
     //MoveRightIntoPiece
     pass = 1;
-    if (test.move('f',4,array)) { pass = 0; }
+    if (test->move('f',4,array)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     //MoveRightPastPiece
     pass = 1;
-    if (test.move('g',4,array)) { pass = 0; }
+    if (test->move('g',4,array)) { pass = 0; }
     EXPECT_EQ(pass, 1);
 
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            if (array[i][j] != nullptr) { delete array[i][j]; }
-        }
-        delete [] array[i];
-    }
-    delete[] array;
-    // delete rookPiece1;
-    // delete rookPiece2;
-    // delete test;
+    delete rookPiece1;
+    delete test;
 }
 TEST(PieceMoveCollision, MoveLeft) {
     Piece* array[8][8];
@@ -118,24 +110,19 @@ TEST(PieceMoveCollision, MoveLeft) {
     array[1][3] = rookPiece2;
     //MoveLeftValid
     pass = 1;
-    if (!test.move('c',4,array)) { pass = 0; }
+    if (!test->move('c',4,array)) { pass = 0; }
     ASSERT_EQ(pass, 1);
     //MoveLeftIntoPiece
     pass = 1;
-    if (test.move('b',4,array)) { pass = 0; }
+    if (test->move('b',4,array)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     //MoveLeftPastPiece
     pass = 1;
-    if (test.move('a',4,array)) { pass = 0; }
+    if (test->move('a',4,array)) { pass = 0; }
     EXPECT_EQ(pass, 1);
 
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            if (array[i][j] != nullptr) { delete array[i][j]; }
-        }
-        delete [] array[i];
-    }
-    delete[] array;
+    delete rookPiece2;
+    delete test;
 }
 TEST(PieceMoveCollision, MoveUp) {
     Piece* array[8][8];
@@ -154,24 +141,19 @@ TEST(PieceMoveCollision, MoveUp) {
     array[3][5] = rookPiece3;
     //MoveUpValid
     pass = 1;
-    if (!test.move('d',5,array)) { pass = 0; }
+    if (!test->move('d',5,array)) { pass = 0; }
     ASSERT_EQ(pass, 1);
     //MoveUpIntoPiece
     pass = 1;
-    if (test.move('d',6,array)) { pass = 0; }
+    if (test->move('d',6,array)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     //MoveUpPastPiece
     pass = 1;
-    if (test.move('d',7,array)) { pass = 0; }
+    if (test->move('d',7,array)) { pass = 0; }
     EXPECT_EQ(pass, 1);
 
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            if (array[i][j] != nullptr) { delete array[i][j]; }
-        }
-        delete [] array[i];
-    }
-    delete[] array;
+    delete rookPiece3;
+    delete test;
 }
 TEST(PieceMoveCollision, MoveDown) {
     Piece* array[8][8];
@@ -187,27 +169,22 @@ TEST(PieceMoveCollision, MoveDown) {
     int pass;
 
     Piece* rookPiece4 = new Rook(WHITE, 'd', 2);
-    array[3][5] = rookPiece4;
+    array[3][1] = rookPiece4;
     //MoveDownValid
     pass = 1;
-    if (!test.move('d',3,array)) { pass = 0; }
+    if (!test->move('d',3,array)) { pass = 0; }
     ASSERT_EQ(pass, 1);
     //MoveDownIntoPiece
     pass = 1;
-    if (test.move('d',2,array)) { pass = 0; }
+    if (test->move('d',2,array)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     //MoveDownPastPiece
     pass = 1;
-    if (test.move('d',1,array)) { pass = 0; }
+    if (test->move('d',1,array)) { pass = 0; }
     EXPECT_EQ(pass, 1);
 
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            if (array[i][j] != nullptr) { delete array[i][j]; }
-        }
-        delete [] array[i];
-    }
-    delete[] array;
+    delete rookPiece4;
+    delete test;
 }
 
 TEST(PieceMoveTest, CollisionWithOpposite) {
@@ -225,11 +202,11 @@ TEST(PieceMoveTest, CollisionWithOpposite) {
     Piece* rookPiece2 = new Rook(BLACK, 'a', 4);
     array[0][3] = rookPiece2;
 
-    
+   EXPECT_EQ(0,1);   
 
-    for (int i = 0; i < 8; ++i) { delete [] array[i]; }
-    delete[] array;
     delete rookPiece1;
     delete rookPiece2;
     delete test;
 }
+
+#endif
