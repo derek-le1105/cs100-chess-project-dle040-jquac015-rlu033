@@ -6,7 +6,7 @@ bool Piece::move(char c, int y, Piece** **array) {
     bool validMove = true;
 
     //does not move
-    if (x == this->x && y == this->y) {
+    if (x == posX && y == posY) {
         validMove = false;
     }
 
@@ -38,7 +38,7 @@ bool Rook::move(char c, int y, Piece* array[][8]) {
 
     x--; y--;
 
-    if (x == this->x && y == this->y) {
+    if (x == posX && y == posY) {
         validMove = false;
     }
 
@@ -49,7 +49,7 @@ bool Rook::move(char c, int y, Piece* array[][8]) {
 
     //Is the given coordinate within the piece's movement restriction?
     //changing both fails
-    if (x != this->x && y != this->y) {
+    if (x != posX && y != posY) {
         validMove = false;
     }
     if (array == nullptr) {
@@ -57,7 +57,7 @@ bool Rook::move(char c, int y, Piece* array[][8]) {
     }
 
     //look at every space BETWEEN the current location and the spot you want to get to
-    int a = this->x, b = this->y;
+    int a = posX, b = posY;
     while (!(x == a && y == b)) {
         //algorithm based on how the rook moves
         if (a < x)
@@ -94,7 +94,7 @@ bool Knight::move(char c, int y, Piece* **array) {
     bool validMove = true;
 
     //does not move
-    if (x == this->x && y == this->y) {
+    if (x == posX && y == posY) {
         validMove = false;
     }
 
@@ -105,8 +105,8 @@ bool Knight::move(char c, int y, Piece* **array) {
         validMove = false;
 
     //one HAS to be +-1, the other HAS to be +-2
-    if (x + this->x == -1 || x + this->x == 1) {
-        if (y + this->y == -2 || y + this->y == 2)
+    if (x + posX == -1 || x + posX == 1) {
+        if (y + posY == -2 || y + posY == 2)
     }
 
     if (array == nullptr) {

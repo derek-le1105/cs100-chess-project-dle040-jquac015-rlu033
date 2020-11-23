@@ -9,6 +9,8 @@ TEST(PieceFunctions, Alignment) {
     EXPECT_EQ(p1.getAlignment(), WHITE);
 }*/
 
+//Piece is an abstract class, so it cannot be tested directly
+//Rook is being used to test Piece since it has the most basic move function: either vertically or horizontally only
 TEST(PieceFunctionTest, Alignment) {
     Rook r1(WHITE, 'a', 1);
     EXPECT_EQ(r1.getAlignment(), WHITE);

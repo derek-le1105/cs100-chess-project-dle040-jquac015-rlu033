@@ -10,8 +10,8 @@ class Piece {
   public:
     Piece(Color a, char c, int i) {
         alignment = a;
-        x = CharToInt(c)-1;
-        y = i-1;
+        posX = CharToInt(c)-1;
+        posY = i-1;
     }
     Color getAlignment() { return alignment; }
     /*std::string GetCoord() const {
@@ -25,7 +25,7 @@ class Piece {
     virtual void drawPiece() = 0;
 
   protected:
-    int x, y;
+    int posX, posY;
     int CharToInt(char c) {
       if (isupper(c))
           return c - 'A' + 1;
