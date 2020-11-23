@@ -1,6 +1,7 @@
 #ifndef __PIECE_H__
 #define __PIECE_H__
 
+#include <string>
 #include <cctype>
 enum Color {WHITE, BLACK};
 class Piece {
@@ -9,11 +10,17 @@ class Piece {
   public:
     Piece(Color a, char c, int i) {
         alignment = a;
-        x = CharToInt(c);
-        y = i;
+        x = CharToInt(c)-1;
+        y = i-1;
     }
     Color getAlignment() { return alignment; }
-    virtual bool move(char, int, Piece* **array = nullptr) = 0; //size of array is 64 for board
+    std::string GetCoord() const {
+        std::string final;
+        final.push_back('a'+this->x);
+        final.push_back('1'+this->y);
+        return final;
+    }
+    virtual bool move(char, int, Piece* array[][8] = nullptr) = 0; //size of array is 64 for board
 
     virtual void drawPiece() = 0;
 
@@ -29,13 +36,22 @@ class Piece {
     }
 };
 
+//moves horizontally or vertically
+class Rook : public Piece {
+  public:
+    Rook(Color a, char c, int i) : Piece(a, c, i) {}
+    bool move(char, int, Piece* array[][8] = nullptr);
+    void drawPiece();
+};
+
+/*
 //move: one forward, unless it hasn't moved yet (start)
 //if it hasn't moved, it can either move one or two forward
 //moves diagonally upwards by capturing
 class Pawn : public Piece {
   public:
     Pawn(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* **array = nullptr);
+    bool move(char, int, Piece** array[][8] = nullptr);
     void drawPiece();
 };
 
@@ -44,7 +60,7 @@ class Pawn : public Piece {
 class Bishop : public Piece {
   public:
     Bishop(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* **array = nullptr);
+    bool move(char, int, Piece** array[][8] = nullptr);
     void drawPiece();
 };
 
@@ -52,15 +68,7 @@ class Bishop : public Piece {
 class Knight : public Piece {
   public:
     Knight(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* **array = nullptr);
-    void drawPiece();
-};
-
-//moves horizontally or vertically
-class Rook : public Piece {
-  public:
-    Rook(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* **array = nullptr);
+    bool move(char, int, Piece** array[][8] = nullptr);
     void drawPiece();
 };
 
@@ -68,7 +76,7 @@ class Rook : public Piece {
 class Queen : public Piece {
   public:
     Queen(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* **array = nullptr);
+    bool move(char, int, Piece** array[][8] = nullptr);
     void drawPiece();
 };
 
@@ -77,9 +85,7 @@ class Queen : public Piece {
 class King : public Piece {
   public:
     King(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* **array = nullptr);
+    bool move(char, int, Piece** array[][8] = nullptr);
     void drawPiece();
-};
+}; */
 #endif
-
-//current problems: check(), stalemate(), checkmate(), castling, en passant

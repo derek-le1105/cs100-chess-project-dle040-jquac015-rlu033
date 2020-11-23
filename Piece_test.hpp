@@ -123,11 +123,14 @@ bool PieceFunctionsTest(int& count) {
 bool CollisionMoveTest(int& count) {
     bool allPass = true;
 
-    Piece**** array = new Piece*[8][8];     //idk how to do 2d array yet
+    Piece* array[8][8];
     Piece* test = new Rook(WHITE, 'a', 1);
-    array[8][8] = test;
+    array[0][0] = test;
+    cout << test->GetCoord() << endl;
     Piece* rookPiece1 = new Rook(WHITE, 'c', 1);
+    array[2][0] = rookPiece1;
     Piece* rookPiece2 = new Rook(WHITE, 'a', 3);
+    array[0][2] = rookPiece2;
 
     bool validMove;
     /*CollisionMoveTest::ValidMoveRight*/ {
@@ -198,6 +201,7 @@ bool CollisionMoveTest(int& count) {
         count += 1;
     }
     
+    for (int i = 0; i < 8; ++i) { delete [] array[i]; }
     delete[] array;
     delete rookPiece1;
     delete rookPiece2;
@@ -211,6 +215,13 @@ bool CollisionMoveTest(int& count) {
     cout << ": PieceFunctionsTest" << endl;
     cout << endl;
     return allPass;
+}
+
+void RUNALLTESTS() {
+    int count = 0;
+    PieceFunctionsTest(count);
+    CollisionMoveTest(count);
+    cout << "Passed " << count << " tests" << endl;
 }
 
 #endif

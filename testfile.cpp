@@ -4,8 +4,7 @@
 using namespace std;
 
 int main() {
-    int count = 0;
-    PieceFunctionsTest(count);
+    RUNALLTESTS();
     return 0;
     
     Rook r(WHITE, 'a', 1);
