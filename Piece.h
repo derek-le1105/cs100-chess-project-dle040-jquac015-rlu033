@@ -14,12 +14,12 @@ class Piece {
         y = i-1;
     }
     Color getAlignment() { return alignment; }
-    std::string GetCoord() const {
+    /*std::string GetCoord() const {
         std::string final;
         final.push_back('a'+this->x);
         final.push_back('1'+this->y);
         return final;
-    }
+    }*/
     virtual bool move(char, int, Piece* array[][8] = nullptr) = 0; //size of array is 64 for board
 
     virtual void drawPiece() = 0;

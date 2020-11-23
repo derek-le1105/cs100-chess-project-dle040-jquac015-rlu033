@@ -9,219 +9,227 @@ TEST(PieceFunctions, Alignment) {
     EXPECT_EQ(p1.getAlignment(), WHITE);
 }*/
 
-#include <iostream>
-using namespace std;
-bool PieceFunctionsTest(int& count) {
-    bool allPass = true;
+TEST(PieceFunctionTest, Alignment) {
     Rook r1(WHITE, 'a', 1);
-    /*PieceFunctionsTest::Alignment*/ {
-        cout << "  ";
-        if (r1.getAlignment() != WHITE) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": PieceFunctions::Alignment" << endl;
-        count += 1;
-    }
-
-    /*PieceFunctionsTest::MoveNoMove*/ {
-        cout << "  ";
-        if (r1.move('a',1)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": MoveRange::MoveToSameLower" << endl;
-        count += 1;
-        
-        cout << "  ";
-        if (r1.move('A',1)) {
-            cout << "FAILED" << endl;
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": MoveRange::MoveToSameCap" << endl;
-        count += 1;
-    }
-
-    /*PieceFunctionsTest::MoveRange*/ {
-        cout << "  ";
-        if (!r1.move('h',1)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": MoveRange::MoveToH" << endl;
-        count += 1;
-
-        cout << "  ";
-        if (!r1.move('a',8)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": MoveRange::MoveTo8" << endl;
-        count += 1;
-
-        cout << "  ";
-        if (r1.move('i',1)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": MoveRange::MoveOverHorizontal" << endl;
-        count += 1;
-
-        cout << "  ";
-        if (r1.move('a',0)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": MoveRange::MoveUnderVertical" << endl;
-        count += 1;
-
-        cout << "  ";
-        if (r1.move('a',9)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": MoveRange::MoveOverVertical" << endl;
-        count += 1;
-    }
-
-    // cout << "  ";
-    // if (0 == 0) {
-    //     cout << "FAILED";
-    //     allPass = false;
-    // }
-    // else
-    //     cout << "PASSED";
-    // cout << ": FailingTest" << endl;
-    // count += 1;
-
-    if (!allPass) {
-        cout << "FAILED";
-    }
-    else
-        cout << "PASSED";
-    cout << ": PieceFunctionsTest" << endl;
-    cout << endl;
-    return allPass;
+    EXPECT_EQ(r1.getAlignment(), WHITE);
+    Rook r2(BLACK, 'a', 1);
+    EXPECT_EQ(r2.getAlignment(), BLACK);
 }
 
-bool CollisionMoveTest(int& count) {
-    bool allPass = true;
+TEST(PieceMoveTest, NoMove) {
+    int pass;
+    Rook test(WHITE, 'a', 1);
+    if (test.move('a',1)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
 
+    pass = 1;
+    if (test.move('A',1)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+}
+
+TEST(PieceMoveTest, TestRange) {
+    int pass;
+    Rook test(WHITE, 'd', 4);
+
+    //InRange
+    pass = 1;
+    if (!test.move('a',4)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    pass = 1;
+    if (!test.move('h',4)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+
+    pass = 1;
+    if (!test.move('d',1)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    pass = 1;
+    if (!test.move('d',8)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+
+    //OutOfRange
+    pass = 1;
+    if (test.move('+',4)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    pass = 1;
+    if (test.move('i',4)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+
+    pass = 1;
+    if (test.move('d',0)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    pass = 1;
+    if (test.move('d',9)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+}
+
+TEST(PieceMoveCollision, MoveRight) {
     Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
+    Piece* test = new Rook(WHITE, 'd', 4);
+    array[3][3] = test;
+
+    int pass;
+
+    Piece* rookPiece1 = new Rook(WHITE, 'f', 4);
+    array[5][3] = rookPiece1;
+    //MoveRightValid
+    pass = 1;
+    if (!test.move('e',4,array)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    //MoveRightIntoPiece
+    pass = 1;
+    if (test.move('f',4,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    //MoveRightPastPiece
+    pass = 1;
+    if (test.move('g',4,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            if (array[i][j] != nullptr) { delete array[i][j]; }
+        }
+        delete [] array[i];
+    }
+    delete[] array;
+    // delete rookPiece1;
+    // delete rookPiece2;
+    // delete test;
+}
+TEST(PieceMoveCollision, MoveLeft) {
+    Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
+    Piece* test = new Rook(WHITE, 'd', 4);
+    array[3][3] = test;
+
+    int pass;
+
+    Piece* rookPiece2 = new Rook(WHITE, 'b', 4);
+    array[1][3] = rookPiece2;
+    //MoveLeftValid
+    pass = 1;
+    if (!test.move('c',4,array)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    //MoveLeftIntoPiece
+    pass = 1;
+    if (test.move('b',4,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    //MoveLeftPastPiece
+    pass = 1;
+    if (test.move('a',4,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            if (array[i][j] != nullptr) { delete array[i][j]; }
+        }
+        delete [] array[i];
+    }
+    delete[] array;
+}
+TEST(PieceMoveCollision, MoveUp) {
+    Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
+    Piece* test = new Rook(WHITE, 'd', 4);
+    array[3][3] = test;
+
+    int pass;
+
+    Piece* rookPiece3 = new Rook(WHITE, 'd', 6);
+    array[3][5] = rookPiece3;
+    //MoveUpValid
+    pass = 1;
+    if (!test.move('d',5,array)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    //MoveUpIntoPiece
+    pass = 1;
+    if (test.move('d',6,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    //MoveUpPastPiece
+    pass = 1;
+    if (test.move('d',7,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            if (array[i][j] != nullptr) { delete array[i][j]; }
+        }
+        delete [] array[i];
+    }
+    delete[] array;
+}
+TEST(PieceMoveCollision, MoveDown) {
+    Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
+    Piece* test = new Rook(WHITE, 'd', 4);
+    array[3][3] = test;
+
+    int pass;
+
+    Piece* rookPiece4 = new Rook(WHITE, 'd', 2);
+    array[3][5] = rookPiece4;
+    //MoveDownValid
+    pass = 1;
+    if (!test.move('d',3,array)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    //MoveDownIntoPiece
+    pass = 1;
+    if (test.move('d',2,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    //MoveDownPastPiece
+    pass = 1;
+    if (test.move('d',1,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            if (array[i][j] != nullptr) { delete array[i][j]; }
+        }
+        delete [] array[i];
+    }
+    delete[] array;
+}
+
+TEST(PieceMoveTest, CollisionWithOpposite) {
+    Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
     Piece* test = new Rook(WHITE, 'a', 1);
     array[0][0] = test;
-    cout << test->GetCoord() << endl;
-    Piece* rookPiece1 = new Rook(WHITE, 'c', 1);
-    array[2][0] = rookPiece1;
-    Piece* rookPiece2 = new Rook(WHITE, 'a', 3);
-    array[0][2] = rookPiece2;
+    Piece* rookPiece1 = new Rook(BLACK, 'd', 1);
+    array[3][0] = rookPiece1;
+    Piece* rookPiece2 = new Rook(BLACK, 'a', 4);
+    array[0][3] = rookPiece2;
 
-    bool validMove;
-    /*CollisionMoveTest::ValidMoveRight*/ {
-        cout << "  ";
-        if (!test->move('b',1,array)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": CollisionMoveTest::ValidMoveRight" << endl;
-        count += 1;
-    }
-    /*CollisionMoveTest::MoveIntoPiece1*/ {
-        cout << "  ";
-        if (test->move('c',1,array)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": CollisionMoveTest::MoveIntoPiece1" << endl;
-        count += 1;
-    }
-    /*CollisionMoveTest::MovePastPiece1*/ {
-        cout << "  ";
-        if (test->move('d',1,array)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": CollisionMoveTest::MovePastPiece1" << endl;
-        count += 1;
-    }
-
-    /*CollisionMoveTest::ValidMoveUp*/ {
-        cout << "  ";
-        if (!test->move('a',2,array)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": CollisionMoveTest::ValidMoveUp" << endl;
-        count += 1;
-    }
-    /*CollisionMoveTest::MoveIntoPiece2*/ {
-        cout << "  ";
-        if (test->move('a',3,array)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": CollisionMoveTest::MoveIntoPiece2" << endl;
-        count += 1;
-    }
-    /*CollisionMoveTest::MovePastPiece2*/ {
-        cout << "  ";
-        if (test->move('a',4,array)) {
-            cout << "FAILED";
-            allPass = false;
-        }
-        else
-            cout << "PASSED";
-        cout << ": CollisionMoveTest::MovePastPiece2" << endl;
-        count += 1;
-    }
     
+
     for (int i = 0; i < 8; ++i) { delete [] array[i]; }
     delete[] array;
     delete rookPiece1;
     delete rookPiece2;
     delete test;
-
-    if (!allPass) {
-        cout << "FAILED";
-    }
-    else
-        cout << "PASSED";
-    cout << ": PieceFunctionsTest" << endl;
-    cout << endl;
-    return allPass;
 }
-
-void RUNALLTESTS() {
-    int count = 0;
-    PieceFunctionsTest(count);
-    CollisionMoveTest(count);
-    cout << "Passed " << count << " tests" << endl;
-}
-
-#endif

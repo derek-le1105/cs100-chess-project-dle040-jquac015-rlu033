@@ -29,6 +29,8 @@ bool Piece::move(char c, int y, Piece** **array) {
 
 } */
 
+#include <iostream>
+using namespace std;
 // ONLY change x or y, not both
 bool Rook::move(char c, int y, Piece* array[][8]) {
     int x = CharToInt(c);
@@ -47,9 +49,9 @@ bool Rook::move(char c, int y, Piece* array[][8]) {
 
     //Is the given coordinate within the piece's movement restriction?
     //changing both fails
-    if (x != this->x && y != this->y)
+    if (x != this->x && y != this->y) {
         validMove = false;
-
+    }
     if (array == nullptr) {
         return validMove;
     }
@@ -57,6 +59,7 @@ bool Rook::move(char c, int y, Piece* array[][8]) {
     //look at every space BETWEEN the current location and the spot you want to get to
     int a = this->x, b = this->y;
     while (!(x == a && y == b)) {
+        //algorithm based on how the rook moves
         if (a < x)
             a++;
         else if (a > x)
@@ -66,13 +69,13 @@ bool Rook::move(char c, int y, Piece* array[][8]) {
         else if (b > y)
             b--;
 
-        if (array[a][b] != nullptr) {
+        if (array[a][b] != nullptr && array[a][b] != 0) {
             return false;
         }
     }
 
     //check ending spot for capture or not
-    if (array[x][y] != nullptr) {
+    if (array[x][y] != nullptr && array[a][b] != 0) {
         if ((array[x][y])->getAlignment() == this->getAlignment())
             validMove = false;
         //Capture the piece here
