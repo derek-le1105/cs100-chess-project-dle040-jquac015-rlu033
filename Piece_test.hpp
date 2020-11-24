@@ -189,6 +189,7 @@ TEST(PieceMoveCollision, MoveDown) {
     delete test;
 }
 
+//Basically the same as MoveRight and MoveUp, with second condition flipped to NOT
 TEST(PieceMoveTest, CollisionWithOpposite) {
     Piece* array[8][8];
     for (int i = 0; i < 8; ++i) {
@@ -197,17 +198,43 @@ TEST(PieceMoveTest, CollisionWithOpposite) {
         }
     }
 
-    Piece* test = new Rook(WHITE, 'a', 1);
-    array[0][0] = test;
-    Piece* rookPiece1 = new Rook(BLACK, 'd', 1);
-    array[3][0] = rookPiece1;
-    Piece* rookPiece2 = new Rook(BLACK, 'a', 4);
-    array[0][3] = rookPiece2;
+    Piece* test = new Rook(WHITE, 'd', 4);
+    array[3][3] = test;
 
-   EXPECT_EQ(0,1);   
+    int pass;
 
-    delete rookPiece1;
-    delete rookPiece2;
+    Piece* rookPiece5 = new Rook(BLACK, 'f', 4);
+    array[5][3] = rookPiece5;
+    //MoveRightValid
+    pass = 1;
+    if (!test->move('e',4,array)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    //MoveRightIntoPiece
+    pass = 1;
+    if (!test->move('f',4,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    //MoveRightPastPiece
+    pass = 1;
+    if (test->move('g',4,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+
+    Piece* rookPiece6 = new Rook(BLACK, 'd', 6);
+    array[3][5] = rookPiece6;
+    //MoveUpValid
+    pass = 1;
+    if (!test->move('d',5,array)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    //MoveUpIntoPiece
+    pass = 1;
+    if (!test->move('d',6,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    //MoveUpPastPiece
+    pass = 1;
+    if (test->move('d',7,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+
+    delete rookPiece5;
+    delete rookPiece6
     delete test;
 }
 

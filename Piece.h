@@ -10,6 +10,9 @@ class Piece {
   public:
     Piece(Color a, char c, int i) {
         alignment = a;
+        setCoord(c, i);
+    }
+    void setCoord(char c, int i) {
         posX = CharToInt(c)-1;
         posY = i-1;
     }
@@ -41,6 +44,15 @@ class Rook : public Piece {
   public:
     Rook(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
+    void drawPiece();
+};
+
+//moves one space in any direction
+//can also castle with rook
+class King : public Piece {
+  public:
+    King(Color a, char c, int i) : Piece(a, c, i) {}
+    bool move(char, int, Piece** array[][8] = nullptr);
     void drawPiece();
 };
 
@@ -78,14 +90,6 @@ class Queen : public Piece {
     Queen(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece** array[][8] = nullptr);
     void drawPiece();
-};
-
-//moves one space in any direction
-//can also castle with rook
-class King : public Piece {
-  public:
-    King(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece** array[][8] = nullptr);
-    void drawPiece();
 }; */
+
 #endif
