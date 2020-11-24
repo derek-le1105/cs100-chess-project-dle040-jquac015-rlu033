@@ -234,7 +234,7 @@ TEST(PieceMoveTest, CollisionWithOpposite) {
     EXPECT_EQ(pass, 1);
 
     delete rookPiece5;
-    delete rookPiece6
+    delete rookPiece6;
     delete test;
 }
 
@@ -305,8 +305,6 @@ TEST(RookMove, CollisionMove) {
 
     delete rookPiece1;
 
-    int pass;
-
     Piece* rookPiece3 = new Rook(WHITE, 'd', 6);
     array[3][5] = rookPiece3;
     //MoveUpValid
@@ -330,21 +328,21 @@ TEST(RookMove, MoveRestriction) {
     int pass;
 
     pass = 1;
-    if (test->move('a',3)) { pass = 0; }
+    if (!test.move('a',3)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     pass = 1;
-    if (test->move('c',1)) { pass = 0; }
+    if (!test.move('c',1)) { pass = 0; }
     EXPECT_EQ(pass, 1);
 
     pass = 1;
-    if (test->move('b',3)) { pass = 0; }
-    EXPECT_EQ(pass, 0);
+    if (test.move('b',3)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
     pass = 1;
-    if (test->move('c',2)) { pass = 0; }
-    EXPECT_EQ(pass, 0);
+    if (test.move('c',2)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
     pass = 1;
-    if (test->move('b',2)) { pass = 0; }
-    EXPECT_EQ(pass, 0);
+    if (test.move('b',2)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
 }
 
 #endif
