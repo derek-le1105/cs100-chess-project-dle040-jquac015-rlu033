@@ -1,9 +1,11 @@
 #include "Piece.h"
 
 /*  -move() template-
-bool Piece::move(char c, int y, Piece** **array) {
+bool Piece::move(char c, int y) {
     int x = CharToInt(c);
     bool validMove = true;
+
+    x--; y--;
 
     //does not move
     if (x == posX && y == posY) {
@@ -18,13 +20,12 @@ bool Piece::move(char c, int y, Piece** **array) {
 
     //check ACTUAL movement restrictions (Bishop in diagonals, etc.)
 
-    if (array == nullptr) {
+    //if (array == nullptr) {
         return validMove;
-    }
+    //}
 
     //look at every space up to the one we want to move to
     //going along the movement of the piece
-    while(!(x == a && y == b)) {}
 
 
 } */
@@ -34,10 +35,9 @@ using namespace std;
 // ONLY change x or y, not both
 bool Rook::move(char c, int y, Piece* array[][8]) {
     bool validMove = true;
-    // bool validMove = Piece::move(c, y, array);
+    // bool validMove = Piece::move(c, y);
     
     int x = CharToInt(c);
-
     x--; y--;
 
     if (x == posX && y == posY) {
@@ -54,6 +54,8 @@ bool Rook::move(char c, int y, Piece* array[][8]) {
     if (x != posX && y != posY) {
         validMove = false;
     }
+
+    //used for testing
     if (array == nullptr) {
         return validMove;
     }
