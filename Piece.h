@@ -23,6 +23,9 @@ class Piece {
     virtual bool move(char, int, Piece* array[][8] = nullptr) = 0; //size of array is 64 for board
 
     virtual void drawPiece() = 0;
+    
+    virtual int getX() = 0;
+    virtual int getY() = 0;
 
   protected:
     int posX, posY;
@@ -42,6 +45,8 @@ class Rook : public Piece {
     Rook(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
+    int getX();
+    int getY();
 };
 
 /*

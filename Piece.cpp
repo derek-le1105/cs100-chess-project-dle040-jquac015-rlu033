@@ -113,3 +113,5 @@ bool Knight::move(char c, int y, Piece* **array) {
         return validMove;
     }
 }*/
+int Rook::getX(){return posX;}
+int Rook::getY(){return posY;}
