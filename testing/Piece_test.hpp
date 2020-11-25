@@ -226,6 +226,7 @@ TEST(RookMove, CollisionMove) {
     delete test;
 }
 TEST(RookMove, MoveRestriction) {
+    //Straight lines
     Rook test(WHITE, 'a',1);
 
     EXPECT_EQ(test.move('a',3), true);
@@ -259,7 +260,7 @@ TEST(KnightMove, PieceMove) {
     EXPECT_EQ(test.move('c',0), false);
 }
 TEST(KnightMove, MoveRestriction) {
-    int pass;
+    //L-shapes
     Knight test(WHITE, 'b', 2);
 
     EXPECT_EQ(test.move('a',3), false);
@@ -293,6 +294,100 @@ TEST(KnightMove, CollisionTest) {
     delete knightPiece2;
 
     delete test;
+}
+
+TEST(BishopMove, PieceMove) {
+    Bishop test(WHITE, 'c',3);
+
+    //NoMove
+    EXPECT_EQ(test.move('c',3), false);
+
+    //InRange
+    EXPECT_EQ(test.move('a',1), true);
+    EXPECT_EQ(test.move('b',4), true);
+
+    EXPECT_EQ(test.move('e',5), true);
+    EXPECT_EQ(test.move('d',2), true);
+
+    //OutOfRange
+    EXPECT_EQ(test.move('c'-3,0), false);
+    EXPECT_EQ(test.move('c'-3,6), false);
+
+    EXPECT_EQ(test.move('i',9), false);
+    EXPECT_EQ(test.move('f',0), false);
+}
+TEST(BishopMove, MoveRestriction) {
+    Bishop test(WHITE, 'c', 3);
+
+    EXPECT_EQ(test.move('c',4), false);
+    EXPECT_EQ(test.move('e',2), false);
+    EXPECT_EQ(test.move('f',7), false);
+    EXPECT_EQ(test.move('b',5), false);
+}
+TEST(BishopMove, CollisionTest) {
+    Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
+    Piece* test = new Bishop(WHITE, 'd', 4);
+    array[3][3] = test;
+
+    /*BishopCollisionTest::MoveUpRight*/{
+        Piece* bishopPiece1 = new Bishop(WHITE, 'f', 6);
+        array[5][5] = bishopPiece1;
+
+        //MoveValid
+        EXPECT_EQ(test->move('e',5,array), true);
+        //MoveIntoPiece
+        EXPECT_EQ(test->move('f',6,array), false);
+        //MovePastPiece
+        EXPECT_EQ(test->move('g',7,array), false);
+        delete bishopPiece1;
+
+        Piece* bishopPiece2 = new Bishop(BLACK, 'f', 6);
+        array[5][5] = bishopPiece2;
+
+        //MoveValid
+        EXPECT_EQ(test->move('e',5,array), true);
+        //MoveIntoPiece
+        EXPECT_EQ(test->move('f',6,array), true);
+        //MovePastPiece
+        EXPECT_EQ(test->move('g',7,array), false);
+        
+        delete bishopPiece2;
+        array[5][5] = nullptr;
+    }
+
+    /*BishopCollisionTest::MoveDownLeft*/{
+        bishopPiece1 = new Bishop(WHITE, 'b', 2);
+        array[1][1] = bishopPiece1;
+
+        //MoveValid
+        EXPECT_EQ(test->move('c',3,array), true);
+        //MoveIntoPiece
+        EXPECT_EQ(test->move('b',2,array), false);
+        //MovePastPiece
+        EXPECT_EQ(test->move('a',1,array), false);
+        delete bishopPiece1;
+
+        bishopPiece2 = new Bishop(BLACK, 'b', 2);
+        array[1][1] = bishopPiece2;
+
+        //MoveValid
+        EXPECT_EQ(test->move('c',3,array), true);
+        //MoveIntoPiece
+        EXPECT_EQ(test->move('b',2,array), true);
+        //MovePastPiece
+        EXPECT_EQ(test->move('a',1,array), false);
+        delete bishopPiece2;
+        array[1][1] = nullptr;
+    }
+
+    delete bishopPiece4;
+    array[3][3] = nullptr;
 }
 
 #endif
