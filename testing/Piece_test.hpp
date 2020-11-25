@@ -19,37 +19,24 @@ TEST(PieceFunctionTest, Alignment) {
 }
 
 TEST(PieceMoveTest, NoMove) {
-    int pass = 1;
     Rook test(WHITE, 'a', 1);
-    if (test.move('a',1)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('a',1), false);
 
-    pass = 1;
-    if (test.move('A',1)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('A',1), false);
 }
 
 TEST(PieceMoveTest, TestRange) {
-    int pass;
     Rook test(WHITE, 'd', 4);
 
     //InRange
-    pass = 1;
-    if (!test.move('a',4)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
-    pass = 1;
-    if (!test.move('h',4)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test.move('a',4), true);
+    ASSERT_EQ(test.move('h',4), true);
 
-    pass = 1;
-    if (!test.move('d',1)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
-    pass = 1;
-    if (!test.move('d',8)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test.move('d',1), true);
+    ASSERT_EQ(test.move('d',1), true);
 
     //OutOfRange
-    pass = 1;
+    int pass = 1;
     if (test.move('+',4)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     pass = 1;
@@ -372,7 +359,7 @@ TEST(KnightMove, PieceMove) {
 
     //OutOfRange
     pass = 1;
-    if (test.move('b-2',3)) { pass = 0; }
+    if (test.move('b'-2,3)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     pass = 1;
     if (test.move('b'-2,1)) { pass = 0; }
@@ -390,16 +377,16 @@ TEST(KnightMove, MoveRestriction) {
     Knight test(WHITE, 'b', 2);
 
     pass = 1;
-    if (test->move('a',3)) { pass = 0; }
+    if (test.move('a',3)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     pass = 1;
-    if (test->move('a',2)) { pass = 0; }
+    if (test.move('a',2)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     pass = 1;
-    if (test->move('c',1)) { pass = 0; }
+    if (test.move('c',1)) { pass = 0; }
     EXPECT_EQ(pass, 1);
     pass = 1;
-    if (test->move('b',1)) { pass = 0; }
+    if (test.move('b',1)) { pass = 0; }
     EXPECT_EQ(pass, 1);
 }
 TEST(KnightMove, CollisionTest) {
