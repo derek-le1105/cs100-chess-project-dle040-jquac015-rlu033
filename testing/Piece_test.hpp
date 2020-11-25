@@ -103,7 +103,7 @@ TEST(PieceMoveCollision, MoveUp) {
     Piece* rookPiece3 = new Rook(WHITE, 'd', 6);
     array[3][5] = rookPiece3;
     //MoveUpValid
-    ASSERT_EQ(test->move('d',5,array), false);
+    ASSERT_EQ(test->move('d',5,array), true);
     //MoveUpIntoPiece
     EXPECT_EQ(test->move('d',6,array), false);
     //MoveUpPastPiece
@@ -239,7 +239,6 @@ TEST(RookMove, MoveRestriction) {
 //Collision was basically already tested for Rook
 
 TEST(KnightMove, PieceMove) {
-    int pass;
     Knight test(WHITE, 'b', 2);
 
     //NoMove
@@ -247,9 +246,9 @@ TEST(KnightMove, PieceMove) {
 
     //InRange
     ASSERT_EQ(test.move('c',4), true);
-    ASSERT_EQ(test.move('d',4), true);
-
     ASSERT_EQ(test.move('a',4), true);
+
+    ASSERT_EQ(test.move('d',3), true);
     ASSERT_EQ(test.move('d',1), true);
 
     //OutOfRange
