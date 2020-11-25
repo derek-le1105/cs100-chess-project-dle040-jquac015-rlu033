@@ -239,18 +239,25 @@ TEST(RookMove, MoveRestriction) {
 //Collision was basically already tested for Rook
 
 TEST(KnightMove, PieceMove) {
-    Knight test(WHITE, 'b', 2);
+    Knight test(WHITE, 'd', 4);
 
     //NoMove
-    ASSERT_EQ(test.move('b',2), false);
+    ASSERT_EQ(test.move('d',4), false);
 
     //InRange
-    ASSERT_EQ(test.move('c',4), true);
-    ASSERT_EQ(test.move('a',4), true);
+    ASSERT_EQ(test.move('b',3), true);
+    ASSERT_EQ(test.move('b',5), true);
 
-    ASSERT_EQ(test.move('d',3), true);
-    ASSERT_EQ(test.move('d',1), true);
+    ASSERT_EQ(test.move('f',3), true);
+    ASSERT_EQ(test.move('f',5), true);
 
+    ASSERT_EQ(test.move('c',2), true);
+    ASSERT_EQ(test.move('e',2), true);
+
+    ASSERT_EQ(test.move('c',6), true);
+    ASSERT_EQ(test.move('e',6), true);
+
+    Knight test2(WHITE, 'b', 2);
     //OutOfRange
     EXPECT_EQ(test.move('b'-2,3), false);
     EXPECT_EQ(test.move('b'-2,1), false);
