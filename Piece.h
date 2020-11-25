@@ -71,7 +71,7 @@ class Bishop : public Piece {
 class King : public Piece {
   public:
     King(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr) {return true;}
+    bool move(char, int, Piece* array[][8] = nullptr) {return false;}
     void drawPiece() {}
 };
 
@@ -81,7 +81,7 @@ class King : public Piece {
 class Pawn : public Piece {
   public:
     Pawn(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr){return true;}
+    bool move(char, int, Piece* array[][8] = nullptr){return false;}
     void drawPiece(){}
 };
 
@@ -89,7 +89,7 @@ class Pawn : public Piece {
 class Queen : public Piece {
   public:
     Queen(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr){return true;}
+    bool move(char, int, Piece* array[][8] = nullptr){return false;}
     void drawPiece(){}
 };
 
