@@ -6,13 +6,11 @@
 #include <SFML/Graphics.hpp>
 using namespace std;
 enum Color {WHITE, BLACK};
-
 class Piece {
-private:
+  private:
     Color alignment;
-public:
     sf::Sprite currentSprite;
-
+  public:
     Piece(Color a, char c, int i) {
         alignment = a;
         setCoord(c, i);
@@ -33,21 +31,21 @@ public:
 
     virtual void drawPiece() = 0;
 
-protected:
+  protected:
     int posX, posY;
     int CharToInt(char c) {
-        if (isupper(c))
-            return c - 'A' + 1;
-        if (islower(c))
-            return c - 'a' + 1;
-        else
-            return 0;
+      if (isupper(c))
+          return c - 'A' + 1;
+      if (islower(c))
+          return c - 'a' + 1;
+      else
+          return 0;
     }
 };
 
 //moves horizontally or vertically
 class Rook : public Piece {
-public:
+  public:
     Rook(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
@@ -55,7 +53,7 @@ public:
 
 //moves in an L-shape and can jump over pieces
 class Knight : public Piece {
-public:
+  public:
     Knight(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
@@ -64,7 +62,7 @@ public:
 //moves diagonally
 //another way to see it is as only on one color
 class Bishop : public Piece {
-public:
+  public:
     Bishop(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
@@ -73,9 +71,9 @@ public:
 //moves one space in any direction
 //can also castle with rook
 class King : public Piece {
-public:
+  public:
     King(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr) {return false;}
+    bool move(char, int, Piece* array[][8] = nullptr) {return true;}
     void drawPiece() {}
 };
 
@@ -83,17 +81,17 @@ public:
 //if it hasn't moved, it can either move one or two forward
 //moves diagonally upwards by capturing
 class Pawn : public Piece {
-public:
+  public:
     Pawn(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr){return false;}
+    bool move(char, int, Piece* array[][8] = nullptr){return true;}
     void drawPiece(){}
 };
 
 //moves horizontally or vertically or diagonally
 class Queen : public Piece {
-public:
+  public:
     Queen(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr){return false;}
+    bool move(char, int, Piece* array[][8] = nullptr){return true;}
     void drawPiece(){}
 };
 

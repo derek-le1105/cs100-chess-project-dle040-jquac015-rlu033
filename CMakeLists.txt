@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.7)
 set(PROJECT_NAME sfml_project)
 
 project(${PROJECT_NAME})
@@ -24,3 +24,16 @@ if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif ()
+
+#---------------CMAKE FOR UNIT TEST---------------
+
+ADD_SUBDIRECTORY(googletest)
+
+#SET(CMAKE_CXX_STANDARD 11)
+
+ADD_EXECUTABLE(test
+    testing/unit_test.cpp
+    Piece.cpp
+)
+
+TARGET_LINK_LIBRARIES(test gtest)

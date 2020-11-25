@@ -1,3 +1,4 @@
+
 #include "Piece.h"
 
 /*  -move() template-
@@ -5,21 +6,28 @@ bool Piece::move(char c, int y) {
     bool validMove = true;
     int x = CharToInt(c);
     x--; y--;
+
     //does not move
     if (x == posX && y == posY) {
         validMove = false;
     }
+
     //outside of range
     if (x < 1 || x > 8)
         validMove = false;
     if (y < 1 || y > 8)
         validMove = false;
+
     //check ACTUAL movement restrictions (Bishop in diagonals, etc.)
+
     //if (array == nullptr) {
         return validMove;
     //}
+
     //look at every space up to the one we want to move to
     //going along the movement of the piece
+
+
 } */
 
 #include <iostream>
