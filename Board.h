@@ -15,11 +15,22 @@ private:
     AssetManager boardAssets;
     sf::RenderWindow window;
     sf::Vector2i mousePosition;
-    //Piece* array[][];
+    Piece* pieceArray[8][8];
 
 protected:
+    int board[8][8] =
+            {  2, 3, 4, 5, 6, 4, 3, 2,
+               1, 1, 1, 1, 1, 1, 1, 1,
+               0, 0, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 0,
+              -1,-1,-1,-1,-1,-1,-1,-1,
+              -2,-3,-4,-5,-6,-4,-3,-2 };
+
+    sf::Sprite pieces[32];
     sf::Sprite _chessBoard; //each block is 84.2 by 84.2
-    sf::Sprite _pawnWhitePiece1;
+/*    sf::Sprite _pawnWhitePiece1;
     sf::Sprite _pawnWhitePiece2;
     sf::Sprite _pawnWhitePiece3;
     sf::Sprite _pawnWhitePiece4;
@@ -51,7 +62,7 @@ protected:
     sf::Sprite _bishopBlackPiece1;
     sf::Sprite _bishopBlackPiece2;
     sf::Sprite _queenBlackPiece;
-    sf::Sprite _kingBlackPiece;
+    sf::Sprite _kingBlackPiece; */
 
 public:
     Board();

@@ -26,11 +26,64 @@ void Board::init(){
     boardAssets.loadTexture("King White Piece", KING_W_PIECE_FILE_PATH);
     boardAssets.loadTexture("King Black Piece", KING_B_PIECE_FILE_PATH);
 
-
     _chessBoard.setTexture(this->boardAssets.getTexture("Chess Board"));
     _chessBoard.setScale(1.5, 1.5);
 
-    _pawnWhitePiece1.setTexture(this->boardAssets.getTexture("Pawn White Piece"));
+    int n = 0;
+    for(int i = 0; i < 8; ++i){
+        for(int j = 0; j < 8; ++j){
+            if(!board[i][j])
+                continue;
+
+            switch(board[i][j]){
+                case -6:
+                    pieces[n].setTexture(this->boardAssets.getTexture("King White Piece"));
+                    //pieceArray[i][j] = new King(WHITE, 'D', 4);
+                    break;
+                case -5:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Queen White Piece"));
+                    break;
+                case -4:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Bishop White Piece"));
+                    break;
+                case -3:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Knight White Piece"));
+                    break;
+                case -2:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Rook White Piece"));
+                    pieceArray[i][j] = new Rook(WHITE, 'A', 1);
+                    break;
+                case -1:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Pawn White Piece"));
+                    pieceArray[i][j] = new Pawn(WHITE, 'A', 2);
+                    break;
+                case 1:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Pawn Black Piece"));
+                    pieceArray[i][j] = new Pawn(BLACK, 'A', 2);
+                    break;
+                case 2:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Rook Black Piece"));
+                    pieceArray[i][j] = new Rook(BLACK, 'A', 8);
+                    break;
+                case 3:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Knight Black Piece"));
+                    break;
+                case 4:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Bishop Black Piece"));
+                    break;
+                case 5:
+                    pieces[n].setTexture(this->boardAssets.getTexture("Queen Black Piece"));
+                    break;
+                case 6:
+                    pieces[n].setTexture(this->boardAssets.getTexture("King Black Piece"));
+                    //pieceArray[i][j] = new King(BLACK, 'D', 4);
+                    break;
+            }
+            pieces[n].setPosition(BLOCK_SIZE * j, BLOCK_SIZE * i);
+            ++n;
+        }
+    }
+/*    _pawnWhitePiece1.setTexture(this->boardAssets.getTexture("Pawn White Piece"));
     _pawnWhitePiece1.move(0, BLOCK_SIZE);
     _pawnWhitePiece2.setTexture(this->boardAssets.getTexture("Pawn White Piece"));
     _pawnWhitePiece2.move(BLOCK_SIZE, BLOCK_SIZE);
@@ -103,12 +156,14 @@ void Board::init(){
     _kingWhitePiece.move(BLOCK_SIZE * 4, 0);
 
     _kingBlackPiece.setTexture(this->boardAssets.getTexture("King Black Piece"));
-    _kingBlackPiece.move(BLOCK_SIZE * 4, BLOCK_SIZE * 7);
+    _kingBlackPiece.move(BLOCK_SIZE * 4, BLOCK_SIZE * 7); */
 }
 
 void Board::draw() {
     window.draw(this->_chessBoard);
-    window.draw(this->_pawnWhitePiece1);
+    for(int i = 0; i < 32; ++i)
+        window.draw(pieces[i]);
+ /*   window.draw(this->_pawnWhitePiece1);
     window.draw(this->_pawnWhitePiece2);
     window.draw(this->_pawnWhitePiece3);
     window.draw(this->_pawnWhitePiece4);
@@ -144,7 +199,7 @@ void Board::draw() {
     window.draw(this->_knightBlackPiece2);
 
     window.draw(this->_queenBlackPiece);
-    window.draw(this->_kingBlackPiece);
+    window.draw(this->_kingBlackPiece); */
 }
 
 void Board::handleInput() {
@@ -153,8 +208,11 @@ void Board::handleInput() {
         if(event.type== sf::Event::Closed )
             this->window.close();
         if(event.type == sf::Event::MouseButtonPressed) {
-            mousePosition = sf::Mouse::getPosition();
-            //_pawnWhitePiece1.move(_pawnWhitePiece1.getPosition().x, _pawnWhitePiece1.getPosition().y);
+            for(int i = 0; i < 32; ++i){
+                if(pieces[i].getGlobalBounds().contains(mousePosition.x, mousePosition.y)){
+
+                }
+            }
         }
     }
 }
