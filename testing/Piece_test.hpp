@@ -36,19 +36,11 @@ TEST(PieceMoveTest, TestRange) {
     ASSERT_EQ(test.move('d',1), true);
 
     //OutOfRange
-    int pass = 1;
-    if (test.move('+',4)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('i',4)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('+',4), false);
+    EXPECT_EQ(test.move('i',4), false);
 
-    pass = 1;
-    if (test.move('d',0)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('d',9)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('d',0), false);
+    EXPECT_EQ(test.move('d',9), false);
 }
 
 TEST(PieceMoveCollision, MoveRight) {
@@ -62,22 +54,14 @@ TEST(PieceMoveCollision, MoveRight) {
     Piece* test = new Rook(WHITE, 'd', 4);
     array[3][3] = test;
 
-    int pass;
-
     Piece* rookPiece1 = new Rook(WHITE, 'f', 4);
     array[5][3] = rookPiece1;
     //MoveRightValid
-    pass = 1;
-    if (!test->move('e',4,array)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test->move('e',4,array), true);
     //MoveRightIntoPiece
-    pass = 1;
-    if (test->move('f',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('f',4,array), false);
     //MoveRightPastPiece
-    pass = 1;
-    if (test->move('g',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('g',4,array), false);
 
     delete rookPiece1;
     delete test;
@@ -93,22 +77,14 @@ TEST(PieceMoveCollision, MoveLeft) {
     Piece* test = new Rook(WHITE, 'd', 4);
     array[3][3] = test;
 
-    int pass;
-
     Piece* rookPiece2 = new Rook(WHITE, 'b', 4);
     array[1][3] = rookPiece2;
     //MoveLeftValid
-    pass = 1;
-    if (!test->move('c',4,array)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test->move('c',4,array), true);
     //MoveLeftIntoPiece
-    pass = 1;
-    if (test->move('b',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('b',4,array), false);
     //MoveLeftPastPiece
-    pass = 1;
-    if (test->move('a',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('a',4,array), false);
 
     delete rookPiece2;
     delete test;
@@ -124,22 +100,14 @@ TEST(PieceMoveCollision, MoveUp) {
     Piece* test = new Rook(WHITE, 'd', 4);
     array[3][3] = test;
 
-    int pass;
-
     Piece* rookPiece3 = new Rook(WHITE, 'd', 6);
     array[3][5] = rookPiece3;
     //MoveUpValid
-    pass = 1;
-    if (!test->move('d',5,array)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test->move('d',5,array), false);
     //MoveUpIntoPiece
-    pass = 1;
-    if (test->move('d',6,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('d',6,array), false);
     //MoveUpPastPiece
-    pass = 1;
-    if (test->move('d',7,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('d',7,array), false);
 
     delete rookPiece3;
     delete test;
@@ -155,22 +123,14 @@ TEST(PieceMoveCollision, MoveDown) {
     Piece* test = new Rook(WHITE, 'd', 4);
     array[3][3] = test;
 
-    int pass;
-
     Piece* rookPiece4 = new Rook(WHITE, 'd', 2);
     array[3][1] = rookPiece4;
     //MoveDownValid
-    pass = 1;
-    if (!test->move('d',3,array)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test->move('d',3,array), true);
     //MoveDownIntoPiece
-    pass = 1;
-    if (test->move('d',2,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('d',2,array), false);
     //MoveDownPastPiece
-    pass = 1;
-    if (test->move('d',1,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('d',1,array), false);
 
     delete rookPiece4;
     delete test;
@@ -188,37 +148,23 @@ TEST(PieceMoveTest, CollisionWithOpposite) {
     Piece* test = new Rook(WHITE, 'd', 4);
     array[3][3] = test;
 
-    int pass;
-
     Piece* rookPiece5 = new Rook(BLACK, 'f', 4);
     array[5][3] = rookPiece5;
     //MoveRightValid
-    pass = 1;
-    if (!test->move('e',4,array)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test->move('e',4,array), true);
     //MoveRightIntoPiece
-    pass = 1;
-    if (!test->move('f',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('f',4,array), true);
     //MoveRightPastPiece
-    pass = 1;
-    if (test->move('g',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('g',4,array), false);
 
     Piece* rookPiece6 = new Rook(BLACK, 'd', 6);
     array[3][5] = rookPiece6;
     //MoveUpValid
-    pass = 1;
-    if (!test->move('d',5,array)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test->move('d',5,array), true);
     //MoveUpIntoPiece
-    pass = 1;
-    if (!test->move('d',6,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('d',6,array), true);
     //MoveUpPastPiece
-    pass = 1;
-    if (test->move('d',7,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('d',7,array), false);
 
     delete rookPiece5;
     delete rookPiece6;
@@ -228,38 +174,21 @@ TEST(PieceMoveTest, CollisionWithOpposite) {
 
 //Literally the same test as Piece::move() since I used Rook (easiest movement)
 TEST(RookMove, PieceMove) {
-    int pass;
     Rook test(WHITE, 'd', 4);
 
     //InRange
-    pass = 1;
-    if (!test.move('a',4)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
-    pass = 1;
-    if (!test.move('h',4)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test.move('a',4), true);
+    ASSERT_EQ(test.move('h',4), true);
 
-    pass = 1;
-    if (!test.move('d',1)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
-    pass = 1;
-    if (!test.move('d',8)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test.move('d',1), true);
+    ASSERT_EQ(test.move('d',8), true);
 
     //OutOfRange
-    pass = 1;
-    if (test.move('+',4)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('i',4)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('+',4), false);
+    EXPECT_EQ(test.move('i',4), false);
 
-    pass = 1;
-    if (test.move('d',0)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('d',9)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('d',0), false);
+    EXPECT_EQ(test.move('d',9), false);
 }
 //also reuses MoveRight and MoveUp
 TEST(RookMove, CollisionMove) {
@@ -273,63 +202,38 @@ TEST(RookMove, CollisionMove) {
     Piece* test = new Rook(WHITE, 'd', 4);
     array[3][3] = test;
 
-    int pass;
-
     Piece* rookPiece1 = new Rook(WHITE, 'f', 4);
     array[5][3] = rookPiece1;
     //MoveRightValid
-    pass = 1;
-    if (!test->move('e',4,array)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test->move('e',4,array), true);
     //MoveRightIntoPiece
-    pass = 1;
-    if (test->move('f',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('f',4,array), false);
     //MoveRightPastPiece
-    pass = 1;
-    if (test->move('g',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('g',4,array), false);
 
     delete rookPiece1;
 
     Piece* rookPiece3 = new Rook(WHITE, 'd', 6);
     array[3][5] = rookPiece3;
     //MoveUpValid
-    pass = 1;
-    if (!test->move('d',5,array)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test->move('d',5,array), true);
     //MoveUpIntoPiece
-    pass = 1;
-    if (test->move('d',6,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('d',6,array), false);
     //MoveUpPastPiece
-    pass = 1;
-    if (test->move('d',7,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('d',7,array), false);
 
     delete rookPiece3;
     delete test;
 }
 TEST(RookMove, MoveRestriction) {
     Rook test(WHITE, 'a',1);
-    int pass;
 
-    pass = 1;
-    if (!test.move('a',3)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (!test.move('c',1)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('a',3), true);
+    EXPECT_EQ(test.move('c',1), true);
 
-    pass = 1;
-    if (test.move('b',3)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('c',2)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('b',2)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('b',3), false);
+    EXPECT_EQ(test.move('c',2), false);
+    EXPECT_EQ(test.move('b',7), false);
 }
 //Collision was basically already tested for Rook
 
@@ -338,56 +242,30 @@ TEST(KnightMove, PieceMove) {
     Knight test(WHITE, 'b', 2);
 
     //NoMove
-    pass = 1;
-    if (test.move('b',2)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test.move('b',2), false);
 
     //InRange
-    pass = 1;
-    if (!test.move('c',4)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
-    pass = 1;
-    if (!test.move('d',4)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test.move('c',4), true);
+    ASSERT_EQ(test.move('d',4), true);
 
-    pass = 1;
-    if (!test.move('a',4)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
-    pass = 1;
-    if (!test.move('d',1)) { pass = 0; }
-    ASSERT_EQ(pass, 1);
+    ASSERT_EQ(test.move('a',4), true);
+    ASSERT_EQ(test.move('d',1), true);
 
     //OutOfRange
-    pass = 1;
-    if (test.move('b'-2,3)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('b'-2,1)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('b'-2,3), false);
+    EXPECT_EQ(test.move('b'-2,1), false);
 
-    pass = 1;
-    if (test.move('a',0)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('c',0)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('a',0), false);
+    EXPECT_EQ(test.move('c',0), false);
 }
 TEST(KnightMove, MoveRestriction) {
     int pass;
     Knight test(WHITE, 'b', 2);
 
-    pass = 1;
-    if (test.move('a',3)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('a',2)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('c',1)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
-    pass = 1;
-    if (test.move('b',1)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test.move('a',3), false);
+    EXPECT_EQ(test.move('a',2), false);
+    EXPECT_EQ(test.move('c',1), false);
+    EXPECT_EQ(test.move('b',1), false);
 }
 TEST(KnightMove, CollisionTest) {
     Piece* array[8][8];
@@ -400,23 +278,18 @@ TEST(KnightMove, CollisionTest) {
     Piece* test = new Knight(WHITE, 'b', 2);
     array[1][1] = test;
 
-    int pass;
     Piece* knightPiece1 = new Knight(WHITE, 'c', 4);
     array[2][3] = knightPiece1;
 
-    pass = 1;
     //MoveIntoPiece
-    if (test->move('c',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('c',4,array), false);
     delete knightPiece1;
 
     Piece* knightPiece2 = new Knight(BLACK, 'c', 4);
     array[2][3] = knightPiece2;
 
-    pass = 1;
     //CapturePiece
-    if (!test->move('c',4,array)) { pass = 0; }
-    EXPECT_EQ(pass, 1);
+    EXPECT_EQ(test->move('c',4,array), true);
     delete knightPiece2;
 
     delete test;
