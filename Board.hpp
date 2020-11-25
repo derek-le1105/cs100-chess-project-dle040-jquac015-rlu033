@@ -90,7 +90,13 @@ class BoardFactory {
     }
 };
 
-/* Test function
+/* Test functionality
+string Pawn::getName() {return " P";}
+string Knight::getName() {return " N";}
+string Rook::getName() {return " R";}
+string Bishop::getName() {return " B";}
+string Queen::getName() {return " Q";}
+string King::getName() {return " K";}
 void BoardFactoryTest() {
     BoardFactory b;
     Piece* array[8][8];
