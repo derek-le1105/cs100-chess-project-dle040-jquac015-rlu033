@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cctype>
+using namespace std;
 enum Color {WHITE, BLACK};
 class Piece {
   private:
@@ -12,6 +13,7 @@ class Piece {
         alignment = a;
         setCoord(c, i);
     }
+    //Coords are arrayCoords
     void setCoord(char c, int i) {
         posX = CharToInt(c)-1;
         posY = i-1;
@@ -47,23 +49,11 @@ class Rook : public Piece {
     void drawPiece();
 };
 
-//moves one space in any direction
-//can also castle with rook
-class King : public Piece {
+//moves in an L-shape and can jump over pieces
+class Knight : public Piece {
   public:
-    King(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece** array[][8] = nullptr);
-    void drawPiece();
-};
-
-/*
-//move: one forward, unless it hasn't moved yet (start)
-//if it hasn't moved, it can either move one or two forward
-//moves diagonally upwards by capturing
-class Pawn : public Piece {
-  public:
-    Pawn(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece** array[][8] = nullptr);
+    Knight(Color a, char c, int i) : Piece(a, c, i) {}
+    bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
 };
 
@@ -72,24 +62,35 @@ class Pawn : public Piece {
 class Bishop : public Piece {
   public:
     Bishop(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece** array[][8] = nullptr);
+    bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
 };
 
-//moves in an L-shape and can jump over pieces
-class Knight : public Piece {
+//moves one space in any direction
+//can also castle with rook
+class King : public Piece {
   public:
-    Knight(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece** array[][8] = nullptr);
-    void drawPiece();
+    King(Color a, char c, int i) : Piece(a, c, i) {}
+    bool move(char, int, Piece* array[][8] = nullptr) {return true;}
+    void drawPiece() {}
+};
+
+//move: one forward, unless it hasn't moved yet (start)
+//if it hasn't moved, it can either move one or two forward
+//moves diagonally upwards by capturing
+class Pawn : public Piece {
+  public:
+    Pawn(Color a, char c, int i) : Piece(a, c, i) {}
+    bool move(char, int, Piece* array[][8] = nullptr){return true;}
+    void drawPiece(){}
 };
 
 //moves horizontally or vertically or diagonally
 class Queen : public Piece {
   public:
     Queen(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece** array[][8] = nullptr);
-    void drawPiece();
-}; */
+    bool move(char, int, Piece* array[][8] = nullptr){return true;}
+    void drawPiece(){}
+};
 
 #endif

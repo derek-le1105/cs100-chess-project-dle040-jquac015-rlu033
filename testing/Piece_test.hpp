@@ -2,7 +2,7 @@
 #define __PIECE_TEST_HPP__
 
 #include "gtest/gtest.h"
-#include "Piece.h"
+#include "../Piece.h"
 /*
 TEST(PieceFunctions, Alignment) {
     Piece p1(WHITE, 'a', 1);
@@ -343,6 +343,96 @@ TEST(RookMove, MoveRestriction) {
     pass = 1;
     if (test.move('b',2)) { pass = 0; }
     EXPECT_EQ(pass, 1);
+}
+//Collision was basically already tested for Rook
+
+TEST(KnightMove, PieceMove) {
+    int pass;
+    Knight test(WHITE, 'b', 2);
+
+    //NoMove
+    pass = 1;
+    if (test.move('b',2)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+
+    //InRange
+    pass = 1;
+    if (!test.move('c',4)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    pass = 1;
+    if (!test.move('d',4)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+
+    pass = 1;
+    if (!test.move('a',4)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+    pass = 1;
+    if (!test.move('d',1)) { pass = 0; }
+    ASSERT_EQ(pass, 1);
+
+    //OutOfRange
+    pass = 1;
+    if (test.move('b-2',3)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    pass = 1;
+    if (test.move('b'-2,1)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+
+    pass = 1;
+    if (test.move('a',0)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    pass = 1;
+    if (test.move('c',0)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+}
+TEST(KnightMove, MoveRestriction) {
+    int pass;
+    Knight test(WHITE, 'b', 2);
+
+    pass = 1;
+    if (test->move('a',3)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    pass = 1;
+    if (test->move('a',2)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    pass = 1;
+    if (test->move('c',1)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    pass = 1;
+    if (test->move('b',1)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+}
+TEST(KnightMove, CollisionTest) {
+    Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
+    Piece* test = new Knight(WHITE, 'b', 2);
+    array[1][1] = test;
+
+    int pass;
+    Piece* knightPiece1 = new Knight(WHITE, 'c', 4);
+    array[2][3] = knightPiece1;
+
+    pass = 1;
+    //MoveIntoPiece
+    if (test->move('c',4,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    delete knightPiece1;
+
+    Piece* knightPiece2 = new Knight(BLACK, 'c', 4);
+    array[2][3] = knightPiece2;
+
+    pass = 1;
+    //CapturePiece
+    if (!test->move('c',4,array)) { pass = 0; }
+    EXPECT_EQ(pass, 1);
+    delete knightPiece2;
+
+    delete test;
 }
 
 #endif
