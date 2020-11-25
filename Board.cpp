@@ -101,7 +101,7 @@ void Board::handleInput() {
         if (event.type == sf::Event::MouseButtonPressed) {
             if(checkClick == pieceCurrentlyClicked){
                 int posX = mousePosition.x / 84, posY = mousePosition.y / 84;
-
+                std::cout << "1: " << posX << " " << posY << std::endl;
                 if(pieceArray[posX][posY] == nullptr)        //if mouse is clicked on a block with no piece in it
                     checkClick = pieceCurrentlyClicked;
                 else {                                          //if mouse is clicked on a block with a piece in it
@@ -110,17 +110,19 @@ void Board::handleInput() {
                 }
             }
             else if (checkClick == moveCurrentlyClicked){       //reverts back to previous enum to allow clicking a new piece
-                int tempX = CharToInt(prevX) - 1;
-                int posX = mousePosition.x / 84, posY = (mousePosition.y + 84 - 1) / 84, boardPosyY = posY - 1;
+                int tempX = CharToInt(prevX) - 1,
+                posX = mousePosition.x / 84, posY = (mousePosition.y + 84 - 1) / 84, boardPosyY = posY - 1;
+
                 char iter = 'a';
                 for(int i = 0; i < posX; ++i)
                     iter++;
                 if(pieceArray[tempX][prevY]->move(iter, posY, pieceArray)){
                     pieceArray[tempX][prevY]->currentSprite.setPosition(posX * BLOCK_SIZE, boardPosyY * BLOCK_SIZE);
                     pieceArray[posX][boardPosyY] = pieceArray[tempX][prevY];        //sets new position = previous position
+                    pieceArray[tempX][prevY]->setCoord(iter, posY);
                     pieceArray[tempX][prevY] = nullptr;                             //makes previous position nullptr
-                    board[posX][boardPosyY] = board[tempX][prevY];
-                    board[tempX][prevY] = 0;
+                    board[boardPosyY][posX] = board[prevY][tempX];
+                    board[prevY][tempX] = 0;
                 }
                 checkClick = pieceCurrentlyClicked;
             }
