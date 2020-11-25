@@ -1,3 +1,4 @@
+
 #include "Piece.h"
 
 /*  -move() template-

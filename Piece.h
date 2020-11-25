@@ -3,11 +3,13 @@
 
 #include <string>
 #include <cctype>
+#include <SFML/Graphics.hpp>
 using namespace std;
 enum Color {WHITE, BLACK};
 class Piece {
   private:
     Color alignment;
+    sf::Sprite currentSprite;
   public:
     Piece(Color a, char c, int i) {
         alignment = a;
