@@ -361,7 +361,7 @@ TEST(BishopMove, CollisionTest) {
     }
 
     /*BishopCollisionTest::MoveDownLeft*/{
-        bishopPiece1 = new Bishop(WHITE, 'b', 2);
+        Piece* bishopPiece1 = new Bishop(WHITE, 'b', 2);
         array[1][1] = bishopPiece1;
 
         //MoveValid
@@ -372,7 +372,7 @@ TEST(BishopMove, CollisionTest) {
         EXPECT_EQ(test->move('a',1,array), false);
         delete bishopPiece1;
 
-        bishopPiece2 = new Bishop(BLACK, 'b', 2);
+        Piece* bishopPiece2 = new Bishop(BLACK, 'b', 2);
         array[1][1] = bishopPiece2;
 
         //MoveValid
@@ -385,7 +385,7 @@ TEST(BishopMove, CollisionTest) {
         array[1][1] = nullptr;
     }
 
-    delete bishopPiece4;
+    delete test;
     array[3][3] = nullptr;
 }
 
