@@ -323,12 +323,20 @@ TEST(BishopMove, PieceMove) {
     EXPECT_EQ(test.move('f',0), false);
 }
 TEST(BishopMove, MoveRestriction) {
-    Bishop test(WHITE, 'c', 3);
+    Bishop test(WHITE, 'd', 4);
 
-    EXPECT_EQ(test.move('c',4), false);
-    EXPECT_EQ(test.move('e',2), false);
-    EXPECT_EQ(test.move('f',7), false);
+    //(used Knight test)
+    EXPECT_EQ(test.move('b',3), false);
     EXPECT_EQ(test.move('b',5), false);
+
+    EXPECT_EQ(test.move('f',3), false);
+    EXPECT_EQ(test.move('f',5), false);
+
+    EXPECT_EQ(test.move('c',2), false);
+    EXPECT_EQ(test.move('e',2), false);
+
+    EXPECT_EQ(test.move('c',6), false);
+    EXPECT_EQ(test.move('e',6), false);
 }
 TEST(BishopMove, CollisionTest) {
     Piece* array[8][8];
