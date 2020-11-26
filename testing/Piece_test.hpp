@@ -325,6 +325,11 @@ TEST(BishopMove, PieceMove) {
 TEST(BishopMove, MoveRestriction) {
     Bishop test(WHITE, 'd', 4);
 
+    EXPECT_EQ(test.move('d',3), false);
+    EXPECT_EQ(test.move('d',5), false);
+    EXPECT_EQ(test.move('c',4), false);
+    EXPECT_EQ(test.move('e',4), false);
+
     //(used Knight test)
     EXPECT_EQ(test.move('b',3), false);
     EXPECT_EQ(test.move('b',5), false);

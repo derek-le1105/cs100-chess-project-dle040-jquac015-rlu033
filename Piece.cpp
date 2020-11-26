@@ -194,7 +194,7 @@ bool Queen::move(char c, int y, Piece* array[][8]) {
     //Is the given coordinate within the piece's movement restriction?
     //can only change either x or y, OR "slope" must be 1 or -1 (changes linearly)
     //Rook OR Bishop
-    if ((x != posX && y != posY) || !(abs((static_cast<double>(x) - posX) / (static_cast<double>(y) - posY)) == 1.0)) {
+    if ((x != posX && y != posY) && !(abs((static_cast<double>(x) - posX) / (static_cast<double>(y) - posY)) == 1.0)) {
         validMove = false;
     }
 

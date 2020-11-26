@@ -71,7 +71,7 @@ class Queen : public Piece {
   public:
     Queen(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
-    void drawPiece(){}
+    void drawPiece();
 };
 
 //moves one space in any direction
