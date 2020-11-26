@@ -138,7 +138,7 @@ bool Bishop::move(char c, int y, Piece* array[][8]) {
 
     //Is the given coordinate within the piece's movement restriction?
     //"slope" must be 1 or -1 (changes linearly)
-    if (!(abs((static_cast<double>(x) - posX) / (static_cast<double>(y) - posY)) == 1)) {
+    if (!(abs((static_cast<double>(x) - posX) / (static_cast<double>(y) - posY)) == 1.0)) {
         validMove = false;
     }
 
@@ -176,3 +176,59 @@ bool Bishop::move(char c, int y, Piece* array[][8]) {
     return validMove;
 }
 void Bishop::drawPiece() {}
+
+bool Queen::move(char c, int y, Piece* array[][8]) {
+    bool validMove = true;
+    int x = CharToInt(c);
+    x--; y--;
+
+    if (x == posX && y == posY) {
+        validMove = false;
+    }
+
+    if (x < 0 || x > 7)
+        validMove = false;
+    if (y < 0 || y > 7)
+        validMove = false;
+
+    //Is the given coordinate within the piece's movement restriction?
+    //can only change either x or y, OR "slope" must be 1 or -1 (changes linearly)
+    //Rook OR Bishop
+    if ((x != posX && y != posY) || !(abs((static_cast<double>(x) - posX) / (static_cast<double>(y) - posY)) == 1.0)) {
+        validMove = false;
+    }
+
+    //used for testing
+    if (array == nullptr) {
+        return validMove;
+    }
+
+    //look at every space BETWEEN the current location and the spot you want to get to
+    int a = posX, b = posY;
+    do {
+        if ((array[a][b] != nullptr && array[a][b] != 0) && array[a][b] != this) {
+            return false;
+        }
+
+        //algorithm based on how the bishop moves, since it also encapsulates the way the rook moves
+        //-already checked if the final location is within the move restriction
+        if (a < x)
+            a++;
+        else if (a > x)
+            a--;
+        if (b < y)
+            b++;
+        else if (b > y)
+            b--;
+    } while (!(x == a && y == b));
+
+    //check ending spot for capture or not
+    if (array[x][y] != nullptr && array[a][b] != 0) {
+        if ((array[x][y])->getAlignment() == this->getAlignment())
+            validMove = false;
+        //Else capture the piece here
+    }
+
+    return validMove;
+}
+void Queen::drawPiece() {}
