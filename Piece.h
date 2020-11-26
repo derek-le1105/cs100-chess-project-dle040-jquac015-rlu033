@@ -66,12 +66,20 @@ class Bishop : public Piece {
     void drawPiece();
 };
 
+//moves horizontally or vertically or diagonally
+class Queen : public Piece {
+  public:
+    Queen(Color a, char c, int i) : Piece(a, c, i) {}
+    bool move(char, int, Piece* array[][8] = nullptr);
+    void drawPiece(){}
+};
+
 //moves one space in any direction
 //can also castle with rook
 class King : public Piece {
   public:
     King(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr) {return false;}
+    bool move(char, int, Piece* array[][8] = nullptr) {return true;}
     void drawPiece() {}
 };
 
@@ -81,15 +89,7 @@ class King : public Piece {
 class Pawn : public Piece {
   public:
     Pawn(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr){return false;}
-    void drawPiece(){}
-};
-
-//moves horizontally or vertically or diagonally
-class Queen : public Piece {
-  public:
-    Queen(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr){return false;}
+    bool move(char, int, Piece* array[][8] = nullptr){return true;}
     void drawPiece(){}
 };
 
