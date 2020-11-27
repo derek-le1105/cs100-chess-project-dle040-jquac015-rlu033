@@ -266,3 +266,70 @@ bool King::move(char c, int y, Piece* array[][8]) {
     return validMove;
 }
 void King::drawPiece() {}
+
+/*pawn has specific moves
+    can only move forward, based on alignment:
+      black moves down, white moves up
+    can move two spaces at the beginning:
+      black on y=7 (array[x][6]), white on y=2 (array[x][1])
+    can only capture moving diagonally upwards
+*/
+/*
+ X Y1  S  B  C
+ 0 -1  0  1  0
+ 0 -1  1  1  0
+ 0  1  0  0  0
+ 0  1  1  0  0
+ 0 -2  1  1  0
+ 0  2  1  0  0
+ 1 -1  0  1  1
+ 1 -1  1  1  1
+ 1  1  0  0  1
+ 1  1  1  0  1
+
+y = (-,B) || (+,W)
+x0 & y1 & ~C        (x0 && y1 && !C)
+x0 & y2 & S & ~C    (x0 && y2 && S && !C)
+x1 & y1 & C          (x1 && y1 && C)
+
+(x - posX == 0) && ((y - posY == 1 && this->getAlignment() == WHITE) || (y - posY == -1 && this->getAlignment() == BLACK)) && ~C
+*/
+bool Pawn::move(char c, int y, Piece* array[][8]) {
+    bool validMove = true;
+    int x = CharToInt(c);
+    x--; y--;
+
+    if (x == posX && y == posY) {
+        validMove = false;
+    }
+
+    if (x < 0 || x > 7)
+        validMove = false;
+    if (y < 0 || y > 7)
+        validMove = false;
+
+    /*  x0 & y1 & ~C
+        x0 & y2 & S & ~C
+        x1 & y1 & C
+    */
+    //has to be x = 0 and +-1
+    if ((x - posX == 0) && ((y - posY == 1 && this->getAlignment() == WHITE) || (y - posY == 1 && this->getAlignment() == BLACK))) {
+        //cannot move forward due to collision
+        if (array != nullptr && array[x][y]->getAlignment() != this->getAlignment())
+            validMove == false;
+    }
+    //can move 2 spaces if it's at the starting position
+    else if ((x - posX == 0) && ((y - posY == 2 && posY == 1 && this->getAlignment() == WHITE) || (y - posY == -2 && posY == 6 && this->getAlignment() == BLACK))) {
+        //cannot move forward due to collision
+        if (array != nullptr && array[x][y]->getAlignment() != this->getAlignment())
+            validMove == false;
+    }
+
+    //can only move diagonally one space if there is a piece to capture
+    else if (abs(x - posX) == 1) && ((y - posY == 1 && this->getAlignment() == WHITE) || (y - posY == -1 && this->getAlignment() == BLACK)) && (array != nullptr && array[x][y]->getAlignment() != this->getAlignment()) {
+        validMove == false;
+    }
+
+    return validMove;
+}
+void Pawn::drawPiece() {}

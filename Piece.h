@@ -89,8 +89,8 @@ class King : public Piece {
 class Pawn : public Piece {
   public:
     Pawn(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr){return true;}
-    void drawPiece(){}
+    bool move(char, int, Piece* array[][8] = nullptr);
+    void drawPiece();
 };
 
 #endif
