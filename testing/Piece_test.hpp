@@ -600,27 +600,29 @@ TEST(KingMove, CollisionTest) {
 
     Piece* p1 = new Rook(WHITE, 'c',5);
     array[2][4] = p1;
-    EXPECT_EQ(test->move('c',5), false);
+    EXPECT_EQ(test->move('c',5,array), false);
     delete p1;
     array[2][4] = nullptr;
 
     Piece* p2 = new Knight(BLACK, 'd',5);
     array[3][4] = p2;
-    EXPECT_EQ(test->move('d',5), true);
+    EXPECT_EQ(test->move('d',5,array), true);
     delete p2;
     array[3][4] = nullptr;
 
     Piece* p3 = new Bishop(WHITE, 'd',3);
     array[3][2] = p3;
-    EXPECT_EQ(test->move('d',3), false);
+    EXPECT_EQ(test->move('d',3,array), false);
     delete p3;
     array[3][2] = nullptr;
 
     Piece* p4 = new Queen(BLACK, 'e',3);
     array[4][2] = p4;
-    EXPECT_EQ(test->move('e',3), true);
+    EXPECT_EQ(test->move('e',3,array), true);
     delete p4;
     array[4][2] = nullptr;
+
+    delete test;
 }
 
 #endif
