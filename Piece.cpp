@@ -321,15 +321,17 @@ bool Pawn::move(char c, int y, Piece* array[][8]) {
     //can move 2 spaces if it's at the starting position
     else if ((x - posX == 0) && ((y - posY == 2 && posY == 1 && this->getAlignment() == WHITE) || (y - posY == -2 && posY == 6 && this->getAlignment() == BLACK))) {
         //cannot move forward due to collision
+        int b = posY;
         if (array != nullptr) {
-	    while (
+	    while (b != y)
+            if ((array[x][b] != nullptr && array[x][b] != 0) && array[x][b] != this) {
+                return false;
+            }
+
 	        if (b < y)
-            b++;
-        else if (b > y)
-            b--;
-//UNFINISHED
-        if (array != nullptr && array[x][y]->getAlignment() != this->getAlignment())
-            validMove == false;
+                b++;
+            else if (b > y)
+                b--;
     }
 
     //can only move diagonally one space if there is a piece to capture
