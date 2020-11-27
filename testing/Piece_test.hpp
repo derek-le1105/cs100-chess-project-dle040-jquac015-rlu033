@@ -670,7 +670,7 @@ TEST(PawnMove, MoveRestriction) {
     EXPECT_EQ(test2.move('c',6), false);
     EXPECT_EQ(test2.move('e',6), false);
 }
-TEST(PawnMove, CollisionTest) {
+TEST(PawnMove, WhiteCollisionTest) {
     Piece* array[8][8];
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
@@ -737,8 +737,17 @@ TEST(PawnMove, CollisionTest) {
     }
     delete test;
     array[3][3] = test;
+}
 
-    test = new Pawn(BLACK, 'd', 7);
+TEST(PawnMove, BlackCollisionTest) {
+    Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
+    Piece* test = new Pawn(BLACK, 'd', 7);
     array[3][6] = test;
 
     /*Black: moving downwards*/{

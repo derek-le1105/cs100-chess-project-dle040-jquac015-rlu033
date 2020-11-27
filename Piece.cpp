@@ -323,18 +323,17 @@ bool Pawn::move(char c, int y, Piece* array[][8]) {
         //cannot move forward due to collision
         int b = posY;
         if (array != nullptr) {
-	    for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 2; i++) {
+                if (b < y)
+                    b++;
+                else if (b > y)
+                    b--;
 
-	        if (b < y)
-                b++;
-            else if (b > y)
-                b--;
-
-            if ((array[x][b] != nullptr && array[x][b] != 0) && array[x][b] != this) {
-                return false;
+                if ((array[x][b] != nullptr && array[x][b] != 0) && array[x][b] != this) {
+                    return false;
+                }
             }
-	    }
-	}
+        }
     }
 
     //can only move diagonally one space if there is a piece to capture
