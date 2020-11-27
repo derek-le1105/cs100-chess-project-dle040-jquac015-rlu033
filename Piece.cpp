@@ -232,3 +232,37 @@ bool Queen::move(char c, int y, Piece* array[][8]) {
     return validMove;
 }
 void Queen::drawPiece() {}
+
+bool King::move(char c, int y, Piece* array[][8]) {
+    bool validMove = true;
+    int x = CharToInt(c);
+    x--; y--;
+
+    if (x == posX && y == posY) {
+        validMove = false;
+    }
+
+    if (x < 0 || x > 7)
+        validMove = false;
+    if (y < 0 || y > 7)
+        validMove = false;
+
+    //both have to be +-1 or 0
+    if (!((abs(x - posX) <= 1 && abs(y - posY) <= 1))){
+        validMove = false;
+    }
+
+    if (array == nullptr) {
+        return validMove;
+    }
+
+    //collision only needs to check the location it's going to, and it just can't be a same alignment piece
+    if (array[x][y] != nullptr && array[x][y] != 0) {
+        if (array[x][y]->getAlignment() == this->getAlignment())
+            return false;
+        //Else capture the piece
+    }
+
+    return validMove;
+}
+void King::drawPiece() {}

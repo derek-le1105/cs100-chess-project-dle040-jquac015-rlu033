@@ -553,4 +553,74 @@ TEST(QueenMove, CollisionTest) {
     array[3][3] = nullptr;
 }
 
+TEST(KingMove, PieceMoveTest) {
+    King test(WHITE, 'b',1);
+
+    //NoMove
+    EXPECT_EQ(test.move('b',1), false);
+
+    //KingInRange
+    ASSERT_EQ(test.move('a',1), true);
+    ASSERT_EQ(test.move('a',2), true);
+    ASSERT_EQ(test.move('b',2), true);
+    ASSERT_EQ(test.move('c',2), true);
+    ASSERT_EQ(test.move('c',1), true);
+
+    //KingOutOfRange
+    EXPECT_EQ(test.move('a',0), false);
+    EXPECT_EQ(test.move('b',0), false);
+    EXPECT_EQ(test.move('c',0), false);
+}
+TEST(KingMove, MoveRestriction) {
+    King test(WHITE, 'd',4);
+
+    EXPECT_EQ(test.move('b',3), false);
+    EXPECT_EQ(test.move('b',4), false);
+    EXPECT_EQ(test.move('b',5), false);
+    EXPECT_EQ(test.move('c',6), false);
+    EXPECT_EQ(test.move('d',6), false);
+    EXPECT_EQ(test.move('e',6), false);
+    EXPECT_EQ(test.move('f',5), false);
+    EXPECT_EQ(test.move('f',4), false);
+    EXPECT_EQ(test.move('f',3), false);
+    EXPECT_EQ(test.move('c',2), false);
+    EXPECT_EQ(test.move('d',2), false);
+    EXPECT_EQ(test.move('e',2), false);
+}
+TEST(KingMove, CollisionTest) {
+    Piece* array[8][8];
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            array[i][j] = nullptr;
+        }
+    }
+
+    Piece* test = new King(WHITE, 'd', 4);
+    array[3][3] = test;
+
+    Piece* p1 = new Rook(WHITE, 'c',5);
+    array[2][4] = p1;
+    EXPECT_EQ(test->move('c',5), false);
+    delete p1;
+    array[2][4] = nullptr;
+
+    Piece* p2 = new Knight(BLACK, 'd',5);
+    array[3][4] = p2;
+    EXPECT_EQ(test->move('d',5), true);
+    delete p2;
+    array[3][4] = nullptr;
+
+    Piece* p3 = new Bishop(WHITE, 'd',3);
+    array[3][2] = p3;
+    EXPECT_EQ(test->move('d',3), false);
+    delete p3;
+    array[3][2] = nullptr;
+
+    Piece* p4 = new Queen(BLACK, 'e',3);
+    array[4][2] = p4;
+    EXPECT_EQ(test->move('e',3), true);
+    delete p4;
+    array[4][2] = nullptr;
+}
+
 #endif

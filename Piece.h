@@ -79,8 +79,8 @@ class Queen : public Piece {
 class King : public Piece {
   public:
     King(Color a, char c, int i) : Piece(a, c, i) {}
-    bool move(char, int, Piece* array[][8] = nullptr) {return true;}
-    void drawPiece() {}
+    bool move(char, int, Piece* array[][8] = nullptr);
+    void drawPiece();
 };
 
 //move: one forward, unless it hasn't moved yet (start)
