@@ -639,7 +639,7 @@ TEST(PawnMove, PieceMove) {
     //PawnOutOfRange
     EXPECT_EQ(test.move('d',9), false);
 }
-TEST(PawnMove, MoveRestriction) {
+TEST(PawnMove, MoveRestrictionWhite) {
     Pawn test(WHITE, 'd', 2);
 
     //PawnInRange
@@ -654,7 +654,8 @@ TEST(PawnMove, MoveRestriction) {
 
     EXPECT_EQ(test.move('c',3), false);
     EXPECT_EQ(test.move('e',3), false);
-
+}
+TEST(PawnMove, MoveRestrictionBlack) {
     Pawn test2(BLACK, 'd', 7);
 
     //PawnInRange
