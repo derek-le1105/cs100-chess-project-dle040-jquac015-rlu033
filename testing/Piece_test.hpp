@@ -626,7 +626,7 @@ TEST(KingMove, CollisionTest) {
 }
 
 TEST(PawnMove, PieceMove) {
-    Pawn test(WHITE, 'd', 2);
+    Pawn test(BLACK, 'd', 2);
 
     //NoMove
     ASSERT_EQ(test.move('d',2), false);
@@ -635,12 +635,12 @@ TEST(PawnMove, PieceMove) {
     ASSERT_EQ(test.move('d',3), true);
     ASSERT_EQ(test.move('d',4), true);
 
-    Pawn test2(WHITE, 'd', 8);
+    Pawn test2(BLACK, 'd', 8);
     //PawnOutOfRange
     EXPECT_EQ(test.move('d',9), false);
 }
-TEST(PawnMove, MoveRestrictionWhite) {
-    Pawn test(WHITE, 'd', 2);
+TEST(PawnMove, MoveRestrictionBlack) {
+    Pawn test(BLACK, 'd', 2);
 
     //PawnInRange
     ASSERT_EQ(test.move('d',3), true);
@@ -655,8 +655,8 @@ TEST(PawnMove, MoveRestrictionWhite) {
     EXPECT_EQ(test.move('c',3), false);
     EXPECT_EQ(test.move('e',3), false);
 }
-TEST(PawnMove, MoveRestrictionBlack) {
-    Pawn test2(BLACK, 'd', 7);
+TEST(PawnMove, MoveRestrictionWhite) {
+    Pawn test2(WHITE, 'd', 7);
 
     //PawnInRange
     ASSERT_EQ(test2.move('d',6), true);
@@ -671,7 +671,7 @@ TEST(PawnMove, MoveRestrictionBlack) {
     EXPECT_EQ(test2.move('c',6), false);
     EXPECT_EQ(test2.move('e',6), false);
 }
-TEST(PawnMove, WhiteCollisionTest) {
+TEST(PawnMove, BlackCollisionTest) {
     Piece* array[8][8];
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
@@ -679,32 +679,32 @@ TEST(PawnMove, WhiteCollisionTest) {
         }
     }
 
-    Piece* test = new Pawn(WHITE, 'd', 2);
+    Piece* test = new Pawn(BLACK, 'd', 2);
     array[3][1] = test;
 
     /*White: moving upwards*/{
-        Piece* p1 = new Rook(WHITE, 'd',3);
+        Piece* p1 = new Rook(BLACK, 'd',3);
         array[3][2] = p1;
         EXPECT_EQ(test->move('d',3,array), false);
         EXPECT_EQ(test->move('d',4,array), false);
         delete p1;
         array[3][2] = nullptr;
 
-        p1 = new Pawn(WHITE, 'd', 4);
+        p1 = new Pawn(BLACK, 'd', 4);
         array[3][3] = p1;
         EXPECT_EQ(test->move('d',3,array), true);
         EXPECT_EQ(test->move('d',4,array), false);
         delete p1;
         array[3][3] == nullptr;
 
-        Piece* p2 = new Rook(BLACK, 'd',3);
+        Piece* p2 = new Rook(WHITE, 'd',3);
         array[3][2] = p2;
         EXPECT_EQ(test->move('d',3,array), false);
         EXPECT_EQ(test->move('d',4,array), false);
         delete p2;
         array[3][2] = nullptr;
 
-        p2 = new Pawn(BLACK, 'd', 4);
+        p2 = new Pawn(WHITE, 'd', 4);
         array[3][3] = p2;
         EXPECT_EQ(test->move('d',3,array), true);
         EXPECT_EQ(test->move('d',4,array), false);
@@ -714,11 +714,11 @@ TEST(PawnMove, WhiteCollisionTest) {
     delete test;
     array[3][1] == nullptr;
 
-    test = new Pawn(WHITE, 'd', 4);
+    test = new Pawn(BLACK, 'd', 4);
     array[3][3] = test;
 
     /*White: Capturing*/{
-        Piece* p1 = new Rook(BLACK, 'c',5);
+        Piece* p1 = new Rook(WHITE, 'c',5);
         array[2][4] = p1;
         EXPECT_EQ(test->move('d',5,array), true);
         EXPECT_EQ(test->move('d',6,array), false);
@@ -727,7 +727,7 @@ TEST(PawnMove, WhiteCollisionTest) {
         delete p1;
         array[2][4] = nullptr;
 
-        p1 = new Pawn(WHITE, 'c', 5);
+        p1 = new Pawn(BLACK, 'c', 5);
         array[2][3] = p1;
         EXPECT_EQ(test->move('d',5,array), true);
         EXPECT_EQ(test->move('d',6,array), false);
@@ -740,7 +740,7 @@ TEST(PawnMove, WhiteCollisionTest) {
     array[3][3] = test;
 }
 
-TEST(PawnMove, BlackCollisionTest) {
+TEST(PawnMove, WhiteCollisionTest) {
     Piece* array[8][8];
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
@@ -748,32 +748,32 @@ TEST(PawnMove, BlackCollisionTest) {
         }
     }
 
-    Piece* test = new Pawn(BLACK, 'd', 7);
+    Piece* test = new Pawn(WHITE, 'd', 7);
     array[3][6] = test;
 
     /*Black: moving downwards*/{
-        Piece* p1 = new Rook(BLACK, 'd',6);
+        Piece* p1 = new Rook(WHITE, 'd',6);
         array[3][5] = p1;
         EXPECT_EQ(test->move('d',6,array), false);
         EXPECT_EQ(test->move('d',5,array), false);
         delete p1;
         array[3][5] = nullptr;
 
-        p1 = new Pawn(WHITE, 'd', 5);
+        p1 = new Pawn(BLACK, 'd', 5);
         array[3][4] = p1;
         EXPECT_EQ(test->move('d',6,array), true);
         EXPECT_EQ(test->move('d',5,array), false);
         delete p1;
         array[3][4] == nullptr;
 
-        Piece* p2 = new Rook(BLACK, 'd',6);
+        Piece* p2 = new Rook(WHITE, 'd',6);
         array[3][5] = p2;
         EXPECT_EQ(test->move('d',6,array), false);
         EXPECT_EQ(test->move('d',5,array), false);
         delete p2;
         array[3][5] = nullptr;
 
-        p2 = new Pawn(BLACK, 'd', 5);
+        p2 = new Pawn(WHITE, 'd', 5);
         array[3][4] = p2;
         EXPECT_EQ(test->move('d',6,array), true);
         EXPECT_EQ(test->move('d',5,array), false);
@@ -783,11 +783,11 @@ TEST(PawnMove, BlackCollisionTest) {
     delete test;
     array[3][6] == nullptr;
 
-    test = new Pawn(BLACK, 'd', 4);
+    test = new Pawn(WHITE, 'd', 4);
     array[3][3] = test;
 
     /*Black: Capturing*/{
-        Piece* p1 = new Rook(WHITE, 'c',3);
+        Piece* p1 = new Rook(BLACK, 'c',3);
         array[2][2] = p1;
         EXPECT_EQ(test->move('d',3,array), true);
         EXPECT_EQ(test->move('d',2,array), false);
@@ -796,7 +796,7 @@ TEST(PawnMove, BlackCollisionTest) {
         delete p1;
         array[2][2] = nullptr;
 
-        p1 = new Pawn(BLACK, 'c', 3);
+        p1 = new Pawn(WHITE, 'c', 3);
         array[2][2] = p1;
         EXPECT_EQ(test->move('d',3,array), true);
         EXPECT_EQ(test->move('d',2,array), false);
