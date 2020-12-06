@@ -99,12 +99,16 @@ bool BoardArray::stalemate() {
     int i, j; //iterate through the board
     char a; int b; //iterate through possible moves
     Piece* currPiece;
+    bool passCheck;
 
     for (i = 0; i < 8; i++) {
     for (j = 0; j < 8; j++) {
-        
+
         currPiece = boardarray[i][j];
         // a = currPiece->getX(); b = currPiece->getY();
+        bool passCheck;
+        string fromStr, toStr;
+        int fromInt, toInt;
 
         if (currPiece != nullptr) {
             //Pawns have 4 possible moves, but in either direction based on alignment
@@ -115,12 +119,28 @@ bool BoardArray::stalemate() {
                 // else if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) { return false; }
 
                 for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
-                    for (a = currPiece->getX()-1, a <= currPiece->getY()+1; a++) {
-                        if (currPiece->move(a,b, boardarray)) { return true; }
+                    for (a = currPiece->getX()-1; a <= currPiece->getY()+1; a++) {
+                        if (currPiece->move(a,b, boardarray)) {
+                            fromStr.push_back(currPiece->getX());
+                            fromInt = currPiece->getY();
+                            toStr.push_back(a);
+                            toInt = b;
+
+                            if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                                return false;
+                        }
                     }
                 }
 
-                if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) { return false; }
+                if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) {
+                    fromStr.push_back(currPiece->getX());
+                    fromInt = currPiece->getY();
+                    toStr.push_back(a);
+                    toInt = b;
+
+                    if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                        return false;
+                }
             }
 
             //Knights have 8 possible moves
@@ -173,4 +193,16 @@ bool BoardArray::stalemate() {
     }
 
     return true;
+}
+
+//Is true if the move will make check become true, false if it does not become check
+bool BoardArray::MoveBecomesCheck(string fromStr, int fromInt, string toStr, int toInt) {
+    bool becomesCheck = false;
+    
+    this->move(fromStr, fromInt, toStr, toInt);
+    becomesCheck = this->check();
+
+    this->move(toStr, toInt, fromStr, fromInt);
+
+    return becomesCheck;
 }

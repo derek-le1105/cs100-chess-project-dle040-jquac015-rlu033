@@ -10,6 +10,8 @@ class BoardArray{
       bool bkingcheck;
       bool wkingcheck;
 
+      bool MoveBecomesCheck(string col, int row, string newcol, int newrow);
+
     public:
         BoardArray();
         ~BoardArray();
