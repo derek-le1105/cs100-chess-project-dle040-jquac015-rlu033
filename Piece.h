@@ -10,6 +10,8 @@ class Piece {
   private:
     Color alignment;
   public:
+    sf::Sprite currentSprite;
+
     Piece(Color a, char c, int i) {
         alignment = a;
         setCoord(c, i);
