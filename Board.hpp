@@ -6,6 +6,7 @@ class BoardFactory {
   public:
     BoardFactory(){}
     //changes array in argument, does not create a new one
+    //array passed in MUST be all nullptr
     //Fischer-random needs test cases, and this function needs retesting
     void CreateBoard(Piece* array[][8], ChessType type = NORMAL) {
         int i, j;
