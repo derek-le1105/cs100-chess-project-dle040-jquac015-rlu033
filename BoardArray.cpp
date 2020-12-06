@@ -102,24 +102,29 @@ bool BoardArray::stalemate(){
     for (i = 0; i < 8; i++) {
         for (j = 0; j < 8; j++) {
             currPiece = boardarray[i][j];
+            a = currPiece->getX(); b = currPiece->getY();
 
             if (currPiece != nullptr) {
                 //Pawns have 4 possible moves, but in either direction based on alignment
                 if (currPiece->getType() == PType::ptype) {
-                    if (currPiece->move(a,currPiece->getY()-1, boardarray) || (currPiece->move(a,currPiece->getY()+1, boardarray))) {
-                        return false;
-                    }
+                    if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray)) { return false; }
+                    else if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray)) { return false; }
+                    else if (currPiece->move(a+1,b-1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
+                    else if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) { return false; }
                 }
 
                 //Knights have 8 possible moves
                 else if (currPiece->getType() == PType::ntype) {
-                    a = currPiece->getX(); b = currPiece->getY();
-                    if (currPiece->move(a-2, b-1, boardarray) || (currPiece->move(a-2, b+1, boardarray)) { return false; }
-                    else if (currPiece->move(a-1, b-2, boardarray) || (currPiece->move(a-1, b+2, boardarray)) { return false; }
-                    else if (currPiece->move(a+1, b-2, boardarray) || (currPiece->move(a+1, b+2, boardarray)) { return false; }
-                    else if (currPiece->move(a+2, b-1, boardarray) || (currPiece->move(a+2, b+1, boardarray)) { return false; }
+                    if (currPiece->move(a-2, b-1, boardarray) || currPiece->move(a-2, b+1, boardarray)) { return false; }
+                    else if (currPiece->move(a-1, b-2, boardarray) || currPiece->move(a-1, b+2, boardarray)) { return false; }
+                    else if (currPiece->move(a+1, b-2, boardarray) || currPiece->move(a+1, b+2, boardarray)) { return false; }
+                    else if (currPiece->move(a+2, b-1, boardarray) || currPiece->move(a+2, b+1, boardarray)) { return false; }
                 }
-                else if (boardarray[i][j]->getType() == PType::btype)
+
+                //Bishops only need one space in diagonals
+                else if (boardarray[i][j]->getType() == PType::btype) {
+                    
+                }
             }
         }
 
