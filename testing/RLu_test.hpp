@@ -8,6 +8,11 @@
 
 TEST(FactoryTest, NormalTest) {
     Piece* array[8][8];
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++)
+            array[i][j] = nullptr;
+    }
+
     BoardFactory b;
     b.CreateBoard(array, NORMAL);
 
