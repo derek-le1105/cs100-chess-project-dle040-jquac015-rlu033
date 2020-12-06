@@ -104,24 +104,26 @@ bool BoardArray::stalemate(){
             currPiece = boardarray[i][j];
 
             if (currPiece != nullptr) {
+                //Pawns have 4 possible moves, but in either direction based on alignment
                 if (currPiece->getType() == PType::ptype) {
-                    for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
-                        for (a = currPiece->getX(); a <= 'h'; a++) {
-                            if (currPiece->move(a,currPiece->getY()-1, boardarray)) {
-                                return true;
-                            }
-                            else if (currPiece->move(a,currPiece->getY()-1, boardarray)) {
-                                return true;
-                            }
-                        }
+                    if (currPiece->move(a,currPiece->getY()-1, boardarray) || (currPiece->move(a,currPiece->getY()+1, boardarray))) {
+                        return false;
                     }
                 }
-                else if (boardarray[i][j]->getType() == PType::ntype) {
-                    
+
+                //Knights have 8 possible moves
+                else if (currPiece->getType() == PType::ntype) {
+                    a = currPiece->getX(); b = currPiece->getY();
+                    if (currPiece->move(a-2, b-1, boardarray) || (currPiece->move(a-2, b+1, boardarray)) { return false; }
+                    else if (currPiece->move(a-1, b-2, boardarray) || (currPiece->move(a-1, b+2, boardarray)) { return false; }
+                    else if (currPiece->move(a+1, b-2, boardarray) || (currPiece->move(a+1, b+2, boardarray)) { return false; }
+                    else if (currPiece->move(a+2, b-1, boardarray) || (currPiece->move(a+2, b+1, boardarray)) { return false; }
                 }
                 else if (boardarray[i][j]->getType() == PType::btype)
             }
         }
 
     }
+
+    return true;
 }
