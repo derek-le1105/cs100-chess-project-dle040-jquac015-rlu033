@@ -3,9 +3,11 @@
 
 #include <string>
 #include <cctype>
+#include <SFML/Graphics>
 using namespace std;
 enum Color {WHITE, BLACK};
 enum PType {ptype, btype, ntype, rtype, qtype, ktype};  //can be (p)awn, (b)ishop, k(n)ight, (r)ook, (q)ueen, (k)ing
+
 class Piece {
   private:
     Color alignment;
