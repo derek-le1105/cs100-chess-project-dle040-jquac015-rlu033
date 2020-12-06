@@ -92,10 +92,36 @@ bool BoardArray::check(){
     return false;
 }
 
-bool BoardArray::checkmate(){
-    if(){
+bool BoardArray::checkmate(){}
+
+bool BoardArray::stalemate(){
+    int i, j; //iterate through the board
+    char a; int b; //iterate through possible moves
+    Piece* currPiece;
+
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            currPiece = boardarray[i][j];
+
+            if (currPiece != nullptr) {
+                if (currPiece->getType() == PType::ptype) {
+                    for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
+                        for (a = currPiece->getX(); a <= 'h'; a++) {
+                            if (currPiece->move(a,currPiece->getY()-1, boardarray)) {
+                                return true;
+                            }
+                            else if (currPiece->move(a,currPiece->getY()-1, boardarray)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if (boardarray[i][j]->getType() == PType::ntype) {
+                    
+                }
+                else if (boardarray[i][j]->getType() == PType::btype)
+            }
+        }
 
     }
 }
-
-bool BoardArray::stalemate(){}
