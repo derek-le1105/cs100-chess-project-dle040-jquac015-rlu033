@@ -1,4 +1,5 @@
 #include "Piece.h"
+#include <iostream> //used for displaying the setupID in Fischer
 
 enum ChessType {NORMAL, FISCHER};
 
@@ -103,14 +104,15 @@ class BoardFactory {
             Piece* add;
 
             setupID = rand() % 960;
+            std::cout << setupID << std::endl;  //can be commented out later
             
             //Divide by 4, remainder is Bishop1 (bright square = even)
             remainder = setupID % 4;
             remainder = (remainder * 2) + 1;
             
-            add = new Bishop(BLACK, 'a'+remainder, 0);
+            add = new Bishop(BLACK, 'a'+remainder, 1);
             array[remainder][0] = add;
-            add = new Bishop(WHITE, 'a'+remainder, 7);
+            add = new Bishop(WHITE, 'a'+remainder, 8);
             array[remainder][7] = add;
             
             bArray[remainder] = true;
@@ -121,9 +123,9 @@ class BoardFactory {
                 remainder = setupID % 4;
                 remainder = (remainder * 2);
                 
-                add = new Bishop(BLACK, 'a'+remainder, 0);
+                add = new Bishop(BLACK, 'a'+remainder, 1);
                 array[remainder][0] = add;
-                add = new Bishop(WHITE, 'a'+remainder, 7);
+                add = new Bishop(WHITE, 'a'+remainder, 8);
                 array[remainder][7] = add;
 
                 bArray[remainder] = true;
@@ -132,7 +134,7 @@ class BoardFactory {
 
             //Divide by 6, remainder is Queen (first free square)
             {
-                //FIX THIS ALGORITHM
+                //CHECK THIS ALGORITHM
                 remainder = setupID % 6;
                 iter = 0;
                 while (iter < remainder) {
@@ -141,9 +143,9 @@ class BoardFactory {
                 }
                 remainder = iter;
                 
-                add = new Queen(BLACK, 'a'+remainder, 0);
+                add = new Queen(BLACK, 'a'+remainder, 1);
                 array[remainder][0] = add;
-                add = new Queen(WHITE, 'a'+remainder, 7);
+                add = new Queen(WHITE, 'a'+remainder, 8);
                 array[remainder][7] = add;
 
                 bArray[remainder] = true;
@@ -167,55 +169,46 @@ class BoardFactory {
                 }
 
                 //slot2
+                else if ((remainder >= 4 && remainder <= 6) || remainder == 0) {
+                    iter++;
+                }
             }
 
             //Empty spaces: Rook - King - Rook
             {
                 bool kingSpot = false;
-                
+                for (iter = 0; iter < 8; iter++) {
+                    if (bArray[iter] != true && !kingSpot) {
+                        if (!kingSpot) {
+                            add = new Rook(BLACK, 'a'+iter, 1);
+                            array[iter][0] = add;
+                            add = new Rook(WHITE, 'a'+iter, 8);
+                            array[iter][7] = add;
+                            kingSpot = true;
+                        }
+                        else {
+                            add = new King(BLACK, 'a'+iter, 1);
+                            array[iter][0] = add;
+                            add = new King(WHITE, 'a'+iter, 8);
+                            array[iter][7] = add;
+                            kingSpot = false;
+                        }
+                    }
+                }
             }
         }
     }
 };
 
-/*
-0000    11000
-0001    10100
-0010    10010
-0011    10001
-0100    01100
-0101    01010
-0110    01001
-0111    00110
-1000    00101
-1001    00011
-
-*/
-
-/* Test functionality
-string Pawn::getName() {return " P";}
-string Knight::getName() {return " N";}
-string Rook::getName() {return " R";}
-string Bishop::getName() {return " B";}
-string Queen::getName() {return " Q";}
-string King::getName() {return " K";}
-void BoardFactoryTest() {
-    BoardFactory b;
-    Piece* array[8][8];
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++)
-            array[i][j] = nullptr;
-    }
-
-    b.CreateBoard(array);
-
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-            cout << i+1 << j+1;
-            if (array[j][i] != nullptr)
-                cout << array[j][i]->getName();
-            cout << endl;
-        }
-    }
-}
+/* Knight Diagram
+0    11000
+1    10100
+2    10010
+3    10001
+4    01100
+5    01010
+6    01001
+7    00110
+8    00101
+9    00011
 */

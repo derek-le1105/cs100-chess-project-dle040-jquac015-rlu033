@@ -90,4 +90,9 @@ TEST(FactoryTest, NormalTest) {
     EXPECT_EQ(array[7][7]->getAlignment(), WHITE);
 }
 
+// //srand(2)
+// TEST(FactoryTest, Fischer2) {
+//     EXPECT_EQ(0,1);
+// }
+
 #endif
