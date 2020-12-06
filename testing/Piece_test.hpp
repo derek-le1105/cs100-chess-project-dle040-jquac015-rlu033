@@ -682,7 +682,7 @@ TEST(PawnMove, BlackCollisionTest) {
     Piece* test = new Pawn(BLACK, 'd', 2);
     array[3][1] = test;
 
-    /*White: moving upwards*/{
+    /*Black: moving upwards*/{
         Piece* p1 = new Rook(BLACK, 'd',3);
         array[3][2] = p1;
         EXPECT_EQ(test->move('d',3,array), false);
@@ -717,7 +717,7 @@ TEST(PawnMove, BlackCollisionTest) {
     test = new Pawn(BLACK, 'd', 4);
     array[3][3] = test;
 
-    /*White: Capturing*/{
+    /*Black: Capturing*/{
         Piece* p1 = new Rook(WHITE, 'c',5);
         array[2][4] = p1;
         ASSERT_EQ(test->move('d',5,array), true);
@@ -751,7 +751,7 @@ TEST(PawnMove, WhiteCollisionTest) {
     Piece* test = new Pawn(WHITE, 'd', 7);
     array[3][6] = test;
 
-    /*Black: moving downwards*/{
+    /*White: moving downwards*/{
         Piece* p1 = new Rook(WHITE, 'd',6);
         array[3][5] = p1;
         EXPECT_EQ(test->move('d',6,array), false);
@@ -786,7 +786,7 @@ TEST(PawnMove, WhiteCollisionTest) {
     test = new Pawn(WHITE, 'd', 4);
     array[3][3] = test;
 
-    /*Black: Capturing*/{
+    /*White: Capturing*/{
         Piece* p1 = new Rook(BLACK, 'c',3);
         array[2][2] = p1;
         ASSERT_EQ(test->move('d',3,array), true);
