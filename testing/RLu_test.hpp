@@ -3,7 +3,7 @@
 
 #include "gtest/gtest.h"
 #include "../Board.hpp"
-#include "../BoardArray.h"
+//#include "../BoardArray.h"
 #include "../Piece.h"
 
 TEST(FactoryTest, NormalTest) {
@@ -12,8 +12,8 @@ TEST(FactoryTest, NormalTest) {
     b.CreateBoard(array, NORMAL);
 
     ASSERT_NE(array, nullptr);
-    EXPECT_EQ(array[0][0]->getType(), PType::rtype)
-    EXPECT_EQ(array[0][0]->getAlignment(), BLACK)
+    EXPECT_EQ(array[0][0]->getType(), PType::rtype);
+    EXPECT_EQ(array[0][0]->getAlignment(), BLACK);
 }
 
 #endif

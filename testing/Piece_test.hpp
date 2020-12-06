@@ -22,11 +22,11 @@ TEST(PieceFunctionTest, Coord) {
     EXPECT_EQ(test.getX(), 'a');
     EXPECT_EQ(test.getY(), 1);
 
-    test->setCoord('b',4);
+    test.setCoord('b',4);
     EXPECT_EQ(test.getX(), 'b');
     EXPECT_EQ(test.getY(), 4);
 
-    test->setCoord('g',8);
+    test.setCoord('g',8);
     EXPECT_EQ(test.getX(), 'g');
     EXPECT_EQ(test.getY(), 8);
 }
@@ -35,23 +35,23 @@ TEST(PieceFunctionTest, PieceType) {
     EXPECT_EQ(test->getType(), PType::ptype);
     delete test;
 
-    Piece* test = new Bishop(WHITE, 'a', 1);
+    test = new Bishop(WHITE, 'a', 1);
     EXPECT_EQ(test->getType(), PType::btype);
     delete test;
 
-    Piece* test = new Knight(WHITE, 'a', 1);
+    test = new Knight(WHITE, 'a', 1);
     EXPECT_EQ(test->getType(), PType::ntype);
     delete test;
 
-    Piece* test = new Rook(WHITE, 'a', 1);
+    test = new Rook(WHITE, 'a', 1);
     EXPECT_EQ(test->getType(), PType::rtype);
     delete test;
 
-    Piece* test = new Queen(WHITE, 'a', 1);
+    test = new Queen(WHITE, 'a', 1);
     EXPECT_EQ(test->getType(), PType::qtype);
     delete test;
 
-    Piece* test = new King(WHITE, 'a', 1);
+    test = new King(WHITE, 'a', 1);
     EXPECT_EQ(test->getType(), PType::ktype);
     delete test;
 }
