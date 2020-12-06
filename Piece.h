@@ -5,6 +5,7 @@
 #include <cctype>
 using namespace std;
 enum Color {WHITE, BLACK};
+enum PType {ptype, btype, ntype, rtype, qtype, ktype};  //can be (p)awn, (b)ishop, k(n)ight, (r)ook, (q)ueen, (k)ing
 class Piece {
   private:
     Color alignment;
@@ -29,10 +30,12 @@ class Piece {
 
     virtual void drawPiece() = 0;
     
-    virtual int getX() = 0;
-    virtual int getY() = 0;
+    char getX() { return posX + 1 + 'a'; }
+    int getY() { return posY + 1; }
+    PType getType() { return type; }
 
   protected:
+    PType type;
     int posX, posY;
     int CharToInt(char c) {
       if (isupper(c))
@@ -47,17 +50,15 @@ class Piece {
 //moves horizontally or vertically
 class Rook : public Piece {
   public:
-    Rook(Color a, char c, int i) : Piece(a, c, i) {}
+    Rook(Color a, char c, int i) : Piece(a, c, i) { type = rtype; }
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
-    int getX();
-    int getY();
 };
 
 //moves in an L-shape and can jump over pieces
 class Knight : public Piece {
   public:
-    Knight(Color a, char c, int i) : Piece(a, c, i) {}
+    Knight(Color a, char c, int i) : Piece(a, c, i) { type = ntype; }
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
 };
@@ -66,7 +67,7 @@ class Knight : public Piece {
 //another way to see it is as only on one color
 class Bishop : public Piece {
   public:
-    Bishop(Color a, char c, int i) : Piece(a, c, i) {}
+    Bishop(Color a, char c, int i) : Piece(a, c, i) { type = btype; }
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
 };
@@ -74,7 +75,7 @@ class Bishop : public Piece {
 //moves horizontally or vertically or diagonally
 class Queen : public Piece {
   public:
-    Queen(Color a, char c, int i) : Piece(a, c, i) {}
+    Queen(Color a, char c, int i) : Piece(a, c, i) { type = qtype; }
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
 };
@@ -83,7 +84,7 @@ class Queen : public Piece {
 //can also castle with rook
 class King : public Piece {
   public:
-    King(Color a, char c, int i) : Piece(a, c, i) {}
+    King(Color a, char c, int i) : Piece(a, c, i) { type = ktype; }
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
 };
@@ -93,7 +94,7 @@ class King : public Piece {
 //moves diagonally upwards by capturing
 class Pawn : public Piece {
   public:
-    Pawn(Color a, char c, int i) : Piece(a, c, i) {}
+    Pawn(Color a, char c, int i) : Piece(a, c, i) { type = ptype; }
     bool move(char, int, Piece* array[][8] = nullptr);
     void drawPiece();
 };
