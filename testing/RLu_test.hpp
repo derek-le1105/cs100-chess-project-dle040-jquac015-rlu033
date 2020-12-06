@@ -8,14 +8,10 @@
 
 TEST(FactoryTest, NormalTest) {
     Piece* array[8][8];
-    int i,j;
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 8; j++)
-            array[i][j] = nullptr;
-    }
 
     BoardFactory b;
-    b.CreateBoard(array, NORMAL);
+    b.ClearBoard(array);
+    b.CreateBoard(array);
 
     ASSERT_NE(array, nullptr);
 
@@ -94,5 +90,18 @@ TEST(FactoryTest, NormalTest) {
 // TEST(FactoryTest, Fischer2) {
 //     EXPECT_EQ(0,1);
 // }
+
+//hehe I kinda can't test this yet...
+//I need to know how the board is created
+/*
+TEST(Stalemate, StartingPosition) {
+    Piece* array[8][8];
+    BoardFactory b;
+    b.ClearBoard(array);
+    b.CreateBoard(array);
+
+    ASSERT_NE(array, nullptr);
+    EXPECT_EQ()
+}*/
 
 #endif

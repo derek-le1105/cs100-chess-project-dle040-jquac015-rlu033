@@ -6,6 +6,15 @@ enum ChessType {NORMAL, FISCHER};
 class BoardFactory {
   public:
     BoardFactory(){}
+    //should NOT be used if the board holds allocated data
+    void ClearBoard(Piece* array[][8]) {
+        int i, j;
+        for (i = 0; i < 8; i++) {
+            for (j = 0; j < 8; j++) {
+                array[i][j] = nullptr;
+            }
+        }
+    }
     //changes array in argument, does not create a new one
     //array passed in MUST be all nullptr
     //Fischer-random needs test cases, and this function needs retesting

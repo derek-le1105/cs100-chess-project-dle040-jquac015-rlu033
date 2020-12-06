@@ -96,6 +96,8 @@ bool BoardArray::checkmate(){}
 
 //needs to also not put the king in check (haven't done that yet)
 bool BoardArray::stalemate() {
+    if (check()) { return false; }
+
     int i, j; //iterate through the board
     char a; int b; //iterate through possible moves
     Piece* currPiece;
@@ -145,10 +147,37 @@ bool BoardArray::stalemate() {
 
             //Knights have 8 possible moves
             else if (currPiece->getType() == PType::ntype) {
-                if (currPiece->move(a-2, b-1, boardarray) || currPiece->move(a-2, b+1, boardarray)) { return false; }
-                else if (currPiece->move(a-1, b-2, boardarray) || currPiece->move(a-1, b+2, boardarray)) { return false; }
-                else if (currPiece->move(a+1, b-2, boardarray) || currPiece->move(a+1, b+2, boardarray)) { return false; }
-                else if (currPiece->move(a+2, b-1, boardarray) || currPiece->move(a+2, b+1, boardarray)) { return false; }
+                // if (currPiece->move(a-2, b-1, boardarray) || currPiece->move(a-2, b+1, boardarray)) { return false; }
+                // else if (currPiece->move(a-1, b-2, boardarray) || currPiece->move(a-1, b+2, boardarray)) { return false; }
+                // else if (currPiece->move(a+1, b-2, boardarray) || currPiece->move(a+1, b+2, boardarray)) { return false; }
+                // else if (currPiece->move(a+2, b-1, boardarray) || currPiece->move(a+2, b+1, boardarray)) { return false; }
+
+                for (b = currPiece->getY()-2; b <= currPiece->getY()+2; b = b+4) {
+                    for (a = currPiece->getX()-1; a <= currPiece->getY()+1; a = a+2) {
+                        if (currPiece->move(a,b, boardarray)) {
+                            fromStr.push_back(currPiece->getX());
+                            fromInt = currPiece->getY();
+                            toStr.push_back(a);
+                            toInt = b;
+
+                            if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                                return false;
+                        }
+                    }
+                }
+                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
+                    for (a = currPiece->getX()-2; a <= currPiece->getY()+2; a = a+4) {
+                        if (currPiece->move(a,b, boardarray)) {
+                            fromStr.push_back(currPiece->getX());
+                            fromInt = currPiece->getY();
+                            toStr.push_back(a);
+                            toInt = b;
+
+                            if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                                return false;
+                        }
+                    }
+                }
             }
 
             //Bishops only need one space in diagonals
@@ -156,14 +185,46 @@ bool BoardArray::stalemate() {
                 // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
 
                 for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
-                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a = a+2)
-                        if (currPiece->move(a,b, boardarray)) { return false; }
+                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a = a+2) {
+                        if (currPiece->move(a,b, boardarray)) {
+                            fromStr.push_back(currPiece->getX());
+                            fromInt = currPiece->getY();
+                            toStr.push_back(a);
+                            toInt = b;
+
+                            if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                                return false;
+                        }
+                    }
                 }
             }
 
             //Rooks move one space vertical or horizontal
             else if (currPiece->getType() == PType::rtype) {
-                if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
+                // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
+
+                for (b = currPiece->getY()-1; b <= currPiece->getY(); b = b+2) {
+                    if (currPiece->move(currPiece->getX(),b, boardarray)) {
+                        fromStr.push_back(currPiece->getX());
+                        fromInt = currPiece->getY();
+                        toStr.push_back(currPiece->getX());
+                        toInt = b;
+
+                        if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                            return false;
+                    }
+                }
+                for (a = currPiece->getX()-1; a <= currPiece->getX(); a = a+2) {
+                    if (currPiece->move(a,currPiece->getY(), boardarray)) {
+                        fromStr.push_back(currPiece->getX());
+                        fromInt = currPiece->getY();
+                        toStr.push_back(a);
+                        toInt = currPiece->getY();
+
+                        if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                            return false;
+                    }
+                }
             }
 
             //Queens move as either rooks or bishops
@@ -171,9 +232,18 @@ bool BoardArray::stalemate() {
                 // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
                 // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
 
-                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b++) {
-                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a++)
-                        if (currPiece->move(a,b, boardarray)) { return false; }
+                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+1) {
+                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a = a+1) {
+                        if (currPiece->move(a,b, boardarray)) {
+                            fromStr.push_back(currPiece->getX());
+                            fromInt = currPiece->getY();
+                            toStr.push_back(a);
+                            toInt = b;
+
+                            if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                                return false;
+                        }
+                    }
                 }
             }
 
@@ -182,9 +252,18 @@ bool BoardArray::stalemate() {
                 // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
                 // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
 
-                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b++) {
-                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a++)
-                        if (currPiece->move(a,b, boardarray)) { return false; }
+                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+1) {
+                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a = a+1) {
+                        if (currPiece->move(a,b, boardarray)) {
+                            fromStr.push_back(currPiece->getX());
+                            fromInt = currPiece->getY();
+                            toStr.push_back(a);
+                            toInt = b;
+
+                            if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
+                                return false;
+                        }
+                    }
                 }
             }
         }
