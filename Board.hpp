@@ -37,21 +37,6 @@ class BoardFactory {
 
         if (type == NORMAL) {
             Piece* add;
-            /*Pawn*/{
-                char iter = 'a';
-                for (j = 0; j < 8; j++) {
-                    add = new Pawn(WHITE, iter, 7);
-                    array[j][6] = add;
-                    iter++;
-                }
-
-                iter = 'a';
-                for (j = 0; j < 8; j++) {
-                    add = new Pawn(BLACK, iter, 2);
-                    array[j][1] = add;
-                    iter++;
-                }
-            }
 
             /*Bishop*/{
                 add = new Bishop(WHITE, 'c', 8);
