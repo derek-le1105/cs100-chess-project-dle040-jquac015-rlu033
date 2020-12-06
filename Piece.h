@@ -30,7 +30,7 @@ class Piece {
 
     virtual void drawPiece() = 0;
     
-    char getX() { return posX + 1 + 'a'; }
+    char getX() { return posX + 'a'; }
     int getY() { return posY + 1; }
     PType getType() { return type; }
 

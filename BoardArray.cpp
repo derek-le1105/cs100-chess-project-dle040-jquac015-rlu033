@@ -94,40 +94,82 @@ bool BoardArray::check(){
 
 bool BoardArray::checkmate(){}
 
-bool BoardArray::stalemate(){
+//needs to also not put the king in check (haven't done that yet)
+bool BoardArray::stalemate() {
     int i, j; //iterate through the board
     char a; int b; //iterate through possible moves
     Piece* currPiece;
 
     for (i = 0; i < 8; i++) {
-        for (j = 0; j < 8; j++) {
-            currPiece = boardarray[i][j];
-            a = currPiece->getX(); b = currPiece->getY();
+    for (j = 0; j < 8; j++) {
+        
+        currPiece = boardarray[i][j];
+        // a = currPiece->getX(); b = currPiece->getY();
 
-            if (currPiece != nullptr) {
-                //Pawns have 4 possible moves, but in either direction based on alignment
-                if (currPiece->getType() == PType::ptype) {
-                    if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray)) { return false; }
-                    else if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray)) { return false; }
-                    else if (currPiece->move(a+1,b-1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
-                    else if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) { return false; }
+        if (currPiece != nullptr) {
+            //Pawns have 4 possible moves, but in either direction based on alignment
+            if (currPiece->getType() == PType::ptype) {
+                // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray)) { return false; }
+                // else if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray)) { return false; }
+                // else if (currPiece->move(a+1,b-1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
+                // else if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) { return false; }
+
+                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
+                    for (a = currPiece->getX()-1, a <= currPiece->getY()+1; a++) {
+                        if (currPiece->move(a,b, boardarray)) { return true; }
+                    }
                 }
 
-                //Knights have 8 possible moves
-                else if (currPiece->getType() == PType::ntype) {
-                    if (currPiece->move(a-2, b-1, boardarray) || currPiece->move(a-2, b+1, boardarray)) { return false; }
-                    else if (currPiece->move(a-1, b-2, boardarray) || currPiece->move(a-1, b+2, boardarray)) { return false; }
-                    else if (currPiece->move(a+1, b-2, boardarray) || currPiece->move(a+1, b+2, boardarray)) { return false; }
-                    else if (currPiece->move(a+2, b-1, boardarray) || currPiece->move(a+2, b+1, boardarray)) { return false; }
-                }
+                if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) { return false; }
+            }
 
-                //Bishops only need one space in diagonals
-                else if (boardarray[i][j]->getType() == PType::btype) {
-                    
+            //Knights have 8 possible moves
+            else if (currPiece->getType() == PType::ntype) {
+                if (currPiece->move(a-2, b-1, boardarray) || currPiece->move(a-2, b+1, boardarray)) { return false; }
+                else if (currPiece->move(a-1, b-2, boardarray) || currPiece->move(a-1, b+2, boardarray)) { return false; }
+                else if (currPiece->move(a+1, b-2, boardarray) || currPiece->move(a+1, b+2, boardarray)) { return false; }
+                else if (currPiece->move(a+2, b-1, boardarray) || currPiece->move(a+2, b+1, boardarray)) { return false; }
+            }
+
+            //Bishops only need one space in diagonals
+            else if (currPiece->getType() == PType::btype) {
+                // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
+
+                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
+                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a = a+2)
+                        if (currPiece->move(a,b, boardarray)) { return false; }
+                }
+            }
+
+            //Rooks move one space vertical or horizontal
+            else if (currPiece->getType() == PType::rtype) {
+                if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
+            }
+
+            //Queens move as either rooks or bishops
+            else if (currPiece->getType() == PType::qtype) {
+                // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
+                // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
+
+                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b++) {
+                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a++)
+                        if (currPiece->move(a,b, boardarray)) { return false; }
+                }
+            }
+
+            //actually, this is the same as the queen. Huh.
+            else if (currPiece->getType() == PType::ktype) {
+                // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
+                // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
+
+                for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b++) {
+                    for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a++)
+                        if (currPiece->move(a,b, boardarray)) { return false; }
                 }
             }
         }
 
+    }
     }
 
     return true;
