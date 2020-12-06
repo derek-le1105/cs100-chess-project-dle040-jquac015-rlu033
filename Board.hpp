@@ -22,14 +22,14 @@ class BoardFactory {
         {
             char iter = 'a';
             for (j = 0; j < 8; j++) {
-                pawn = new Pawn(BLACK, iter, 7);
+                pawn = new Pawn(WHITE, iter, 7);
                 array[j][6] = pawn;
                 iter++;
             }
 
             iter = 'a';
             for (j = 0; j < 8; j++) {
-                pawn = new Pawn(WHITE, iter, 2);
+                pawn = new Pawn(BLACK, iter, 2);
                 array[j][1] = pawn;
                 iter++;
             }
@@ -40,68 +40,68 @@ class BoardFactory {
             /*Pawn*/{
                 char iter = 'a';
                 for (j = 0; j < 8; j++) {
-                    add = new Pawn(BLACK, iter, 7);
+                    add = new Pawn(WHITE, iter, 7);
                     array[j][6] = add;
                     iter++;
                 }
 
                 iter = 'a';
                 for (j = 0; j < 8; j++) {
-                    add = new Pawn(WHITE, iter, 2);
+                    add = new Pawn(BLACK, iter, 2);
                     array[j][1] = add;
                     iter++;
                 }
             }
 
             /*Bishop*/{
-                add = new Bishop(BLACK, 'c', 8);
+                add = new Bishop(WHITE, 'c', 8);
                 array[2][7] = add;
-                add = new Bishop(BLACK, 'f', 8);
+                add = new Bishop(WHITE, 'f', 8);
                 array[5][7] = add;
 
-                add = new Bishop(WHITE, 'c', 1);
+                add = new Bishop(BLACK, 'c', 1);
                 array[2][0] = add;
-                add = new Bishop(WHITE, 'f', 1);
+                add = new Bishop(BLACK, 'f', 1);
                 array[5][0] = add;
             }
 
             /*Knight*/{
-                add = new Knight(BLACK, 'b', 8);
+                add = new Knight(WHITE, 'b', 8);
                 array[1][7] = add;
-                add = new Knight(BLACK, 'g', 8);
+                add = new Knight(WHITE, 'g', 8);
                 array[6][7] = add;
 
-                add = new Knight(WHITE, 'b', 1);
+                add = new Knight(BLACK, 'b', 1);
                 array[1][0] = add;
-                add = new Knight(WHITE, 'g', 1);
+                add = new Knight(BLACK, 'g', 1);
                 array[6][0] = add;
             }
 
             /*Rook*/{
-                add = new Rook(BLACK, 'a', 8);
+                add = new Rook(WHITE, 'a', 8);
                 array[0][7] = add;
-                add = new Rook(BLACK, 'h', 8);
+                add = new Rook(WHITE, 'h', 8);
                 array[7][7] = add;
 
-                add = new Rook(WHITE, 'a', 1);
+                add = new Rook(BLACK, 'a', 1);
                 array[0][0] = add;
-                add = new Rook(WHITE, 'h', 1);
+                add = new Rook(BLACK, 'h', 1);
                 array[7][0] = add;
             }
 
             /*Queen*/{
-                add = new Queen(BLACK, 'd', 8);
+                add = new Queen(WHITE, 'd', 8);
                 array[3][7] = add;
 
-                add = new Queen(WHITE, 'd', 1);
+                add = new Queen(BLACK, 'd', 1);
                 array[3][0] = add;
             }
 
             /*King*/{
-                add = new King(BLACK, 'e', 8);
+                add = new King(WHITE, 'e', 8);
                 array[4][7] = add;
 
-                add = new King(WHITE, 'e', 1);
+                add = new King(BLACK, 'e', 1);
                 array[4][0] = add;
             }
         }
@@ -123,9 +123,9 @@ class BoardFactory {
             remainder = setupID % 4;
             remainder = (remainder * 2) + 1;
             
-            add = new Bishop(WHITE, 'a'+remainder, 0);
+            add = new Bishop(BLACK, 'a'+remainder, 0);
             array[remainder][0] = add;
-            add = new Bishop(BLACK, 'a'+remainder, 7);
+            add = new Bishop(WHITE, 'a'+remainder, 7);
             array[remainder][7] = add;
             
             bArray[remainder] = true;
@@ -136,9 +136,9 @@ class BoardFactory {
                 remainder = setupID % 4;
                 remainder = (remainder * 2);
                 
-                add = new Bishop(WHITE, 'a'+remainder, 0);
+                add = new Bishop(BLACK, 'a'+remainder, 0);
                 array[remainder][0] = add;
-                add = new Bishop(BLACK, 'a'+remainder, 7);
+                add = new Bishop(WHITE, 'a'+remainder, 7);
                 array[remainder][7] = add;
 
                 bArray[remainder] = true;
@@ -156,9 +156,9 @@ class BoardFactory {
                 }
                 remainder = iter;
                 
-                add = new Queen(WHITE, 'a'+remainder, 0);
+                add = new Queen(BLACK, 'a'+remainder, 0);
                 array[remainder][0] = add;
-                add = new Queen(BLACK, 'a'+remainder, 7);
+                add = new Queen(WHITE, 'a'+remainder, 7);
                 array[remainder][7] = add;
 
                 bArray[remainder] = true;
