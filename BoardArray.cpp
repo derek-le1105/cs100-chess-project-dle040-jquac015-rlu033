@@ -70,21 +70,20 @@ void BoardArray::move(string col ,int row, string newcol, int newrow){
 }
 
 bool BoardArray::check(){
-    Piece* findking = new King(turn, 'z', 20);
-    int poskingx;
-    int poskingy;
+    Piece* checked;
+    Piece* checKing;
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
-            if(typeid(boardarray[i][j]) == typeid(findking)){
-                poskingx = i;
-                poskingy = j;
+            checked = boardarray[i][j]
+            if(checked->getType() == ktype && checked->getAignment() == turn){
+                checKing = boardarray[i][j];
             }
         }
     }
-    delete findking;
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
-            if(boardarray[i][j].move(poskingx+65, poskingy, boardarray){
+            checked = boardarray[i][j]
+            if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
                 return true;
             }
         }
@@ -93,9 +92,48 @@ bool BoardArray::check(){
 }
 
 bool BoardArray::checkmate(){
-    if(){
-
+    if(!check()){return false;}
+    Piece* checked;
+    Piece* checKing;
+    int i, j, xsave, ysave;
+    for(i=0; i<8; i++){
+        for(j=0; j<8; j++){
+            checked = boardarray[i][j]
+            if(checked->getType() == ktype && checked->getAignment() == turn){
+                checKing = boardarray[i][j];
+            }
+        }
     }
+    for(i=0; i<8; i++){
+        for(j=0; j<8; j++){
+            checked = boardarray[i][j]
+            if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
+                xsave = ChartoInt(checked->getX());
+                ysave = checked->getY();
+            }
+        }
+    }
+    for(i=0; i<8; i++){
+        for(j=0; j<8; j++){
+            checked = boardarray[i][j]
+            if(checked->move(xsave+'a', ysave, boardarray) && boardarray[xsave][ysave]->getAlignment() != checked->getAlignment()){
+                return false;
+            }
+        }
+    }
+    xsave = ChartoInt(checKing->getX());
+    ysave = checKing->getY();
+    for(i=ChartoInt(checKing->getX()-1); i<ChartoInt(checKing->getX())+2; i++) {
+        for(j=checKing->getY()-1; j<checKing->getY()+2; j++){
+            if(checKing->move(i+'a', j, boardarray)){
+                boardarray[i][j] = checKing;
+                checKing = nullptr;
+                check();
+            }
+        }
+    }
+    boardarray[xsave][ysave] = boardarray[i][j];
+    return false;
 }
 
 bool BoardArray::stalemate(){}
