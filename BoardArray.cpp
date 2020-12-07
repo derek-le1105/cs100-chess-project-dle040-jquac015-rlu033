@@ -94,7 +94,7 @@ bool BoardArray::check(){
 
 bool BoardArray::checkmate(){}
 
-//needs to also not put the king in check (haven't done that yet)
+//needs to also not put the king in check (relies on check())
 bool BoardArray::stalemate() {
     if (check()) { return false; }
 
@@ -102,30 +102,24 @@ bool BoardArray::stalemate() {
     char a; int b; //iterate through possible moves
     Piece* currPiece;
     bool passCheck;
+    string fromStr, toStr;
+    int fromInt, toInt;
 
     for (i = 0; i < 8; i++) {
     for (j = 0; j < 8; j++) {
 
         currPiece = boardarray[i][j];
-        // a = currPiece->getX(); b = currPiece->getY();
-        bool passCheck;
-        string fromStr, toStr;
-        int fromInt, toInt;
 
         if (currPiece != nullptr) {
             //Pawns have 4 possible moves, but in either direction based on alignment
             if (currPiece->getType() == PType::ptype) {
-                // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray)) { return false; }
-                // else if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray)) { return false; }
-                // else if (currPiece->move(a+1,b-1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
-                // else if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) { return false; }
 
                 for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
                     for (a = currPiece->getX()-1; a <= currPiece->getY()+1; a++) {
                         if (currPiece->move(a,b, boardarray)) {
-                            fromStr.push_back(currPiece->getX());
+                            fromStr = {currPiece->getX()};
                             fromInt = currPiece->getY();
-                            toStr.push_back(a);
+                            toStr = {a};
                             toInt = b;
 
                             if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
@@ -135,9 +129,9 @@ bool BoardArray::stalemate() {
                 }
 
                 if (currPiece->move(a,b-2, boardarray) || currPiece->move(a,b+2, boardarray)) {
-                    fromStr.push_back(currPiece->getX());
+                    fromStr = {currPiece->getX()};
                     fromInt = currPiece->getY();
-                    toStr.push_back(a);
+                    toStr = {a};
                     toInt = b;
 
                     if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
@@ -147,17 +141,13 @@ bool BoardArray::stalemate() {
 
             //Knights have 8 possible moves
             else if (currPiece->getType() == PType::ntype) {
-                // if (currPiece->move(a-2, b-1, boardarray) || currPiece->move(a-2, b+1, boardarray)) { return false; }
-                // else if (currPiece->move(a-1, b-2, boardarray) || currPiece->move(a-1, b+2, boardarray)) { return false; }
-                // else if (currPiece->move(a+1, b-2, boardarray) || currPiece->move(a+1, b+2, boardarray)) { return false; }
-                // else if (currPiece->move(a+2, b-1, boardarray) || currPiece->move(a+2, b+1, boardarray)) { return false; }
 
                 for (b = currPiece->getY()-2; b <= currPiece->getY()+2; b = b+4) {
                     for (a = currPiece->getX()-1; a <= currPiece->getY()+1; a = a+2) {
                         if (currPiece->move(a,b, boardarray)) {
-                            fromStr.push_back(currPiece->getX());
+                            fromStr = {currPiece->getX()};
                             fromInt = currPiece->getY();
-                            toStr.push_back(a);
+                            toStr = {a};
                             toInt = b;
 
                             if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
@@ -168,9 +158,9 @@ bool BoardArray::stalemate() {
                 for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
                     for (a = currPiece->getX()-2; a <= currPiece->getY()+2; a = a+4) {
                         if (currPiece->move(a,b, boardarray)) {
-                            fromStr.push_back(currPiece->getX());
+                            fromStr = {currPiece->getX()};
                             fromInt = currPiece->getY();
-                            toStr.push_back(a);
+                            toStr = {a};
                             toInt = b;
 
                             if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
@@ -182,14 +172,13 @@ bool BoardArray::stalemate() {
 
             //Bishops only need one space in diagonals
             else if (currPiece->getType() == PType::btype) {
-                // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
 
                 for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+2) {
                     for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a = a+2) {
                         if (currPiece->move(a,b, boardarray)) {
-                            fromStr.push_back(currPiece->getX());
+                            fromStr = {currPiece->getX()};
                             fromInt = currPiece->getY();
-                            toStr.push_back(a);
+                            toStr = {a};
                             toInt = b;
 
                             if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
@@ -201,13 +190,12 @@ bool BoardArray::stalemate() {
 
             //Rooks move one space vertical or horizontal
             else if (currPiece->getType() == PType::rtype) {
-                // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
 
                 for (b = currPiece->getY()-1; b <= currPiece->getY(); b = b+2) {
                     if (currPiece->move(currPiece->getX(),b, boardarray)) {
-                        fromStr.push_back(currPiece->getX());
+                        fromStr = {currPiece->getX()};
                         fromInt = currPiece->getY();
-                        toStr.push_back(currPiece->getX());
+                        toStr = {currPiece->getX()};
                         toInt = b;
 
                         if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
@@ -216,9 +204,9 @@ bool BoardArray::stalemate() {
                 }
                 for (a = currPiece->getX()-1; a <= currPiece->getX(); a = a+2) {
                     if (currPiece->move(a,currPiece->getY(), boardarray)) {
-                        fromStr.push_back(currPiece->getX());
+                        fromStr = {currPiece->getX()};
                         fromInt = currPiece->getY();
-                        toStr.push_back(a);
+                        toStr = {a};
                         toInt = currPiece->getY();
 
                         if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
@@ -229,15 +217,13 @@ bool BoardArray::stalemate() {
 
             //Queens move as either rooks or bishops
             else if (currPiece->getType() == PType::qtype) {
-                // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
-                // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
 
                 for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+1) {
                     for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a = a+1) {
                         if (currPiece->move(a,b, boardarray)) {
-                            fromStr.push_back(currPiece->getX());
+                            fromStr = {currPiece->getX()};
                             fromInt = currPiece->getY();
-                            toStr.push_back(a);
+                            toStr = {a};
                             toInt = b;
 
                             if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))
@@ -249,15 +235,13 @@ bool BoardArray::stalemate() {
 
             //actually, this is the same as the queen. Huh.
             else if (currPiece->getType() == PType::ktype) {
-                // if (currPiece->move(a-1,b-1, boardarray) || currPiece->move(a+1,b-1, boardarray) || currPiece->move(a-1,b+1, boardarray) || currPiece->move(a+1,b+1, boardarray)) { return false; }
-                // if (currPiece->move(a,b-1, boardarray) || currPiece->move(a,b+1, boardarray) || currPiece->move(a-1,b, boardarray) || currPiece->move(a+1,b, boardarray)) { return false; }
 
                 for (b = currPiece->getY()-1; b <= currPiece->getY()+1; b = b+1) {
                     for (a = currPiece->getX()-1; a <= currPiece->getX()+1; a = a+1) {
                         if (currPiece->move(a,b, boardarray)) {
-                            fromStr.push_back(currPiece->getX());
+                            fromStr = {currPiece->getX()};
                             fromInt = currPiece->getY();
-                            toStr.push_back(a);
+                            toStr = {a};
                             toInt = b;
 
                             if (!this->MoveBecomesCheck(fromStr, fromInt, toStr, toInt))

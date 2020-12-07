@@ -101,33 +101,35 @@ class BoardFactory {
             }
         }
         
-        //FISCHER-RANDOM algorithm: https://en.wikipedia.org/wiki/Fischer_random_chess_numbering_scheme
+        //FISCHER-RANDOM algorithm: https://en.wikipedia.org/wiki/Fischer_random_chess_numbering_scheme#Direct_derivation
         else if (type == FISCHER) {
             srand(2);
             int setupID, remainder;
             bool bArray[8];
-            int iter, slot;
+            int iter, slot1, slot2;
             for (iter = 0; i < 8; i++) {
                 bArray[i] = false;
             }
             Piece* add;
 
             setupID = rand() % 960;
-            std::cout << setupID << std::endl;  //can be commented out later
+            std::cout << "Fischer-Random ID" << setupID << std::endl;  //can be commented out later
             
-            //Divide by 4, remainder is Bishop1 (bright square = even)
-            remainder = setupID % 4;
-            remainder = (remainder * 2) + 1;
-            
-            add = new Bishop(BLACK, 'a'+remainder, 1);
-            array[remainder][0] = add;
-            add = new Bishop(WHITE, 'a'+remainder, 8);
-            array[remainder][7] = add;
-            
-            bArray[remainder] = true;
-            setupID /= 4;
+            //Divide by 4, remainder is Bishop1 (bright square = even (0=b, 1=d, 2=f, 3=h))
+            {
+                remainder = setupID % 4;
+                remainder = (remainder * 2) + 1;
+                
+                add = new Bishop(BLACK, 'a'+remainder, 1);
+                array[remainder][0] = add;
+                add = new Bishop(WHITE, 'a'+remainder, 8);
+                array[remainder][7] = add;
+                
+                bArray[remainder] = true;
+                setupID /= 4;
+            }
 
-            //Divide by 4, remainder is Bishop2 (bright square = odd)
+            //Divide by 4, remainder is Bishop2 (dark square = odd (0=a, 1=c, 2=e, 3=g))
             {
                 remainder = setupID % 4;
                 remainder = (remainder * 2);
@@ -143,13 +145,22 @@ class BoardFactory {
 
             //Divide by 6, remainder is Queen (first free square)
             {
-                //CHECK THIS ALGORITHM
                 remainder = setupID % 6;
-                iter = 0;
-                while (iter < remainder) {
-                    if (bArray[iter] == false)
-                        iter++;
+                iter = 0, slot1 = 0;
+                //skip initial filled squares
+                while (bArray[iter] == true) {
+                    iter++;
                 }
+                while (slot1 < remainder) {
+                    slot1++;
+                    iter++;
+
+                    //skip any filled squares
+                    while(bArray[iter] == true) {
+                        iter++;
+                    }
+                }
+
                 remainder = iter;
                 
                 add = new Queen(BLACK, 'a'+remainder, 1);
@@ -163,23 +174,72 @@ class BoardFactory {
 
             //Single digit will notate how knights are set up (based on table from website)
             {
-            //uses "find the free spot" algorithm from the last one
                 remainder = setupID;
+                slot1 = 0, slot2 = 1;
 
-                //slot1
-                if (remainder <= 3) {
-                    slot = 1;
-                    iter = 0;
-                    while (iter < slot) {
-                    if (bArray[iter] == false)
-                        iter++;
+                while (remainder != 0) {
+                    slot2++;
+                    remainder--;
+                    if (slot2 == 5) {
+                        slot1++;
+                        slot2 = slot1 + 1;
                     }
-                    remainder = iter;
                 }
 
-                //slot2
-                else if ((remainder >= 4 && remainder <= 6) || remainder == 0) {
-                    iter++;
+                {
+                    remainder = slot1;
+                    iter = 0, slot1 = 0;
+
+                    //skip initial filled squares
+                    while (bArray[iter] == true) {
+                        iter++;
+                    }
+                    while (slot1 < remainder) {
+                        slot1++;
+                        iter++;
+
+                        //skip any filled squares
+                        while(bArray[iter] == true) {
+                            iter++;
+                        }
+                    }
+
+                    remainder = iter;
+                    
+                    add = new Knight(BLACK, 'a'+remainder, 1);
+                    array[remainder][0] = add;
+                    add = new Knight(WHITE, 'a'+remainder, 8);
+                    array[remainder][7] = add;
+
+                    bArray[remainder] = true;
+                }
+
+                {
+                    remainder = --slot2; //remove one free space since it was taken by slot1
+                    iter = 0, slot2 = 0;
+
+                    //skip initial filled squares
+                    while (bArray[iter] == true) {
+                        iter++;
+                    }
+                    while (slot2 < remainder) {
+                        slot2++;
+                        iter++;
+
+                        //skip any filled squares
+                        while(bArray[iter] == true) {
+                            iter++;
+                        }
+                    }
+
+                    remainder = iter;
+                    
+                    add = new Knight(BLACK, 'a'+remainder, 1);
+                    array[remainder][0] = add;
+                    add = new Knight(WHITE, 'a'+remainder, 8);
+                    array[remainder][7] = add;
+
+                    bArray[remainder] = true;
                 }
             }
 
@@ -210,14 +270,14 @@ class BoardFactory {
 };
 
 /* Knight Diagram
-0    11000
-1    10100
-2    10010
-3    10001
-4    01100
-5    01010
-6    01001
-7    00110
-8    00101
-9    00011
+0    0000   11000
+1    0001   10100
+2    0010   10010
+3    0011   10001
+4    0100   01100
+5    0101   01010
+6    0110   01001
+7    0111   00110
+8    1000   00101
+9    1001   00011
 */

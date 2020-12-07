@@ -87,9 +87,18 @@ TEST(FactoryTest, NormalTest) {
 }
 
 // //srand(2)
-// TEST(FactoryTest, Fischer2) {
-//     EXPECT_EQ(0,1);
-// }
+TEST(FactoryTest, Fischer2) {
+    //I needed to look at the ID first to test it
+    //ID: ___
+    Piece* array[8][8];
+    BoardFactory b;
+    b.ClearBoard(array);
+    b.CreateBoard(array,FISCHER);
+
+    //INSERT tests here
+
+    EXPECT_EQ(0,1);
+}
 
 //hehe I kinda can't test this yet...
 //I need to know how the board is created
