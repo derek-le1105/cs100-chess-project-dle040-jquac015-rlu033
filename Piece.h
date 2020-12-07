@@ -3,7 +3,8 @@
 
 #include <string>
 #include <cctype>
-#include <SFML/Graphics>
+#include <SFML/Graphics.hpp>
+
 using namespace std;
 enum Color {WHITE, BLACK};
 enum PType {ptype, btype, ntype, rtype, qtype, ktype};  //can be (p)awn, (b)ishop, k(n)ight, (r)ook, (q)ueen, (k)ing
@@ -11,6 +12,7 @@ enum PType {ptype, btype, ntype, rtype, qtype, ktype};  //can be (p)awn, (b)isho
 class Piece {
   private:
     Color alignment;
+    sf::Sprite currentSprite;
   public:
     sf::Sprite currentSprite;
 

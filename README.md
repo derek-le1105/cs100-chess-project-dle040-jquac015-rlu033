@@ -31,9 +31,9 @@
  >   * The input will be the moves the player wants to make.
  >   * The output will be a chess board and chess pieces that reflect the position the player inputs. At the end of the game, an "End Game" message will be displayed (P1 wins, P2 wins, Draw).
  > * The three design patterns we plan to use are abstract factory, strategy, and visitor:
- >   * An important pattern is abstract factory. The pieces all have individual movements, but they all have the same type of movement, which can be called by the same function name. Having a "Piece" abstract class will allow the individual piece variations to have a movement function to use.
- >   * We want to use the strategy design pattern in order to check for all moves of a chess piece. This allows us to check whether or not there is a checkmate/check/stalemate. It is important to use the strategy design pattern because some pieces have multiple types of movement and we would not be able to fully accommodate the piece without using the strategy design pattern. We also might create a scoring system with the piece values that can use the strategy pattern. 
- >   * Because we are using the strategy design pattern, it would also be important to use a visitor to view items in the object using the strategy design pattern. By using a visitor, we can check the location of a piece and the possible movements it can make, specifically the squares it threatens. 
+ >   * We want to use the strategy design pattern in order to check for all moves of a chess piece. This allows us to check whether or not there is a checkmate/check/stalemate. It is important to use the strategy design pattern because every pieces has a different type of movement and we would not be able to fully accommodate the piece without using the strategy design pattern. We also might create a scoring system with the piece values that can use the strategy pattern. 
+ >   * An important pattern is abstract factory. The board is a double array of Piece*, which can be tedious to set up/reset over and over. To solve this, we can make use of a factory to populate the array. This way we can also change the starting positions of the pieces, as there are different styles than the traditional set-up.
+ >   * Because we are using the strategy design pattern, it would also be important to use a visitor to view items in the object using the strategy design pattern. By using a visitor, we can check the alignment of a piece, which is used in deciding if that piece can move on a specific player's turn, or when chcking if a piece can capture another piece. This can also be applied during the Board's move function, which can be able to look at location of a piece and the possible movements it can make, specifically the squares it threatens. 
 
  > ## Phase II
  > In addition to completing the "Class Diagram" section below, you will need to 
@@ -46,7 +46,9 @@
  >   * Create smaller development tasks as issues and assign them to team members. Place these in the `Backlog` column.
  >   * These cards should represent roughly 7 days worth of development time for your team, taking you until your first meeting with the TA
 ## Class Diagram
- > Include a class diagram(s) for each design pattern and a description of the diagram(s). This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper OMT notation (as discussed in the course slides). You may combine multiple design patterns into one diagram if you'd like, but it needs to be clear which portion of the diagram represents which design pattern (either in the diagram or in the description). 
+ ![final project diagram1](https://user-images.githubusercontent.com/72291856/100272376-db963000-2f0f-11eb-9a1e-3e0e7ee990b7.jpg)
+ ![final project diagram2](https://user-images.githubusercontent.com/72291856/100272384-dfc24d80-2f0f-11eb-91e8-c3a8e541cf81.jpg)
+
  
  > ## Phase III
  > You will need to schedule a check-in with the TA (during lab hours or office hours). Your entire team must be present. 
