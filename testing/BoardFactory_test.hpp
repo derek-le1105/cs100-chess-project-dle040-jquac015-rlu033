@@ -340,17 +340,4 @@ TEST(FactoryTest, FischerSeed2Cycled2) {
     b.FreeBoard(array);
 }
 
-//hehe I kinda can't test this yet...
-//I need to know how the board is created
-/*
-TEST(Stalemate, StartingPosition) {
-    Piece* array[8][8];
-    BoardFactory b;
-    b.ClearBoard(array);
-    b.CreateBoard(array);
-
-    ASSERT_NE(array, nullptr);
-    EXPECT_EQ()
-}*/
-
 #endif
