@@ -32,6 +32,8 @@ class BoardFactory {
     void CreateBoard(Piece* array[][8], ChessType type = NORMAL) {
         FreeBoard(array);
 
+	int j;
+
         Piece* pawn;
         {
             char iter = 'a';
@@ -107,12 +109,11 @@ class BoardFactory {
         
         //FISCHER-RANDOM algorithm: https://en.wikipedia.org/wiki/Fischer_random_chess_numbering_scheme#Direct_derivation
         else if (type == FISCHER) {
-            srand(2);
             int setupID, remainder;
             bool bArray[8];
             int iter, slot1, slot2;
-            for (iter = 0; i < 8; i++) {
-                bArray[i] = false;
+            for (iter = 0; iter < 8; iter++) {
+                bArray[iter] = false;
             }
             Piece* add;
 
@@ -251,7 +252,7 @@ class BoardFactory {
             {
                 bool kingSpot = false;
                 for (iter = 0; iter < 8; iter++) {
-                    if (bArray[iter] != true && !kingSpot) {
+                    if (bArray[iter] != true) {
                         if (!kingSpot) {
                             add = new Rook(BLACK, 'a'+iter, 1);
                             array[iter][0] = add;
