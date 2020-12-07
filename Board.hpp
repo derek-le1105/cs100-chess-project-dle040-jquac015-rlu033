@@ -113,7 +113,7 @@ class BoardFactory {
             Piece* add;
 
             setupID = rand() % 960;
-            std::cout << "Fischer-Random ID" << setupID << std::endl;  //can be commented out later
+            std::cout << "Fischer-Random ID: " << setupID << std::endl;  //can be commented out later
             
             //Divide by 4, remainder is Bishop1 (bright square = even (0=b, 1=d, 2=f, 3=h))
             {
