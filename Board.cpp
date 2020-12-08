@@ -27,9 +27,16 @@ void Board::init(){
     boardAssets.loadTexture("Queen Black Piece", QUEEN_B_PIECE_FILE_PATH);
     boardAssets.loadTexture("King White Piece", KING_W_PIECE_FILE_PATH);
     boardAssets.loadTexture("King Black Piece", KING_B_PIECE_FILE_PATH);
+    boardAssets.loadTexture("Highlight Piece", HIGHLIGHT_PIECE_FILE_PATH);
+    boardAssets.loadTexture("Potential Move Circle", POTENTIAL_MOVE_FILE_PATH);
+
+    _highlightPiece.setTexture(this->boardAssets.getTexture("Highlight Piece"));
+    _highlightPiece.setScale(1.00223, 1.00669);
 
     _chessBoard.setTexture(this->boardAssets.getTexture("Chess Board"));
     _chessBoard.setScale(1.5, 1.5);
+
+    _potentialMove.setTexture(this->boardAssets.getTexture("Potential Move Circle"));       //used to pushback into the potential moves vector
 
     for(int i = 0; i < 8; ++i){
         for(int j = 0; j < 8; ++j){
@@ -72,22 +79,9 @@ void Board::init(){
                     break;
                 case 6:
                     pieceArray[j][i]->currentSprite.setTexture(this->boardAssets.getTexture("King Black Piece"));
-                    //pieceArray[j][i] = new King(BLACK, 'D', 4);
                     break;
             }
             pieceArray[j][i]->currentSprite.setPosition(BLOCK_SIZE * j, BLOCK_SIZE * i);
-        }
-    }
-}
-
-void Board::draw() {
-    window.draw(this->_chessBoard);
-/*    for(int i = 0; i < 32; ++i)
-        window.draw(pieces[i]);*/
-    for(int i = 0; i < 8; ++i){
-        for(int j = 0; j < 8; ++j){
-            if(pieceArray[j][i] != nullptr)
-                window.draw(pieceArray[j][i]->currentSprite);
         }
     }
 }
@@ -101,15 +95,27 @@ void Board::handleInput() {
         if (event.type == sf::Event::MouseButtonPressed) {
             if(checkClick == pieceCurrentlyClicked){
                 int posX = mousePosition.x / 84, posY = mousePosition.y / 84;
-                std::cout << "1: " << posX << " " << posY << std::endl;
+
                 if(pieceArray[posX][posY] == nullptr)        //if mouse is clicked on a block with no piece in it
                     checkClick = pieceCurrentlyClicked;
                 else {                                          //if mouse is clicked on a block with a piece in it
                     checkClick = moveCurrentlyClicked;
                     storePreviousCord();
+                    _highlightPiece.setPosition(posX * 84.2, posY * 84.6);
+
+                    for(char tempIter = 'a'; tempIter <= 'h'; ++tempIter){ //use for loops to display all positions that are valid for movement for current piece
+                        for(int j = 1; j <= 8; ++j){
+                            if(pieceArray[posX][posY]->move(tempIter, j, pieceArray)){
+                                getPotentialMoves(CharToInt(tempIter) - 1, j - 1);
+                            }
+                        }
+                    }
                 }
+                drawSpriteCheck = valid;
+
             }
             else if (checkClick == moveCurrentlyClicked){       //reverts back to previous enum to allow clicking a new piece
+                potentialMoves.clear();
                 int tempX = CharToInt(prevX) - 1,
                 posX = mousePosition.x / 84, posY = (mousePosition.y + 84 - 1) / 84, boardPosyY = posY - 1;
 
@@ -123,6 +129,8 @@ void Board::handleInput() {
                     pieceArray[tempX][prevY] = nullptr;                             //makes previous position nullptr
                     board[boardPosyY][posX] = board[prevY][tempX];
                     board[prevY][tempX] = 0;
+
+                    drawSpriteCheck = invalid;
                 }
                 checkClick = pieceCurrentlyClicked;
             }
@@ -146,5 +154,27 @@ void Board::storePreviousCord() {
         iter++;
     prevX = iter;
     prevY = posY;
+}
+
+void Board::draw() {
+    window.draw(this->_chessBoard);
+    if(drawSpriteCheck == valid)
+        window.draw(this->_highlightPiece);
+
+    for(int i = 0; i < 8; ++i){
+        for(int j = 0; j < 8; ++j){
+            if(pieceArray[j][i] != nullptr)
+                window.draw(pieceArray[j][i]->currentSprite);
+        }
+    }
+
+    for(int i = 0; i < potentialMoves.size(); ++i)
+        window.draw(potentialMoves[i]);
+}
+
+void Board::getPotentialMoves(int i, int j) {       //stores potential moves into a vector and sets position of each potential move (uses <vector>.clear() to empty vector if another piece is clicked)
+    potentialMoves.push_back(_potentialMove);
+    potentialMoves.back().setTexture(this->boardAssets.getTexture("Potential Move Circle"));
+    potentialMoves.back().setPosition(BLOCK_SIZE * i, BLOCK_SIZE * j);
 }
 
