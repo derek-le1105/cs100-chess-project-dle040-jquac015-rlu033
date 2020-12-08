@@ -14,5 +14,7 @@
 #define QUEEN_B_PIECE_FILE_PATH  "Resources/queenBPiece.png"
 #define KING_B_PIECE_FILE_PATH   "Resources/kingBPiece.png"
 #define KNIGHT_B_PIECE_FILE_PATH "Resources/knightBPiece.png"
+#define HIGHLIGHT_PIECE_FILE_PATH "Resources/highlightPiece.jpg"
+#define POTENTIAL_MOVE_FILE_PATH  "Resources/potentialMove.png"
 
 #endif //SFML_PROJECT_DEFINITIONS_H

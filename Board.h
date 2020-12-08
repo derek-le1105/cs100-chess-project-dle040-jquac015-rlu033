@@ -10,9 +10,11 @@
 #include <iostream>
 #include <cctype>
 #include <cmath>
+#include <vector>
 
 const float BLOCK_SIZE = 84.2;
 
+enum allowDrawnSprite {valid, invalid};
 enum ChessType {NORMAL, FISCHER};
 enum pieceClicked {pieceCurrentlyClicked, moveCurrentlyClicked};
 
@@ -34,14 +36,14 @@ public:
         {
             char iter = 'a';
             for (j = 0; j < 8; j++) {
-                pawn = new Pawn(BLACK, iter, 7);
+                pawn = new Pawn(WHITE, iter, 7);
                 array[j][6] = pawn;
                 iter++;
             }
 
             iter = 'a';
             for (j = 0; j < 8; j++) {
-                pawn = new Pawn(WHITE, iter, 2);
+                pawn = new Pawn(BLACK, iter, 2);
                 array[j][1] = pawn;
                 iter++;
             }
@@ -51,58 +53,58 @@ public:
 
             Piece* bishop;
             {
-                bishop = new Bishop(BLACK, 'c', 8);
+                bishop = new Bishop(WHITE, 'c', 8);
                 array[2][7] = bishop;
-                bishop = new Bishop(BLACK, 'f', 8);
+                bishop = new Bishop(WHITE, 'f', 8);
                 array[5][7] = bishop;
 
-                bishop = new Bishop(WHITE, 'c', 1);
+                bishop = new Bishop(BLACK, 'c', 1);
                 array[2][0] = bishop;
-                bishop = new Bishop(WHITE, 'f', 1);
+                bishop = new Bishop(BLACK, 'f', 1);
                 array[5][0] = bishop;
             }
 
             Piece* knight;
             {
-                knight = new Knight(BLACK, 'b', 8);
+                knight = new Knight(WHITE, 'b', 8);
                 array[1][7] = knight;
-                knight = new Knight(BLACK, 'g', 8);
+                knight = new Knight(WHITE, 'g', 8);
                 array[6][7] = knight;
 
-                knight = new Knight(WHITE, 'b', 1);
+                knight = new Knight(BLACK, 'b', 1);
                 array[1][0] = knight;
-                knight = new Knight(WHITE, 'g', 1);
+                knight = new Knight(BLACK, 'g', 1);
                 array[6][0] = knight;
             }
 
             Piece* rook;
             {
-                rook = new Rook(BLACK, 'a', 8);
+                rook = new Rook(WHITE, 'a', 8);
                 array[0][7] = rook;
-                rook = new Rook(BLACK, 'h', 8);
+                rook = new Rook(WHITE, 'h', 8);
                 array[7][7] = rook;
 
-                rook = new Rook(WHITE, 'a', 1);
+                rook = new Rook(BLACK, 'a', 1);
                 array[0][0] = rook;
-                rook = new Rook(WHITE, 'h', 1);
+                rook = new Rook(BLACK, 'h', 1);
                 array[7][0] = rook;
             }
 
             Piece* queen;
             {
-                queen = new Queen(BLACK, 'd', 8);
+                queen = new Queen(WHITE, 'd', 8);
                 array[3][7] = queen;
 
-                queen = new Queen(WHITE, 'd', 1);
+                queen = new Queen(BLACK, 'd', 1);
                 array[3][0] = queen;
             }
 
             Piece* king;
             {
-                king = new King(BLACK, 'e', 8);
+                king = new King(WHITE, 'e', 8);
                 array[4][7] = king;
 
-                king = new King(WHITE, 'e', 1);
+                king = new King(BLACK, 'e', 1);
                 array[4][0] = king;
             }
         }
@@ -116,7 +118,9 @@ private:
     sf::RenderWindow window;
     sf::Vector2i mousePosition;
     Piece* pieceArray[8][8];
+    //Piece* potMoveArray[8][8];
     pieceClicked checkClick = pieceCurrentlyClicked;
+    allowDrawnSprite drawSpriteCheck = invalid;
     char prevX;
     int prevY;
 
@@ -131,7 +135,9 @@ protected:
               -1,-1,-1,-1,-1,-1,-1,-1,
               -2,-3,-4,-5,-6,-4,-3,-2 };
     sf::Sprite _chessBoard; //each block is 84.2 by 84.2
-
+    sf::Sprite _highlightPiece;
+    sf::Sprite _potentialMove;
+    vector<sf::Sprite> potentialMoves;
 
 public:
     Board();
@@ -142,6 +148,7 @@ public:
     void handleInput();
     void run();
     void storePreviousCord();
+    void getPotentialMoves(int i, int j);
     int CharToInt(char c) {
         if (isupper(c))
             return c - 'A' + 1;
