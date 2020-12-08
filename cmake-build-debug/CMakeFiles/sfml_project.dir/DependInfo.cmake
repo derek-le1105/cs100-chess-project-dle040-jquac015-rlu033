@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/derek/CLionProjects/cs100/AssetManager.cpp" "C:/Users/derek/CLionProjects/cs100/cmake-build-debug/CMakeFiles/sfml_project.dir/AssetManager.cpp.obj"
   "C:/Users/derek/CLionProjects/cs100/Board.cpp" "C:/Users/derek/CLionProjects/cs100/cmake-build-debug/CMakeFiles/sfml_project.dir/Board.cpp.obj"
   "C:/Users/derek/CLionProjects/cs100/Piece.cpp" "C:/Users/derek/CLionProjects/cs100/cmake-build-debug/CMakeFiles/sfml_project.dir/Piece.cpp.obj"
+  "C:/Users/derek/CLionProjects/cs100/initializeBoard.cpp" "C:/Users/derek/CLionProjects/cs100/cmake-build-debug/CMakeFiles/sfml_project.dir/initializeBoard.cpp.obj"
   "C:/Users/derek/CLionProjects/cs100/main.cpp" "C:/Users/derek/CLionProjects/cs100/cmake-build-debug/CMakeFiles/sfml_project.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

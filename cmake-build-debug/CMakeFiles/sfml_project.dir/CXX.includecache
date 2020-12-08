@@ -699,8 +699,22 @@ Piece.h
 C:/Users/derek/CLionProjects/cs100/Piece.h
 AssetManager.h
 C:/Users/derek/CLionProjects/cs100/AssetManager.h
+iostream
+-
+cctype
+-
+cmath
+-
+vector
+-
 
 C:/Users/derek/CLionProjects/cs100/DEFINITIONS.h
 
 C:/Users/derek/CLionProjects/cs100/Piece.h
+string
+-
+cctype
+-
+SFML/Graphics/Sprite.hpp
+-
 
