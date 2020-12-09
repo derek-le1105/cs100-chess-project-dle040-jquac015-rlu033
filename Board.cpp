@@ -95,10 +95,7 @@ void Board::handleInput() {
         if (event.type == sf::Event::MouseButtonPressed) {
             if(checkClick == pieceCurrentlyClicked){
                 int posX = mousePosition.x / 84, posY = mousePosition.y / 84;
-                if(game == whiteTurn)
-                    cout << "white" << endl;
-                else
-                    cout << "black" << endl;
+                
                 if(checkTurn(posX, posY)) {
                     if (pieceArray[posX][posY] == nullptr)        //if mouse is clicked on a block with no piece in it
                         checkClick = pieceCurrentlyClicked;
