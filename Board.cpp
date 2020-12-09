@@ -95,7 +95,7 @@ void Board::handleInput() {
         if (event.type == sf::Event::MouseButtonPressed) {
             if(checkClick == pieceCurrentlyClicked){
                 int posX = mousePosition.x / 84, posY = mousePosition.y / 84;
-                
+
                 if(checkTurn(posX, posY)) {
                     if (pieceArray[posX][posY] == nullptr)        //if mouse is clicked on a block with no piece in it
                         checkClick = pieceCurrentlyClicked;
@@ -122,16 +122,16 @@ void Board::handleInput() {
                     for (int i = 0; i < posX; ++i)
                         iter++;
                     if (pieceArray[tempX][prevY]->move(iter, posY, pieceArray)) {
-                        pieceArray[tempX][prevY]->currentSprite.setPosition(posX * BLOCK_SIZE, boardPosyY * BLOCK_SIZE);
+                        pieceArray[tempX][prevY]->currentSprite.setPosition(posX * BLOCK_SIZE, boardPosyY * BLOCK_SIZE);    //moves sprite to cursor clicked
                         pieceArray[posX][boardPosyY] = pieceArray[tempX][prevY];        //sets new position = previous position
-                        pieceArray[tempX][prevY]->setCoord(iter, posY);
+                        pieceArray[tempX][prevY]->setCoord(iter, posY);                 //sets coordinates within piece
                         pieceArray[tempX][prevY] = nullptr;                             //makes previous position nullptr
-                        board[boardPosyY][posX] = board[prevY][tempX];
-                        board[prevY][tempX] = 0;
+                        board[boardPosyY][posX] = board[prevY][tempX];                  //sets boardPiece at [boardPosY][posX] to boardPiece at [prevY][tempX]
+                        board[prevY][tempX] = 0;                                        //'cleans up' previous piece
 
                         drawSpriteCheck = invalid;
 
-                        game = (game == whiteTurn) ? whiteTurn : blackTurn;
+                        game = (game == whiteTurn) ? blackTurn : whiteTurn;             //if game = whiteturn, set to black and vice versa
                     }
                     checkClick = pieceCurrentlyClicked;
 
