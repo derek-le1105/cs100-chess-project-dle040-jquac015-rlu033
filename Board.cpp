@@ -95,44 +95,50 @@ void Board::handleInput() {
         if (event.type == sf::Event::MouseButtonPressed) {
             if(checkClick == pieceCurrentlyClicked){
                 int posX = mousePosition.x / 84, posY = mousePosition.y / 84;
+                if(game == whiteTurn)
+                    cout << "white" << endl;
+                else
+                    cout << "black" << endl;
+                if(checkTurn(posX, posY)) {
+                    if (pieceArray[posX][posY] == nullptr)        //if mouse is clicked on a block with no piece in it
+                        checkClick = pieceCurrentlyClicked;
+                    else {                                          //if mouse is clicked on a block with a piece in it
+                        checkClick = moveCurrentlyClicked;
+                        storePreviousCord();
+                        _highlightPiece.setPosition(posX * 84.2, posY * 84.6);
 
-                if(pieceArray[posX][posY] == nullptr)        //if mouse is clicked on a block with no piece in it
-                    checkClick = pieceCurrentlyClicked;
-                else {                                          //if mouse is clicked on a block with a piece in it
-                    checkClick = moveCurrentlyClicked;
-                    storePreviousCord();
-                    _highlightPiece.setPosition(posX * 84.2, posY * 84.6);
-
-                    for(char tempIter = 'a'; tempIter <= 'h'; ++tempIter){ //use for loops to display all positions that are valid for movement for current piece
-                        for(int j = 1; j <= 8; ++j){
-                            if(pieceArray[posX][posY]->move(tempIter, j, pieceArray)){
-                                getPotentialMoves(CharToInt(tempIter) - 1, j - 1);
-                            }
-                        }
+                        for (char tempIter = 'a'; tempIter <= 'h'; ++tempIter)  //use for loops to display all positions that are valid for movement for current piece
+                            for (int j = 1; j <= 8; ++j)
+                                if (pieceArray[posX][posY]->move(tempIter, j, pieceArray))
+                                    getPotentialMoves(CharToInt(tempIter) - 1, j - 1);
                     }
+                    drawSpriteCheck = valid;
                 }
-                drawSpriteCheck = valid;
-
             }
             else if (checkClick == moveCurrentlyClicked){       //reverts back to previous enum to allow clicking a new piece
-                potentialMoves.clear();
-                int tempX = CharToInt(prevX) - 1,
-                posX = mousePosition.x / 84, posY = (mousePosition.y + 84 - 1) / 84, boardPosyY = posY - 1;
+                if(checkTurn(prevX, prevY)) {
+                    potentialMoves.clear();
+                    int tempX = CharToInt(prevXChar) - 1,
+                            posX = mousePosition.x / 84, posY = (mousePosition.y + 84 - 1) / 84, boardPosyY = posY - 1;
 
-                char iter = 'a';
-                for(int i = 0; i < posX; ++i)
-                    iter++;
-                if(pieceArray[tempX][prevY]->move(iter, posY, pieceArray)){
-                    pieceArray[tempX][prevY]->currentSprite.setPosition(posX * BLOCK_SIZE, boardPosyY * BLOCK_SIZE);
-                    pieceArray[posX][boardPosyY] = pieceArray[tempX][prevY];        //sets new position = previous position
-                    pieceArray[tempX][prevY]->setCoord(iter, posY);
-                    pieceArray[tempX][prevY] = nullptr;                             //makes previous position nullptr
-                    board[boardPosyY][posX] = board[prevY][tempX];
-                    board[prevY][tempX] = 0;
+                    char iter = 'a';
+                    for (int i = 0; i < posX; ++i)
+                        iter++;
+                    if (pieceArray[tempX][prevY]->move(iter, posY, pieceArray)) {
+                        pieceArray[tempX][prevY]->currentSprite.setPosition(posX * BLOCK_SIZE, boardPosyY * BLOCK_SIZE);
+                        pieceArray[posX][boardPosyY] = pieceArray[tempX][prevY];        //sets new position = previous position
+                        pieceArray[tempX][prevY]->setCoord(iter, posY);
+                        pieceArray[tempX][prevY] = nullptr;                             //makes previous position nullptr
+                        board[boardPosyY][posX] = board[prevY][tempX];
+                        board[prevY][tempX] = 0;
 
-                    drawSpriteCheck = invalid;
+                        drawSpriteCheck = invalid;
+
+                        game = (game == whiteTurn) ? whiteTurn : blackTurn;
+                    }
+                    checkClick = pieceCurrentlyClicked;
+
                 }
-                checkClick = pieceCurrentlyClicked;
             }
         }
     }
@@ -152,8 +158,13 @@ void Board::storePreviousCord() {
     char iter = 'a';
     for(int i = 0; i < posX; ++i)
         iter++;
-    prevX = iter;
+    prevXChar = iter;
+    prevX = posX;
     prevY = posY;
+}
+
+bool Board::checkTurn(int x, int y) {   //checks who's turn it is in the game
+    return ((game == whiteTurn && pieceArray[x][y]->getAlignment() == WHITE) || (game == blackTurn && pieceArray[x][y]->getAlignment() == BLACK));
 }
 
 void Board::draw() {

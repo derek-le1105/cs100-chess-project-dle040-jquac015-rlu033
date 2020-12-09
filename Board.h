@@ -17,6 +17,7 @@ const float BLOCK_SIZE = 84.2;
 enum allowDrawnSprite {valid, invalid};
 enum ChessType {NORMAL, FISCHER};
 enum pieceClicked {pieceCurrentlyClicked, moveCurrentlyClicked};
+enum currentTurn {whiteTurn, blackTurn};
 
 class BoardFactory {
 public:
@@ -118,11 +119,11 @@ private:
     sf::RenderWindow window;
     sf::Vector2i mousePosition;
     Piece* pieceArray[8][8];
-    //Piece* potMoveArray[8][8];
     pieceClicked checkClick = pieceCurrentlyClicked;
     allowDrawnSprite drawSpriteCheck = invalid;
-    char prevX;
-    int prevY;
+    currentTurn game = whiteTurn;
+    char prevXChar;
+    int prevX, prevY;
 
 protected:
     int board[8][8] =
@@ -149,6 +150,7 @@ public:
     void run();
     void storePreviousCord();
     void getPotentialMoves(int i, int j);
+    bool checkTurn(int x, int y);
     int CharToInt(char c) {
         if (isupper(c))
             return c - 'A' + 1;
