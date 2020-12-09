@@ -2,12 +2,7 @@
 #define __RLU_TEST__
 
 #include "gtest/gtest.h"
-<<<<<<< HEAD
-#include "../BoardFactory.hpp"
-//#include "../BoardArray.h"
-=======
 #include "../Board.h"
->>>>>>> origin
 #include "../Piece.h"
 
 TEST(FactoryTest, NormalTest) {
