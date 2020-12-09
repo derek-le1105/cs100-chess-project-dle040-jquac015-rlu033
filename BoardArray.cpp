@@ -1,7 +1,7 @@
 #include <iostream>
 #include "BoardArray.h"
 #include "Piece.cpp"
-#include "board.hpp"
+#include "BoardFactory.hpp"
 #include "string.h"
 using namespace std;
 
@@ -110,7 +110,7 @@ bool BoardArray::stalemate() {
 
         currPiece = boardarray[i][j];
 
-        if (currPiece != nullptr) {
+        if (currPiece != nullptr && currPiece->getAlignment() == turn) {
             //Pawns have 4 possible moves, but in either direction based on alignment
             if (currPiece->getType() == PType::ptype) {
 
