@@ -5,28 +5,21 @@ bool Piece::move(char c, int y) {
     bool validMove = true;
     int x = CharToInt(c);
     x--; y--;
-
     //does not move
     if (x == posX && y == posY) {
         validMove = false;
     }
-
     //outside of range
     if (x < 1 || x > 8)
         validMove = false;
     if (y < 1 || y > 8)
         validMove = false;
-
     //check ACTUAL movement restrictions (Bishop in diagonals, etc.)
-
     //if (array == nullptr) {
         return validMove;
     //}
-
     //look at every space up to the one we want to move to
     //going along the movement of the piece
-
-
 } */
 
 #include <iostream>
@@ -286,12 +279,10 @@ void King::drawPiece() {}
  1 -1  1  1  1
  1  1  0  0  1
  1  1  1  0  1
-
 y = (-,B) || (+,W)
 x0 & y1 & ~C        (x0 && y1 && !C)
 x0 & y2 & S & ~C    (x0 && y2 && S && !C)
 x1 & y1 & C          (x1 && y1 && C)
-
 (x - posX == 0) && ((y - posY == 1 && this->getAlignment() == WHITE) || (y - posY == -1 && this->getAlignment() == BLACK)) && ~C
 */
 bool Pawn::move(char c, int y, Piece* array[][8]) {
@@ -317,10 +308,10 @@ bool Pawn::move(char c, int y, Piece* array[][8]) {
         //cannot move forward due to collision
         if (array != nullptr) {
             if(array[x][y] != nullptr && array[x][y] != 0)
-                    validMove = false;
+                validMove = false;
         }
     }
-    //can move 2 spaces if it's at the starting position
+        //can move 2 spaces if it's at the starting position
     else if ((x - posX == 0) && ((y - posY == 2 && posY == 1 && this->getAlignment() == BLACK) || (y - posY == -2 && posY == 6 && this->getAlignment() == WHITE))) {
         //cannot move forward due to collision
         int b = posY;
@@ -337,10 +328,10 @@ bool Pawn::move(char c, int y, Piece* array[][8]) {
         }
     }
 
-    //can only move diagonally one space if there is a piece to capture
+        //can only move diagonally one space if there is a piece to capture
     else if ((abs(x - posX) == 1) && ((y - posY == 1 && this->getAlignment() == BLACK) || (y - posY == -1 && this->getAlignment() == WHITE)) && array != nullptr) {
         if (array[x][y] == nullptr)
-            validMove =  false;
+            validMove = false;
         else if (array[x][y] != nullptr && array[x][y] != 0 && array[x][y]->getAlignment() == this->getAlignment())
             validMove = false;
     }
