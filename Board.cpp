@@ -500,15 +500,6 @@ bool Board::MoveBecomesCheck(string fromStr, int fromInt, string toStr, int toIn
     return becomesCheck;
 }
 
-int Board::ChartoInt(char toInt){
-    int ret = toInt;
-    if(ret>=65 && ret<=90){
-        return ret-65;
-    }else if(ret>=97 && ret<=122){
-        return ret-97;
-    }
-}
-
 void Board::getPotentialMoves(int i, int j) {       //stores potential moves into a vector and sets position of each potential move (uses <vector>.clear() to empty vector if another piece is clicked)
     potentialMoves.push_back(_potentialMove);
     potentialMoves.back().setTexture(this->boardAssets.getTexture("Potential Move Circle"));

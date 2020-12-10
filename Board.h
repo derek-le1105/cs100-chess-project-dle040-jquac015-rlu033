@@ -174,7 +174,6 @@ public:
     bool checkmate();
     bool stalemate();
     bool MoveBecomesCheck(string col, int row, string newcol, int newrow);
-    int ChartoInt(char toInt);
     char StringtoChar(string toChar);
 };
 
