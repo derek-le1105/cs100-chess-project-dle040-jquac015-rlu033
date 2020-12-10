@@ -19,16 +19,17 @@ Stalemate: https://www.ichess.net/blog/stalemate-in-chess/
 */
 class TestFactory : public BoardFactory {
     BoardFactory b;
+    int testNum;
 
     public:
-    TestFactory() {}
-    void BuildTests (Piece* array[][8], int input = 0) {
+    TestFactory(int num = 0) { testNum = num; }
+    void BuildTests (Piece* array[][8]) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++)
                 array[i][j] = nullptr;
         }
 
-        switch (input) {
+        switch (testNum) {
             case 1:
                 CreateBoard(array);
                 array[5][5] = array[5][6];
@@ -119,8 +120,76 @@ class TestFactory : public BoardFactory {
     }
 };
 
+TEST(BoardTest, NoFlags0) {
+    BoardArray test;
+    BoardFactory* b = new TestFactory(0);
+    test.setFactory(b);
+    test.ResetBoard();
+    EXPECT_EQ(test.checkmate(),false);
+    EXPECT_EQ(test.stalemate(),false);
+}
 TEST(BoardTest, Checkmate1) {
-    BoardArray();
-    EXPECT_EQ(0,1);
+    BoardArray test;
+    BoardFactory* b = new TestFactory(1);
+    test.setFactory(b);
+    test.ResetBoard();
+    EXPECT_EQ(test.check(),true);
+    EXPECT_EQ(test.checkmate(),true);
+    EXPECT_EQ(test.stalemate(),false);
+}
+TEST(BoardTest, Checkmate2) {
+    BoardArray test;
+    BoardFactory* b = new TestFactory(2);
+    test.setFactory(b);
+    test.ResetBoard();
+    EXPECT_EQ(test.check(),true);
+    EXPECT_EQ(test.checkmate(),true);
+    EXPECT_EQ(test.stalemate(),false);
+}
+TEST(BoardTest, Checkmate3) {
+    BoardArray test;
+    BoardFactory* b = new TestFactory(3);
+    test.setFactory(b);
+    test.ResetBoard();
+    EXPECT_EQ(test.check(),true);
+    EXPECT_EQ(test.checkmate(),true);
+    EXPECT_EQ(test.stalemate(),false);
+}
+TEST(BoardTest, Checkmate4) {
+    BoardArray test;
+    BoardFactory* b = new TestFactory(4);
+    test.setFactory(b);
+    test.ResetBoard();
+    EXPECT_EQ(test.check(),true);
+    EXPECT_EQ(test.checkmate(),true);
+    EXPECT_EQ(test.stalemate(),false);
+}
+
+TEST(BoardTest, Stalemate6) {
+    BoardArray test;
+    BoardFactory* b = new TestFactory(6);
+    test.setFactory(b);
+    test.ResetBoard();
+    EXPECT_EQ(test.check(),false);
+    EXPECT_EQ(test.checkmate(),false);
+    EXPECT_EQ(test.stalemate(),true);
+}
+TEST(BoardTest, Stalemate7) {
+    BoardArray test;
+    BoardFactory* b = new TestFactory(7);
+    test.setFactory(b);
+    test.ResetBoard();
+    EXPECT_EQ(test.check(),false);
+    EXPECT_EQ(test.checkmate(),false);
+    EXPECT_EQ(test.stalemate(),true);
+}
+TEST(BoardTest, Stalemate8) {
+    BoardArray test;
+    BoardFactory* b = new TestFactory(8);
+    test.setFactory(b);
+    test.ResetBoard();
+    EXPECT_EQ(test.check(),false);
+    EXPECT_EQ(test.checkmate(),false);
+    EXPECT_EQ(test.stalemate(),true);
 }
 #endif

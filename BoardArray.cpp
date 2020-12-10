@@ -1,10 +1,10 @@
 #include <iostream>
 #include "BoardArray.h"
-#include "Piece.cpp"
+#include "Piece.h"
 #include "string.h"
 using namespace std;
 
-BoardArray::BoardArray(){ b = new BoardFactory(); }
+BoardArray::BoardArray(){ b = new BoardFactory(); b->ClearBoard(boardarray); }
 
 BoardArray::~BoardArray(){
     if (b != nullptr) { delete b; }
