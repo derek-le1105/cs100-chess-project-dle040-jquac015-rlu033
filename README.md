@@ -23,18 +23,22 @@
  >   * Because we are using the strategy design pattern, it would also be important to use a visitor to view items in the object using the strategy design pattern. By using a visitor, we can check the alignment of a piece, which is used in deciding if that piece can move on a specific player's turn, or when chcking if a piece can capture another piece. This can also be applied during the Board's move function, which can be able to look at location of a piece and the possible movements it can make, specifically the squares it threatens. 
 
 ## Class Diagram
- ![final project diagram1](https://user-images.githubusercontent.com/72291856/100272376-db963000-2f0f-11eb-9a1e-3e0e7ee990b7.jpg)
- ![final project diagram2](https://user-images.githubusercontent.com/72291856/100272384-dfc24d80-2f0f-11eb-91e8-c3a8e541cf81.jpg)
+![final project diagram](https://user-images.githubusercontent.com/72291856/101779897-add1ef00-3aaa-11eb-9b64-5758fe8917a6.png)
+![final project diagram1](https://user-images.githubusercontent.com/72291856/101779903-b0ccdf80-3aaa-11eb-8f75-84dbcae3512a.png)
  
  ## Screenshots
  ![scrnsht1](https://user-images.githubusercontent.com/64372005/101778926-67c85b80-3aa9-11eb-817d-305380df7fe3.PNG)
  ![scrnsht2](https://user-images.githubusercontent.com/64372005/101778944-7151c380-3aa9-11eb-979a-f8e703c00300.PNG)
  ![scrnsht3](https://user-images.githubusercontent.com/64372005/101778826-3ea7cb00-3aa9-11eb-9ec3-2521d922fe1a.PNG)
+ 
  ## Installation/Usage
  > * Download the ZIP folder for this project.
  > * Unzip the folder.
  > * Navigate to the cmake-build-debug folder.
  > * Run the sfml_project.exe file.
- ## Testing
- > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
  
+ ## Testing
+![image](https://user-images.githubusercontent.com/72291856/101778906-6008b700-3aa9-11eb-8c3c-4ea7ec191333.png)
+![image](https://user-images.githubusercontent.com/72291856/101778990-82023980-3aa9-11eb-9cfc-05eb1db4759b.png)
+![image](https://user-images.githubusercontent.com/72291856/101779071-a1996200-3aa9-11eb-9a16-fc9c0fa2880d.png)
+![image](https://user-images.githubusercontent.com/72291856/101779186-c42b7b00-3aa9-11eb-9759-06ed5f17c0e0.png)
