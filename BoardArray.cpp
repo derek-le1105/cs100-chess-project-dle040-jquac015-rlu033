@@ -61,18 +61,24 @@ std::cout << "Check ";
     Piece* checKing;
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
+	    if (boardarray[i][j] != nullptr) {
             checked = boardarray[i][j];
-            if(checked != nullptr && checked->getType() == ktype && checked->getAlignment() != turn){
+            if(checked->getType() == ktype && checked->getAlignment() != turn){
                 checKing = boardarray[i][j];
+		cout << i << j << endl;
             }
+	    }
         }
     }
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
+	    if (boardarray[i][j] != nullptr) {
             checked = boardarray[i][j];
-            if(checked != nullptr && checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
+            if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
+		cout << i << j << endl;
                 return true;
             }
+	    }
         }
     }
     return false;
@@ -86,27 +92,33 @@ std::cout << "Checkmate ";
     int i, j, xsave, ysave;
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
+	    if (boardarray[i][j] != nullptr) {
             checked = boardarray[i][j];
-            if(checked != nullptr && checked->getType() == ktype && checked->getAlignment() == turn){
+            if(checked->getType() == ktype && checked->getAlignment() == turn){
                 checKing = boardarray[i][j];
-            }
+	    }
+	    }
         }
     }
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
+	    if (boardarray[i][j] != nullptr) {
             checked = boardarray[i][j];
-            if(checked != nullptr && checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
+            if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
                 xsave = ChartoInt(checked->getX());
                 ysave = checked->getY();
             }
+	    }
         }
     }
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
+	    if (boardarray[i][j] != nullptr) {
             checked = boardarray[i][j];
-            if(checked != nullptr && checked->move(xsave+'a', ysave, boardarray) && boardarray[xsave][ysave]->getAlignment() != checked->getAlignment()){
+            if(checked->move(xsave+'a', ysave, boardarray) && boardarray[xsave][ysave]->getAlignment() != checked->getAlignment()){
                 return false;
             }
+	    }
         }
     }
     xsave = ChartoInt(checKing->getX());
