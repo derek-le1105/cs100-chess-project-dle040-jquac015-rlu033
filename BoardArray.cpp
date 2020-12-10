@@ -4,12 +4,14 @@
 #include "string.h"
 using namespace std;
 
-BoardArray::BoardArray(){}
+BoardArray::BoardArray(){ b = new BoardFactory(); }
 
-BoardArray::~BoardArray(){}
+BoardArray::~BoardArray(){
+    if (b != nullptr) { delete b; }
+}
 
 void BoardArray::ResetBoard(){
-    b.CreateBoard(boardarray, NORMAL);
+    b->CreateBoard(boardarray, NORMAL);
     turn = WHITE;
 }
 

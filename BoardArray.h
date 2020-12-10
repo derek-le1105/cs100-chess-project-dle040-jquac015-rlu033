@@ -293,13 +293,14 @@ class BoardArray{
     private:
       Piece *boardarray[8][8];
       Color turn;
-      BoardFactory b;
+      BoardFactory* b;
 
       bool MoveBecomesCheck(string col, int row, string newcol, int newrow);
 
     public:
         BoardArray();
         ~BoardArray();
+        void setFactory(BoardFactory* in) { b = in; }
         void ResetBoard();
         void Turn();
         void display();
