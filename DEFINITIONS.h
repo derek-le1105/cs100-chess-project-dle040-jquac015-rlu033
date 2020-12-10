@@ -16,5 +16,8 @@
 #define KNIGHT_B_PIECE_FILE_PATH "Resources/knightBPiece.png"
 #define HIGHLIGHT_PIECE_FILE_PATH "Resources/highlightPiece.jpg"
 #define POTENTIAL_MOVE_FILE_PATH  "Resources/potentialMove.png"
+#define WHITE_SCREEN_FILE_PATH    "Resources/whiteScreen.png"
+#define WHITE_CHECKMATE_FILE_PATH   "Resources/whiteCheckmate.png"
+#define BLACK_CHECKMATE_FILE_PATH   "Resources/blackCheckmate.png"
 
 #endif //SFML_PROJECT_DEFINITIONS_H

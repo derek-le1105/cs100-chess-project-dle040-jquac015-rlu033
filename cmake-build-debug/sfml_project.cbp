@@ -105,12 +105,6 @@
 		<Unit filename="C:/Users/derek/CLionProjects/cs100/Piece.h">
 			<Option target="sfml_project"/>
 		</Unit>
-		<Unit filename="C:/Users/derek/CLionProjects/cs100/initializeBoard.cpp">
-			<Option target="sfml_project"/>
-		</Unit>
-		<Unit filename="C:/Users/derek/CLionProjects/cs100/initializeBoard.h">
-			<Option target="sfml_project"/>
-		</Unit>
 		<Unit filename="C:/Users/derek/CLionProjects/cs100/main.cpp">
 			<Option target="sfml_project"/>
 		</Unit>
