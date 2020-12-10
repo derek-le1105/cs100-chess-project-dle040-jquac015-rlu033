@@ -257,7 +257,6 @@ bool Board::check(){
             if(pieceArray[i][j] != nullptr) {
                 checked = pieceArray[i][j];
                 if (checked->move(checKing->getX(), checKing->getY(), pieceArray) && checKing->getAlignment() != checked->getAlignment()) {
-                    cout << "true" << endl;
                     return true;
                 }
             }
@@ -267,9 +266,6 @@ bool Board::check(){
 }
 
 bool Board::checkmate() {
-    cout << "===================================================" << endl;
-    PrintBoard();
-    cout << "===================================================" << endl;
 
     if (!check()) { return false; }
     Piece *checked;
@@ -280,7 +276,6 @@ bool Board::checkmate() {
             if (pieceArray[i][j] != nullptr) {
                 checked = pieceArray[i][j];
                 if (checked->getType() == ktype && checked->getAlignment() == turn) {
-                    cout << "first" << endl;
                     checKing = pieceArray[i][j];
                 }
             }
