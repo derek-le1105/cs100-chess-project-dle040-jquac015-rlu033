@@ -3,7 +3,7 @@
 
 #include <string>
 #include <cctype>
-#include <SFML/Graphics/Sprite.hpp>
+//#include <SFML/Graphics/Sprite.hpp>
 
 using namespace std;
 enum Color {WHITE, BLACK};
@@ -11,7 +11,7 @@ class Piece {
 private:
     Color alignment;
 public:
-    sf::Sprite currentSprite;
+//    sf::Sprite currentSprite;
 
     Piece(Color a, char c, int i) {
         alignment = a;
