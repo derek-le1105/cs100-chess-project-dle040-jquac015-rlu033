@@ -128,7 +128,7 @@ private:
     char prevXChar;
     int prevX, prevY;
     bool gameoverCheck = false;
-    Color turn;
+    Color turn = WHITE;
 
 protected:
     int board[8][8] =
@@ -151,6 +151,7 @@ public:
     Board(int width, int height, std::string title);
     ~Board();
 
+    void PrintBoard();
     void init();
     void draw();
     void handleInput();

@@ -19,6 +19,15 @@ Board::~Board(){
 
 }
 
+void Board::PrintBoard() {
+    for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < 8; i++) {
+            if (pieceArray[i][j] == nullptr) {cout << "0";}
+            else {cout << "1";}
+        } cout << endl;
+    }
+}
+
 void Board::init(){
     boardAssets.loadTexture("Chess Board", CHESS_BOARD_FILE_PATH);
     boardAssets.loadTexture("Pawn White Piece", PAWN_W_PIECE_FILE_PATH);
@@ -135,8 +144,8 @@ void Board::handleInput() {
                     if (pieceArray[charToIntX][prevY]->move(iter, posY, pieceArray)) {   //checks to see if desired block is a valid move
                         movePiece(charToIntX, posX, posY, boardPosyY, iter);
 
-                        if(checkmate())
-                            displayGameOver(turn);
+                        if(check())
+                            gameoverCheck = true;
 
                         drawSpriteCheck = invalid;
 
@@ -170,15 +179,16 @@ void Board::displayGameOver(Color turn) {
         }
     }
 
-    if (turn == BLACK) {
+    if (turn == WHITE) {
         _checkmateMessage.setTexture(this->boardAssets.getTexture("Black Checkmate"));
         _chessBoard.setColor(sf::Color::Black);
+
     }
     else {
         _chessBoard.setTexture(this->boardAssets.getTexture("White Screen"));
+        _checkmateMessage.setTexture(this->boardAssets.getTexture("White Checkmate"));
         _chessBoard.setScale(3, 3);
     }
-    window.draw(_checkmateMessage);
 }
 
 void Board::run(){
@@ -224,6 +234,7 @@ void Board::draw() {
 
     if(gameoverCheck) {
         displayGameOver(turn);
+        window.draw(_checkmateMessage);
     }
 }
 
@@ -255,68 +266,65 @@ bool Board::check(){
     return false;
 }
 
-bool Board::checkmate(){
-    if(!check()){
-        cout << "false" << endl;
-        return false;}
-    cout << "true" << endl;
-    Piece* checked;
-    Piece* checKing;
+bool Board::checkmate() {
+    cout << "===================================================" << endl;
+    PrintBoard();
+    cout << "===================================================" << endl;
+
+    if (!check()) { return false; }
+    Piece *checked;
+    Piece *checKing;
     int i, j, xsave, ysave;
-    for(i=0; i<8; i++){
-        for(j=0; j<8; j++){
-            if(pieceArray[i][j] != nullptr) {
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            if (pieceArray[i][j] != nullptr) {
                 checked = pieceArray[i][j];
                 if (checked->getType() == ktype && checked->getAlignment() == turn) {
+                    cout << "first" << endl;
                     checKing = pieceArray[i][j];
                 }
             }
         }
     }
-    for(i=0; i<8; i++){
-        for(j=0; j<8; j++){
-            if(pieceArray[i][j] != nullptr) {
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            if (pieceArray[i][j] != nullptr) {
                 checked = pieceArray[i][j];
-                if (checked->move(checKing->getX() -1 , checKing->getY() - 1, pieceArray) &&
+                if (checked->move(checKing->getX(), checKing->getY(), pieceArray) &&
                     checKing->getAlignment() != checked->getAlignment()) {
-                    xsave = ChartoInt(checked->getX() - 1) ;
-                    ysave = checked->getY() - 1;
+                    xsave = ChartoInt(checked->getX());
+                    ysave = checked->getY();
                 }
             }
         }
     }
-    cout << "1" << endl;
-
-    for(i=0; i<8; i++){
-        for(j=0; j<8; j++){
-            if(pieceArray[i][j] != nullptr) {
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            if (pieceArray[i][j] != nullptr) {
                 checked = pieceArray[i][j];
-                cout << i << j << endl;
-                if (checked->move(xsave + 'a', ysave, pieceArray)) {
+                if (checked->move(xsave + 'a', ysave, pieceArray) &&
+                    pieceArray[xsave][ysave]->getAlignment() != checked->getAlignment()) {
                     return false;
                 }
             }
         }
     }
-    cout << "2" << endl;
-
     xsave = ChartoInt(checKing->getX());
     ysave = checKing->getY();
-    for(i=ChartoInt(checKing->getX()-1); i<ChartoInt(checKing->getX())+2; i++) {
-        for(j=checKing->getY()-1; j<checKing->getY()+2; j++){
-            if(pieceArray[i][j] != nullptr) {
+    for (i = ChartoInt(checKing->getX() - 1); i < ChartoInt(checKing->getX()) + 2; i++) {
+        for (j = checKing->getY() - 1; j < checKing->getY() + 2; j++) {
+            if (pieceArray[i][j] != nullptr) {
                 if (checKing->move(i + 'a', j, pieceArray)) {
                     pieceArray[i][j] = checKing;
                     checKing = nullptr;
-                    check();
+                    if (!check()) { return false; }
                 }
+
             }
         }
+        pieceArray[xsave][ysave] = pieceArray[i][j];
+        return true;
     }
-    cout << "3" << endl;
-
-    pieceArray[xsave][ysave] = pieceArray[i][j];
-    return false;
 }
 
 //needs to also not put the king in check (relies on check())
