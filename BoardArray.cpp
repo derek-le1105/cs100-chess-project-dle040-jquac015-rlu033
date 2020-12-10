@@ -58,17 +58,22 @@ bool BoardArray::check(){
     Piece* checKing;
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
-            checked = boardarray[i][j];
-            if(checked->getType() == ktype && checked->getAlignment() != turn){
-                checKing = boardarray[i][j];
+            if(boardarray[i][j] != nullptr){
+                checked = boardarray[i][j];
+                if(checked->getType() == ktype && checked->getAlignment() != turn){
+                    checKing = boardarray[i][j];
+                }
             }
         }
     }
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
-            checked = boardarray[i][j];
-            if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
-                return true;
+            if(boardarray[i][j] != nullptr) {
+                checked = boardarray[i][j];
+                if (checked->move(checKing->getX(), checKing->getY(), boardarray) &&
+                    checKing->getAlignment() != checked->getAlignment()) {
+                    return true;
+                }
             }
         }
     }

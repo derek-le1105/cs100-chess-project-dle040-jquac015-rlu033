@@ -305,7 +305,7 @@ class BoardArray{
         void display();
         char StringtoChar(string toChar);
         int ChartoInt(char toInt);
-        void move(string col ,int row, string newcol, int newrow);
+        bool move(string col ,int row, string newcol, int newrow);
         bool check();
         bool checkmate();
         bool stalemate();
