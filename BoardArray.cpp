@@ -4,7 +4,7 @@
 #include "string.h"
 using namespace std;
 
-BoardArray::BoardArray(){ b = new BoardFactory(); b->ClearBoard(boardarray); }
+BoardArray::BoardArray(){ b = new BoardFactory(); b->ClearBoard(boardarray); turn = WHITE; }
 
 BoardArray::~BoardArray(){
     if (b != nullptr) { delete b; }
@@ -56,12 +56,13 @@ void BoardArray::move(string col ,int row, string newcol, int newrow){
 }
 
 bool BoardArray::check(){
+std::cout << "Check ";
     Piece* checked;
     Piece* checKing;
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
             checked = boardarray[i][j];
-            if(checked->getType() == ktype && checked->getAlignment() != turn){
+            if(checked != nullptr && checked->getType() == ktype && checked->getAlignment() != turn){
                 checKing = boardarray[i][j];
             }
         }
@@ -69,7 +70,7 @@ bool BoardArray::check(){
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
             checked = boardarray[i][j];
-            if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
+            if(checked != nullptr && checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
                 return true;
             }
         }
@@ -78,6 +79,7 @@ bool BoardArray::check(){
 }
 
 bool BoardArray::checkmate(){
+std::cout << "Checkmate ";
     if(!check()){return false;}
     Piece* checked;
     Piece* checKing;
@@ -85,7 +87,7 @@ bool BoardArray::checkmate(){
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
             checked = boardarray[i][j];
-            if(checked->getType() == ktype && checked->getAlignment() == turn){
+            if(checked != nullptr && checked->getType() == ktype && checked->getAlignment() == turn){
                 checKing = boardarray[i][j];
             }
         }
@@ -93,7 +95,7 @@ bool BoardArray::checkmate(){
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
             checked = boardarray[i][j];
-            if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
+            if(checked != nullptr && checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
                 xsave = ChartoInt(checked->getX());
                 ysave = checked->getY();
             }
@@ -102,7 +104,7 @@ bool BoardArray::checkmate(){
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
             checked = boardarray[i][j];
-            if(checked->move(xsave+'a', ysave, boardarray) && boardarray[xsave][ysave]->getAlignment() != checked->getAlignment()){
+            if(checked != nullptr && checked->move(xsave+'a', ysave, boardarray) && boardarray[xsave][ysave]->getAlignment() != checked->getAlignment()){
                 return false;
             }
         }
@@ -114,16 +116,17 @@ bool BoardArray::checkmate(){
             if(checKing->move(i+'a', j, boardarray)){
                 boardarray[i][j] = checKing;
                 checKing = nullptr;
-                check();
+                if(!check()) { return false; }
             }
         }
     }
     boardarray[xsave][ysave] = boardarray[i][j];
-    return false;
+    return true;
 }
 
 //needs to also not put the king in check (relies on check())
 bool BoardArray::stalemate() {
+std::cout << "Stalemate ";
     if (check()) { return false; }
 
     int i, j; //iterate through the board
@@ -138,7 +141,7 @@ bool BoardArray::stalemate() {
 
             currPiece = boardarray[i][j];
 
-            if (currPiece != nullptr && currPiece->getAlignment() == turn) {
+            if (currPiece != nullptr && currPiece->getAlignment() != turn) {
                 //Pawns have 4 possible moves, but in either direction based on alignment
                 if (currPiece->getType() == PType::ptype) {
 
@@ -291,9 +294,11 @@ bool BoardArray::MoveBecomesCheck(string fromStr, int fromInt, string toStr, int
     bool becomesCheck = false;
 
     this->move(fromStr, fromInt, toStr, toInt);
+    Turn();
     becomesCheck = this->check();
 
     this->move(toStr, toInt, fromStr, fromInt);
+    Turn();
 
     return becomesCheck;
 }
