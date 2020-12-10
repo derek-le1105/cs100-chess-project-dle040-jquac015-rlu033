@@ -74,15 +74,15 @@ bool BoardArray::check(){
     Piece* checKing;
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
-            checked = boardarray[i][j]
-            if(checked->getType() == ktype && checked->getAignment() == turn){
+            checked = boardarray[i][j];
+            if(checked->getType() == ktype && checked->getAlignment() != turn){
                 checKing = boardarray[i][j];
             }
         }
     }
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
-            checked = boardarray[i][j]
+            checked = boardarray[i][j];
             if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
                 return true;
             }
@@ -98,15 +98,15 @@ bool BoardArray::checkmate(){
     int i, j, xsave, ysave;
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
-            checked = boardarray[i][j]
-            if(checked->getType() == ktype && checked->getAignment() == turn){
+            checked = boardarray[i][j];
+            if(checked->getType() == ktype && checked->getAlignment() == turn){
                 checKing = boardarray[i][j];
             }
         }
     }
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
-            checked = boardarray[i][j]
+            checked = boardarray[i][j];
             if(checked->move(checKing->getX(), checKing->getY(), boardarray) && checKing->getAlignment() != checked->getAlignment()){
                 xsave = ChartoInt(checked->getX());
                 ysave = checked->getY();
@@ -115,7 +115,7 @@ bool BoardArray::checkmate(){
     }
     for(i=0; i<8; i++){
         for(j=0; j<8; j++){
-            checked = boardarray[i][j]
+            checked = boardarray[i][j];
             if(checked->move(xsave+'a', ysave, boardarray) && boardarray[xsave][ysave]->getAlignment() != checked->getAlignment()){
                 return false;
             }
