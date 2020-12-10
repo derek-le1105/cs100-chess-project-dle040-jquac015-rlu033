@@ -1,23 +1,26 @@
 #ifndef SFML_PROJECT_BOARD_H
 #define SFML_PROJECT_BOARD_H
 
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include "DEFINITIONS.h"
 #include <SFML/Graphics.hpp>
-#include "Piece.h"
-#include "AssetManager.h"
 #include <iostream>
 #include <cctype>
 #include <cmath>
 #include <vector>
+#include <stack>
+#include <string>
+
+#include "DEFINITIONS.h"
+#include "Piece.h"
+#include "AssetManager.h"
 
 const float BLOCK_SIZE = 84.2;
+const unsigned int SCREEN_WIDTH = 674;
+const unsigned int SCREEN_HEIGHT = 677;
 
 enum allowDrawnSprite {valid, invalid};
 enum ChessType {NORMAL, FISCHER};
 enum pieceClicked {pieceCurrentlyClicked, moveCurrentlyClicked};
-enum currentTurn {whiteTurn, blackTurn};
+//enum currentTurn {whiteTurn, blackTurn};
 
 class BoardFactory {
 public:
@@ -121,9 +124,11 @@ private:
     Piece* pieceArray[8][8];
     pieceClicked checkClick = pieceCurrentlyClicked;
     allowDrawnSprite drawSpriteCheck = invalid;
-    currentTurn game = whiteTurn;
+    //currentTurn game = whiteTurn;
     char prevXChar;
     int prevX, prevY;
+    bool gameoverCheck = false;
+    Color turn = WHITE;
 
 protected:
     int board[8][8] =
@@ -138,18 +143,24 @@ protected:
     sf::Sprite _chessBoard; //each block is 84.2 by 84.2
     sf::Sprite _highlightPiece;
     sf::Sprite _potentialMove;
+    sf::Sprite _checkmateMessage;
     vector<sf::Sprite> potentialMoves;
 
 public:
     Board();
     Board(int width, int height, std::string title);
+    ~Board();
 
+    void PrintBoard();
     void init();
     void draw();
     void handleInput();
     void run();
+
+    void movePiece(int tempX, int posX, int posY, int boardPosY, char iter);
     void storePreviousCord();
     void getPotentialMoves(int i, int j);
+    void displayGameOver(Color turn);
     bool checkTurn(int x, int y);
     int CharToInt(char c) {
         if (isupper(c))
@@ -159,6 +170,11 @@ public:
         else
             return 0;
     }
+    bool check();
+    bool checkmate();
+    bool stalemate();
+    bool MoveBecomesCheck(string col, int row, string newcol, int newrow);
+    char StringtoChar(string toChar);
 };
 
 

@@ -683,22 +683,14 @@ string
 -
 
 C:/Users/derek/CLionProjects/cs100/Board.cpp
+cstring
+-
 Board.h
 C:/Users/derek/CLionProjects/cs100/Board.h
 
 C:/Users/derek/CLionProjects/cs100/Board.h
-SFML/Graphics/RectangleShape.hpp
--
-SFML/Graphics/RenderWindow.hpp
--
-DEFINITIONS.h
-C:/Users/derek/CLionProjects/cs100/DEFINITIONS.h
 SFML/Graphics.hpp
 -
-Piece.h
-C:/Users/derek/CLionProjects/cs100/Piece.h
-AssetManager.h
-C:/Users/derek/CLionProjects/cs100/AssetManager.h
 iostream
 -
 cctype
@@ -707,6 +699,16 @@ cmath
 -
 vector
 -
+stack
+-
+string
+-
+DEFINITIONS.h
+C:/Users/derek/CLionProjects/cs100/DEFINITIONS.h
+Piece.h
+C:/Users/derek/CLionProjects/cs100/Piece.h
+AssetManager.h
+C:/Users/derek/CLionProjects/cs100/AssetManager.h
 
 C:/Users/derek/CLionProjects/cs100/DEFINITIONS.h
 

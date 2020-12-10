@@ -203,33 +203,6 @@ Piece.cpp.s:
 	$(MAKE) -f CMakeFiles\sfml_project.dir\build.make CMakeFiles/sfml_project.dir/Piece.cpp.s
 .PHONY : Piece.cpp.s
 
-initializeBoard.obj: initializeBoard.cpp.obj
-
-.PHONY : initializeBoard.obj
-
-# target to build an object file
-initializeBoard.cpp.obj:
-	$(MAKE) -f CMakeFiles\sfml_project.dir\build.make CMakeFiles/sfml_project.dir/initializeBoard.cpp.obj
-.PHONY : initializeBoard.cpp.obj
-
-initializeBoard.i: initializeBoard.cpp.i
-
-.PHONY : initializeBoard.i
-
-# target to preprocess a source file
-initializeBoard.cpp.i:
-	$(MAKE) -f CMakeFiles\sfml_project.dir\build.make CMakeFiles/sfml_project.dir/initializeBoard.cpp.i
-.PHONY : initializeBoard.cpp.i
-
-initializeBoard.s: initializeBoard.cpp.s
-
-.PHONY : initializeBoard.s
-
-# target to generate assembly for a file
-initializeBoard.cpp.s:
-	$(MAKE) -f CMakeFiles\sfml_project.dir\build.make CMakeFiles/sfml_project.dir/initializeBoard.cpp.s
-.PHONY : initializeBoard.cpp.s
-
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -275,9 +248,6 @@ help:
 	@echo ... Piece.obj
 	@echo ... Piece.i
 	@echo ... Piece.s
-	@echo ... initializeBoard.obj
-	@echo ... initializeBoard.i
-	@echo ... initializeBoard.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

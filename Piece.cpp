@@ -78,6 +78,7 @@ bool Rook::move(char c, int y, Piece* array[][8]) {
 
     return validMove;
 }
+void Rook::drawPiece() {}
 
 
 bool Knight::move(char c, int y, Piece* array[][8]) {
@@ -112,6 +113,7 @@ bool Knight::move(char c, int y, Piece* array[][8]) {
 
     return validMove;
 }
+void Knight::drawPiece() {}
 
 bool Bishop::move(char c, int y, Piece* array[][8]) {
     bool validMove = true;
@@ -166,6 +168,7 @@ bool Bishop::move(char c, int y, Piece* array[][8]) {
 
     return validMove;
 }
+void Bishop::drawPiece() {}
 
 bool Queen::move(char c, int y, Piece* array[][8]) {
     bool validMove = true;
@@ -221,6 +224,7 @@ bool Queen::move(char c, int y, Piece* array[][8]) {
 
     return validMove;
 }
+void Queen::drawPiece() {}
 
 bool King::move(char c, int y, Piece* array[][8]) {
     bool validMove = true;
@@ -254,6 +258,7 @@ bool King::move(char c, int y, Piece* array[][8]) {
 
     return validMove;
 }
+void King::drawPiece() {}
 
 /*pawn has specific moves
     can only move forward, based on alignment:
@@ -336,3 +341,4 @@ bool Pawn::move(char c, int y, Piece* array[][8]) {
 
     return validMove;
 }
+void Pawn::drawPiece() {}
