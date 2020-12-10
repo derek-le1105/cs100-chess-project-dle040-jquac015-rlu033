@@ -11,7 +11,7 @@ class Piece {
 private:
     Color alignment;
 public:
-    sf::Sprite currentSprite;
+//    sf::Sprite currentSprite;
 
     Piece(Color a, char c, int i) {
         alignment = a;
@@ -31,8 +31,6 @@ public:
     }*/
     virtual bool move(char, int, Piece* array[][8] = nullptr) = 0; //size of array is 64 for board
 
-    virtual void drawPiece() = 0;
-
 protected:
     int posX, posY;
     int CharToInt(char c) {
@@ -50,7 +48,6 @@ class Rook : public Piece {
 public:
     Rook(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
-    void drawPiece();
 };
 
 //moves in an L-shape and can jump over pieces
@@ -58,7 +55,6 @@ class Knight : public Piece {
 public:
     Knight(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
-    void drawPiece();
 };
 
 //moves diagonally
@@ -67,7 +63,6 @@ class Bishop : public Piece {
 public:
     Bishop(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
-    void drawPiece();
 };
 
 //moves horizontally or vertically or diagonally
@@ -75,7 +70,6 @@ class Queen : public Piece {
 public:
     Queen(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
-    void drawPiece();
 };
 
 //moves one space in any direction
@@ -84,7 +78,6 @@ class King : public Piece {
 public:
     King(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
-    void drawPiece();
 };
 
 //move: one forward, unless it hasn't moved yet (start)
@@ -94,7 +87,6 @@ class Pawn : public Piece {
 public:
     Pawn(Color a, char c, int i) : Piece(a, c, i) {}
     bool move(char, int, Piece* array[][8] = nullptr);
-    void drawPiece();
 };
 
 #endif
