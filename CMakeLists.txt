@@ -34,6 +34,7 @@ ADD_SUBDIRECTORY(googletest)
 ADD_EXECUTABLE(test
     testing/unit_test.cpp
     Piece.cpp
+    BoardArray.h
 )
 
 TARGET_LINK_LIBRARIES(test gtest)
