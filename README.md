@@ -13,7 +13,7 @@
  > * This is interesting to us because we are all avid chess players and it is interesting to see chess being built as a program from the ground up.
  > * Languages/Tools/Technologies:
  >   * [C++](https://www.cplusplus.com/)
- >   * [C++ graphics library](https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1126/materials/cppdoc/graphics.html)
+ >   * [C++ graphics library](https://www.sfml-dev.org/download/sfml/2.5.1/)
  > * Input/Output:
  >   * The input will be the moves the player wants to make.
  >   * The output will be a chess board and chess pieces that reflect the position the player inputs. At the end of the game, an "End Game" message will be displayed (P1 wins, P2 wins, Draw).
