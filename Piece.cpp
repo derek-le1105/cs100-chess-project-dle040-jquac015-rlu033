@@ -306,7 +306,7 @@ bool Pawn::move(char c, int y, Piece* array[][8]) {
                 validMove = false;
         }
     }
-        //can move 2 spaces if it's at the starting position
+    //can move 2 spaces if it's at the starting position
     else if ((x - posX == 0) && ((y - posY == 2 && posY == 1 && this->getAlignment() == BLACK) || (y - posY == -2 && posY == 6 && this->getAlignment() == WHITE))) {
         //cannot move forward due to collision
         int b = posY;
@@ -323,7 +323,7 @@ bool Pawn::move(char c, int y, Piece* array[][8]) {
         }
     }
 
-        //can only move diagonally one space if there is a piece to capture
+    //can only move diagonally one space if there is a piece to capture
     else if ((abs(x - posX) == 1) && ((y - posY == 1 && this->getAlignment() == BLACK) || (y - posY == -1 && this->getAlignment() == WHITE)) && array != nullptr) {
         if (array[x][y] == nullptr)
             validMove = false;
