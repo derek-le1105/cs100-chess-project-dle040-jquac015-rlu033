@@ -293,8 +293,7 @@ class BoardArray{
     private:
       Piece *boardarray[8][8];
       Color turn;
-      bool bkingcheck;
-      bool wkingcheck;
+      BoardFactory b;
 
       bool MoveBecomesCheck(string col, int row, string newcol, int newrow);
 
