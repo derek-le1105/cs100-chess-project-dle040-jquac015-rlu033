@@ -22,7 +22,7 @@ class TestFactory : public BoardFactory {
 
     public:
     TestFactory() {}
-    void BuildTests (int array[][8], int input = 0) {
+    void BuildTests (Piece* array[][8], int input = 0) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++)
                 array[i][j] = nullptr;
@@ -42,7 +42,7 @@ class TestFactory : public BoardFactory {
                 array[6][4]->setCoord('e',3);
                 array[7][4] = array[3][0];
                 array[3][0] = nullptr;
-                array[7][4] = setCoord('f',3);
+                array[7][4]->setCoord('f',3);
                 break;
             case 2:
                 array[7][7] = new King(WHITE,'h',8);
@@ -117,9 +117,10 @@ class TestFactory : public BoardFactory {
                 break;
         }
     }
-}
+};
 
 TEST(BoardTest, Checkmate1) {
-    EXPECT_EQ(1,1);
+    BoardArray();
+    EXPECT_EQ(0,1);
 }
 #endif

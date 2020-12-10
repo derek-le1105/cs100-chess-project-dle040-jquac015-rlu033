@@ -19,7 +19,7 @@ class Piece {
         posX = CharToInt(c)-1;
         posY = i-1;
     }
-    Color getAlignment() { return alignment; }
+    Color getAlignment() const { return alignment; }
     /*std::string GetCoord() const {
         std::string final;
         final.push_back('a'+this->x);
@@ -28,9 +28,9 @@ class Piece {
     }*/
     virtual bool move(char, int, Piece* array[][8] = nullptr) = 0; //size of array is 64 for board
     
-    char getX() { return posX + 1 + 'a'; }
-    int getY() { return posY + 1; }
-    PType getType() { return type; }
+    char getX() const { return posX + 'a'; }
+    int getY() const { return posY + 1; }
+    PType getType() const { return type; }
 
   protected:
     PType type;

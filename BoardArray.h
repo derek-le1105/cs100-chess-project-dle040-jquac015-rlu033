@@ -1,8 +1,6 @@
 #ifndef __BOARDARRAY_H__
 #define __BOARDARRAY_H__
 #include <string>
-#include "Piece.cpp"
-
 #include "Piece.h"
 #include <iostream> //used for displaying the setupID in Fischer
 
@@ -277,7 +275,7 @@ class BoardFactory {
             }
         }
     }
-}
+};
 /* Knight Diagram
 0    0000   11000
 1    0001   10100
@@ -293,7 +291,7 @@ class BoardFactory {
 
 class BoardArray{
     private:
-      Piece *boardarray[][8];
+      Piece *boardarray[8][8];
       Color turn;
       bool bkingcheck;
       bool wkingcheck;
