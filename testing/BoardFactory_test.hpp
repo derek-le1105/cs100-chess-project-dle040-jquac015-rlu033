@@ -2,12 +2,7 @@
 #define __RLU_TEST__
 
 #include "gtest/gtest.h"
-<<<<<<< HEAD
 #include "../Board.h"
-=======
-#include "../Board.hpp"
-//#include "../BoardArray.h"
->>>>>>> parent of 79e906d (Merge branch 'rlu033/workspace' of https://github.com/cs100/final-project-dle040-jquac015-rlu033 into rlu033/workspace)
 #include "../Piece.h"
 
 TEST(FactoryTest, NormalTest) {
