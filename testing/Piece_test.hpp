@@ -17,6 +17,44 @@ TEST(PieceFunctionTest, Alignment) {
     Rook r2(BLACK, 'a', 1);
     EXPECT_EQ(r2.getAlignment(), BLACK);
 }
+TEST(PieceFunctionTest, Coord) {
+    Rook test(WHITE, 'a', 1);
+    EXPECT_EQ(test.getX(), 'a');
+    EXPECT_EQ(test.getY(), 1);
+
+    test.setCoord('b',4);
+    EXPECT_EQ(test.getX(), 'b');
+    EXPECT_EQ(test.getY(), 4);
+
+    test.setCoord('g',8);
+    EXPECT_EQ(test.getX(), 'g');
+    EXPECT_EQ(test.getY(), 8);
+}
+TEST(PieceFunctionTest, PieceType) {
+    Piece* test = new Pawn(WHITE, 'a', 1);
+    EXPECT_EQ(test->getType(), PType::ptype);
+    delete test;
+
+    test = new Bishop(WHITE, 'a', 1);
+    EXPECT_EQ(test->getType(), PType::btype);
+    delete test;
+
+    test = new Knight(WHITE, 'a', 1);
+    EXPECT_EQ(test->getType(), PType::ntype);
+    delete test;
+
+    test = new Rook(WHITE, 'a', 1);
+    EXPECT_EQ(test->getType(), PType::rtype);
+    delete test;
+
+    test = new Queen(WHITE, 'a', 1);
+    EXPECT_EQ(test->getType(), PType::qtype);
+    delete test;
+
+    test = new King(WHITE, 'a', 1);
+    EXPECT_EQ(test->getType(), PType::ktype);
+    delete test;
+}
 
 TEST(PieceMoveTest, NoMove) {
     Rook test(WHITE, 'a', 1);
@@ -682,7 +720,7 @@ TEST(PawnMove, BlackCollisionTest) {
     Piece* test = new Pawn(BLACK, 'd', 2);
     array[3][1] = test;
 
-    /*White: moving upwards*/{
+    /*Black: moving upwards*/{
         Piece* p1 = new Rook(BLACK, 'd',3);
         array[3][2] = p1;
         EXPECT_EQ(test->move('d',3,array), false);
@@ -717,7 +755,9 @@ TEST(PawnMove, BlackCollisionTest) {
     test = new Pawn(BLACK, 'd', 4);
     array[3][3] = test;
 
-    /*White: Capturing*/{
+    /*Black: Capturing*/{
+        EXPECT_EQ(test->move('c', 5), false);
+
         Piece* p1 = new Rook(WHITE, 'c',5);
         array[2][4] = p1;
         ASSERT_EQ(test->move('d',5,array), true);
@@ -751,7 +791,7 @@ TEST(PawnMove, WhiteCollisionTest) {
     Piece* test = new Pawn(WHITE, 'd', 7);
     array[3][6] = test;
 
-    /*Black: moving downwards*/{
+    /*White: moving downwards*/{
         Piece* p1 = new Rook(WHITE, 'd',6);
         array[3][5] = p1;
         EXPECT_EQ(test->move('d',6,array), false);
@@ -786,7 +826,9 @@ TEST(PawnMove, WhiteCollisionTest) {
     test = new Pawn(WHITE, 'd', 4);
     array[3][3] = test;
 
-    /*Black: Capturing*/{
+    /*White: Capturing*/{
+        EXPECT_EQ(test->move('c', 3), false);
+
         Piece* p1 = new Rook(BLACK, 'c',3);
         array[2][2] = p1;
         ASSERT_EQ(test->move('d',3,array), true);

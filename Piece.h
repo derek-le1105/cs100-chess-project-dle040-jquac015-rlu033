@@ -29,7 +29,7 @@ class Piece {
     virtual bool move(char, int, Piece* array[][8] = nullptr) = 0; //size of array is 64 for board
 
     virtual void drawPiece() = 0;
-    
+
     char getX() { return posX + 1 + 'a'; }
     int getY() { return posY + 1; }
     PType getType() { return type; }
