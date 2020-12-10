@@ -2,7 +2,7 @@
 #define __BOARD_TEST_H__
 
 #include "gtest/gtest.h"
-#include "../Board.h"
+#include "../BoardArray.h"
 
 /* (BW) signifies who's turn was last
 Checkmate: https://www.chess.com/forum/view/general/13-checkmates-you-must-know
@@ -119,4 +119,7 @@ class TestFactory : public BoardFactory {
     }
 }
 
+TEST(BoardTest, Checkmate1) {
+    EXPECT_EQ(1,1);
+}
 #endif
